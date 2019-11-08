@@ -1,0 +1,2137 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AVERAGE
+    BREAK
+    CASE
+    COLON
+    DO
+    ELSE
+    FALSE
+    FOR
+    FUNC
+    IF
+    LCORCHO
+    MAIN
+    MEAN
+    MODE
+    MODULE
+    NOT
+    PI
+    POINT
+    POWER
+    PRINT
+    RCORCHO
+    SQRT
+    SWITCH
+    TRUE
+    WHILE
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> globales END
+Rule 2     globales -> declarar globales
+Rule 3     globales -> empty
+Rule 4     declarar -> inicializada
+Rule 5     declarar -> CONS inicializada
+Rule 6     declarar -> noinicializada
+Rule 7     inicializada -> tipo asignacion
+Rule 8     inicializada -> ARR tipo asignacioninicialarr
+Rule 9     inicializada -> MAT tipo asignacioninicialmat
+Rule 10    noinicializada -> tipo ID PNTCOMMA
+Rule 11    noinicializada -> ARR tipo ID bracket PNTCOMMA
+Rule 12    noinicializada -> MAT tipo ID bracket bracket PNTCOMMA
+Rule 13    bracket -> LBRCKT DTI RBRCKT
+Rule 14    bracket -> LBRCKT ID RBRCKT
+Rule 15    tipo -> INT
+Rule 16    tipo -> FLOAT
+Rule 17    tipo -> BOOL
+Rule 18    tipo -> STRING
+Rule 19    asignacion -> ID EQUALS expresion PNTCOMMA
+Rule 20    asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA
+Rule 21    asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA
+Rule 22    looparreglo -> LBRCKT expresion expresionloop RBRCKT
+Rule 23    expresionloop -> COMMA expresion expresionloop
+Rule 24    expresionloop -> empty
+Rule 25    expresion -> exp expresionrelacional
+Rule 26    expresionrelacional -> GREATER exp
+Rule 27    expresionrelacional -> LOWER exp
+Rule 28    expresionrelacional -> SAME exp
+Rule 29    expresionrelacional -> LEQUAL exp
+Rule 30    expresionrelacional -> GEQUAL exp
+Rule 31    expresionrelacional -> NOTEQUAL exp
+Rule 32    expresionrelacional -> AND exp
+Rule 33    expresionrelacional -> OR exp
+Rule 34    expresionrelacional -> empty
+Rule 35    exp -> termino expsumres
+Rule 36    expsumres -> PLUS termino expsumres
+Rule 37    expsumres -> MINUS termino expsumres
+Rule 38    expsumres -> empty
+Rule 39    termino -> factor terminomuldiv
+Rule 40    terminomuldiv -> TIMES factor terminomuldiv
+Rule 41    terminomuldiv -> DIVIDE factor terminomuldiv
+Rule 42    terminomuldiv -> empty
+Rule 43    factor -> LPAREN expresion RPAREN
+Rule 44    factor -> PLUS vardt
+Rule 45    factor -> MINUS vardt
+Rule 46    factor -> vardt
+Rule 47    vardt -> ID
+Rule 48    vardt -> DTI
+Rule 49    vardt -> DTF
+Rule 50    vardt -> DTB
+Rule 51    vardt -> DTS
+Rule 52    vardt -> ID bracket
+Rule 53    vardt -> ID bracket bracket
+Rule 54    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 32
+ARR                  : 8 11
+AVERAGE              : 
+BOOL                 : 17
+BREAK                : 
+CASE                 : 
+COLON                : 
+COMMA                : 23
+CONS                 : 5
+DIVIDE               : 41
+DO                   : 
+DTB                  : 50
+DTF                  : 49
+DTI                  : 13 48
+DTS                  : 51
+ELSE                 : 
+END                  : 1
+EQUALS               : 19 20 21
+FALSE                : 
+FLOAT                : 16
+FOR                  : 
+FUNC                 : 
+GEQUAL               : 30
+GREATER              : 26
+ID                   : 10 11 12 14 19 20 21 47 52 53
+IF                   : 
+INT                  : 15
+LBRCKT               : 13 14 22
+LCORCHO              : 
+LEQUAL               : 29
+LOWER                : 27
+LPAREN               : 43
+MAIN                 : 
+MAT                  : 9 12
+MEAN                 : 
+MINUS                : 37 45
+MODE                 : 
+MODULE               : 
+NOT                  : 
+NOTEQUAL             : 31
+OR                   : 33
+PI                   : 
+PLUS                 : 36 44
+PNTCOMMA             : 10 11 12 19 20 21
+POINT                : 
+POWER                : 
+PRINT                : 
+RBRCKT               : 13 14 22
+RCORCHO              : 
+RPAREN               : 43
+SAME                 : 28
+SQRT                 : 
+STRING               : 18
+SWITCH               : 
+TIMES                : 40
+TRUE                 : 
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 7
+asignacioninicialarr : 8
+asignacioninicialmat : 9
+bracket              : 11 12 12 20 21 21 52 53 53
+declarar             : 2
+empty                : 3 24 34 38 42
+exp                  : 25 26 27 28 29 30 31 32 33
+expresion            : 19 22 23 43
+expresionloop        : 22 23
+expresionrelacional  : 25
+expsumres            : 35 36 37
+factor               : 39 40 41
+globales             : 1 2
+inicializada         : 4 5
+looparreglo          : 20 21 21
+noinicializada       : 6
+programa             : 0
+termino              : 35 36 37
+terminomuldiv        : 39 40 41
+tipo                 : 7 8 9 10 11 12
+vardt                : 44 45 46
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . globales END
+    (2) globales -> . declarar globales
+    (3) globales -> . empty
+    (4) declarar -> . inicializada
+    (5) declarar -> . CONS inicializada
+    (6) declarar -> . noinicializada
+    (54) empty -> .
+    (7) inicializada -> . tipo asignacion
+    (8) inicializada -> . ARR tipo asignacioninicialarr
+    (9) inicializada -> . MAT tipo asignacioninicialmat
+    (10) noinicializada -> . tipo ID PNTCOMMA
+    (11) noinicializada -> . ARR tipo ID bracket PNTCOMMA
+    (12) noinicializada -> . MAT tipo ID bracket bracket PNTCOMMA
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    CONS            shift and go to state 6
+    END             reduce using rule 54 (empty -> .)
+    ARR             shift and go to state 9
+    MAT             shift and go to state 10
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    programa                       shift and go to state 1
+    globales                       shift and go to state 2
+    declarar                       shift and go to state 3
+    empty                          shift and go to state 4
+    inicializada                   shift and go to state 5
+    noinicializada                 shift and go to state 7
+    tipo                           shift and go to state 8
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> globales . END
+
+    END             shift and go to state 15
+
+
+state 3
+
+    (2) globales -> declarar . globales
+    (2) globales -> . declarar globales
+    (3) globales -> . empty
+    (4) declarar -> . inicializada
+    (5) declarar -> . CONS inicializada
+    (6) declarar -> . noinicializada
+    (54) empty -> .
+    (7) inicializada -> . tipo asignacion
+    (8) inicializada -> . ARR tipo asignacioninicialarr
+    (9) inicializada -> . MAT tipo asignacioninicialmat
+    (10) noinicializada -> . tipo ID PNTCOMMA
+    (11) noinicializada -> . ARR tipo ID bracket PNTCOMMA
+    (12) noinicializada -> . MAT tipo ID bracket bracket PNTCOMMA
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    CONS            shift and go to state 6
+    END             reduce using rule 54 (empty -> .)
+    ARR             shift and go to state 9
+    MAT             shift and go to state 10
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    declarar                       shift and go to state 3
+    globales                       shift and go to state 16
+    empty                          shift and go to state 4
+    inicializada                   shift and go to state 5
+    noinicializada                 shift and go to state 7
+    tipo                           shift and go to state 8
+
+state 4
+
+    (3) globales -> empty .
+
+    END             reduce using rule 3 (globales -> empty .)
+
+
+state 5
+
+    (4) declarar -> inicializada .
+
+    CONS            reduce using rule 4 (declarar -> inicializada .)
+    ARR             reduce using rule 4 (declarar -> inicializada .)
+    MAT             reduce using rule 4 (declarar -> inicializada .)
+    INT             reduce using rule 4 (declarar -> inicializada .)
+    FLOAT           reduce using rule 4 (declarar -> inicializada .)
+    BOOL            reduce using rule 4 (declarar -> inicializada .)
+    STRING          reduce using rule 4 (declarar -> inicializada .)
+    END             reduce using rule 4 (declarar -> inicializada .)
+
+
+state 6
+
+    (5) declarar -> CONS . inicializada
+    (7) inicializada -> . tipo asignacion
+    (8) inicializada -> . ARR tipo asignacioninicialarr
+    (9) inicializada -> . MAT tipo asignacioninicialmat
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    ARR             shift and go to state 19
+    MAT             shift and go to state 20
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    inicializada                   shift and go to state 17
+    tipo                           shift and go to state 18
+
+state 7
+
+    (6) declarar -> noinicializada .
+
+    CONS            reduce using rule 6 (declarar -> noinicializada .)
+    ARR             reduce using rule 6 (declarar -> noinicializada .)
+    MAT             reduce using rule 6 (declarar -> noinicializada .)
+    INT             reduce using rule 6 (declarar -> noinicializada .)
+    FLOAT           reduce using rule 6 (declarar -> noinicializada .)
+    BOOL            reduce using rule 6 (declarar -> noinicializada .)
+    STRING          reduce using rule 6 (declarar -> noinicializada .)
+    END             reduce using rule 6 (declarar -> noinicializada .)
+
+
+state 8
+
+    (7) inicializada -> tipo . asignacion
+    (10) noinicializada -> tipo . ID PNTCOMMA
+    (19) asignacion -> . ID EQUALS expresion PNTCOMMA
+
+    ID              shift and go to state 22
+
+    asignacion                     shift and go to state 21
+
+state 9
+
+    (8) inicializada -> ARR . tipo asignacioninicialarr
+    (11) noinicializada -> ARR . tipo ID bracket PNTCOMMA
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    tipo                           shift and go to state 23
+
+state 10
+
+    (9) inicializada -> MAT . tipo asignacioninicialmat
+    (12) noinicializada -> MAT . tipo ID bracket bracket PNTCOMMA
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    tipo                           shift and go to state 24
+
+state 11
+
+    (15) tipo -> INT .
+
+    ID              reduce using rule 15 (tipo -> INT .)
+
+
+state 12
+
+    (16) tipo -> FLOAT .
+
+    ID              reduce using rule 16 (tipo -> FLOAT .)
+
+
+state 13
+
+    (17) tipo -> BOOL .
+
+    ID              reduce using rule 17 (tipo -> BOOL .)
+
+
+state 14
+
+    (18) tipo -> STRING .
+
+    ID              reduce using rule 18 (tipo -> STRING .)
+
+
+state 15
+
+    (1) programa -> globales END .
+
+    $end            reduce using rule 1 (programa -> globales END .)
+
+
+state 16
+
+    (2) globales -> declarar globales .
+
+    END             reduce using rule 2 (globales -> declarar globales .)
+
+
+state 17
+
+    (5) declarar -> CONS inicializada .
+
+    CONS            reduce using rule 5 (declarar -> CONS inicializada .)
+    ARR             reduce using rule 5 (declarar -> CONS inicializada .)
+    MAT             reduce using rule 5 (declarar -> CONS inicializada .)
+    INT             reduce using rule 5 (declarar -> CONS inicializada .)
+    FLOAT           reduce using rule 5 (declarar -> CONS inicializada .)
+    BOOL            reduce using rule 5 (declarar -> CONS inicializada .)
+    STRING          reduce using rule 5 (declarar -> CONS inicializada .)
+    END             reduce using rule 5 (declarar -> CONS inicializada .)
+
+
+state 18
+
+    (7) inicializada -> tipo . asignacion
+    (19) asignacion -> . ID EQUALS expresion PNTCOMMA
+
+    ID              shift and go to state 25
+
+    asignacion                     shift and go to state 21
+
+state 19
+
+    (8) inicializada -> ARR . tipo asignacioninicialarr
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    tipo                           shift and go to state 26
+
+state 20
+
+    (9) inicializada -> MAT . tipo asignacioninicialmat
+    (15) tipo -> . INT
+    (16) tipo -> . FLOAT
+    (17) tipo -> . BOOL
+    (18) tipo -> . STRING
+
+    INT             shift and go to state 11
+    FLOAT           shift and go to state 12
+    BOOL            shift and go to state 13
+    STRING          shift and go to state 14
+
+    tipo                           shift and go to state 27
+
+state 21
+
+    (7) inicializada -> tipo asignacion .
+
+    CONS            reduce using rule 7 (inicializada -> tipo asignacion .)
+    ARR             reduce using rule 7 (inicializada -> tipo asignacion .)
+    MAT             reduce using rule 7 (inicializada -> tipo asignacion .)
+    INT             reduce using rule 7 (inicializada -> tipo asignacion .)
+    FLOAT           reduce using rule 7 (inicializada -> tipo asignacion .)
+    BOOL            reduce using rule 7 (inicializada -> tipo asignacion .)
+    STRING          reduce using rule 7 (inicializada -> tipo asignacion .)
+    END             reduce using rule 7 (inicializada -> tipo asignacion .)
+
+
+state 22
+
+    (10) noinicializada -> tipo ID . PNTCOMMA
+    (19) asignacion -> ID . EQUALS expresion PNTCOMMA
+
+    PNTCOMMA        shift and go to state 28
+    EQUALS          shift and go to state 29
+
+
+state 23
+
+    (8) inicializada -> ARR tipo . asignacioninicialarr
+    (11) noinicializada -> ARR tipo . ID bracket PNTCOMMA
+    (20) asignacioninicialarr -> . ID bracket EQUALS looparreglo PNTCOMMA
+
+    ID              shift and go to state 31
+
+    asignacioninicialarr           shift and go to state 30
+
+state 24
+
+    (9) inicializada -> MAT tipo . asignacioninicialmat
+    (12) noinicializada -> MAT tipo . ID bracket bracket PNTCOMMA
+    (21) asignacioninicialmat -> . ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA
+
+    ID              shift and go to state 33
+
+    asignacioninicialmat           shift and go to state 32
+
+state 25
+
+    (19) asignacion -> ID . EQUALS expresion PNTCOMMA
+
+    EQUALS          shift and go to state 29
+
+
+state 26
+
+    (8) inicializada -> ARR tipo . asignacioninicialarr
+    (20) asignacioninicialarr -> . ID bracket EQUALS looparreglo PNTCOMMA
+
+    ID              shift and go to state 34
+
+    asignacioninicialarr           shift and go to state 30
+
+state 27
+
+    (9) inicializada -> MAT tipo . asignacioninicialmat
+    (21) asignacioninicialmat -> . ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA
+
+    ID              shift and go to state 35
+
+    asignacioninicialmat           shift and go to state 32
+
+state 28
+
+    (10) noinicializada -> tipo ID PNTCOMMA .
+
+    CONS            reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    ARR             reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    MAT             reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    INT             reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    FLOAT           reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    BOOL            reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    STRING          reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+    END             reduce using rule 10 (noinicializada -> tipo ID PNTCOMMA .)
+
+
+state 29
+
+    (19) asignacion -> ID EQUALS . expresion PNTCOMMA
+    (25) expresion -> . exp expresionrelacional
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    expresion                      shift and go to state 37
+    exp                            shift and go to state 38
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 30
+
+    (8) inicializada -> ARR tipo asignacioninicialarr .
+
+    CONS            reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    ARR             reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    MAT             reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    INT             reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    FLOAT           reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    BOOL            reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    STRING          reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+    END             reduce using rule 8 (inicializada -> ARR tipo asignacioninicialarr .)
+
+
+state 31
+
+    (11) noinicializada -> ARR tipo ID . bracket PNTCOMMA
+    (20) asignacioninicialarr -> ID . bracket EQUALS looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 49
+
+state 32
+
+    (9) inicializada -> MAT tipo asignacioninicialmat .
+
+    CONS            reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    ARR             reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    MAT             reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    INT             reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    FLOAT           reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    BOOL            reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    STRING          reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+    END             reduce using rule 9 (inicializada -> MAT tipo asignacioninicialmat .)
+
+
+state 33
+
+    (12) noinicializada -> MAT tipo ID . bracket bracket PNTCOMMA
+    (21) asignacioninicialmat -> ID . bracket bracket EQUALS looparreglo looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 51
+
+state 34
+
+    (20) asignacioninicialarr -> ID . bracket EQUALS looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 52
+
+state 35
+
+    (21) asignacioninicialmat -> ID . bracket bracket EQUALS looparreglo looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 53
+
+state 36
+
+    (47) vardt -> ID .
+    (52) vardt -> ID . bracket
+    (53) vardt -> ID . bracket bracket
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    TIMES           reduce using rule 47 (vardt -> ID .)
+    DIVIDE          reduce using rule 47 (vardt -> ID .)
+    PLUS            reduce using rule 47 (vardt -> ID .)
+    MINUS           reduce using rule 47 (vardt -> ID .)
+    GREATER         reduce using rule 47 (vardt -> ID .)
+    LOWER           reduce using rule 47 (vardt -> ID .)
+    SAME            reduce using rule 47 (vardt -> ID .)
+    LEQUAL          reduce using rule 47 (vardt -> ID .)
+    GEQUAL          reduce using rule 47 (vardt -> ID .)
+    NOTEQUAL        reduce using rule 47 (vardt -> ID .)
+    AND             reduce using rule 47 (vardt -> ID .)
+    OR              reduce using rule 47 (vardt -> ID .)
+    PNTCOMMA        reduce using rule 47 (vardt -> ID .)
+    RPAREN          reduce using rule 47 (vardt -> ID .)
+    COMMA           reduce using rule 47 (vardt -> ID .)
+    RBRCKT          reduce using rule 47 (vardt -> ID .)
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 54
+
+state 37
+
+    (19) asignacion -> ID EQUALS expresion . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 55
+
+
+state 38
+
+    (25) expresion -> exp . expresionrelacional
+    (26) expresionrelacional -> . GREATER exp
+    (27) expresionrelacional -> . LOWER exp
+    (28) expresionrelacional -> . SAME exp
+    (29) expresionrelacional -> . LEQUAL exp
+    (30) expresionrelacional -> . GEQUAL exp
+    (31) expresionrelacional -> . NOTEQUAL exp
+    (32) expresionrelacional -> . AND exp
+    (33) expresionrelacional -> . OR exp
+    (34) expresionrelacional -> . empty
+    (54) empty -> .
+
+    GREATER         shift and go to state 57
+    LOWER           shift and go to state 58
+    SAME            shift and go to state 59
+    LEQUAL          shift and go to state 60
+    GEQUAL          shift and go to state 61
+    NOTEQUAL        shift and go to state 62
+    AND             shift and go to state 63
+    OR              shift and go to state 64
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expresionrelacional            shift and go to state 56
+    empty                          shift and go to state 65
+
+state 39
+
+    (35) exp -> termino . expsumres
+    (36) expsumres -> . PLUS termino expsumres
+    (37) expsumres -> . MINUS termino expsumres
+    (38) expsumres -> . empty
+    (54) empty -> .
+
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expsumres                      shift and go to state 66
+    empty                          shift and go to state 69
+
+state 40
+
+    (39) termino -> factor . terminomuldiv
+    (40) terminomuldiv -> . TIMES factor terminomuldiv
+    (41) terminomuldiv -> . DIVIDE factor terminomuldiv
+    (42) terminomuldiv -> . empty
+    (54) empty -> .
+
+    TIMES           shift and go to state 71
+    DIVIDE          shift and go to state 72
+    PLUS            reduce using rule 54 (empty -> .)
+    MINUS           reduce using rule 54 (empty -> .)
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    terminomuldiv                  shift and go to state 70
+    empty                          shift and go to state 73
+
+state 41
+
+    (43) factor -> LPAREN . expresion RPAREN
+    (25) expresion -> . exp expresionrelacional
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    expresion                      shift and go to state 74
+    exp                            shift and go to state 38
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 42
+
+    (44) factor -> PLUS . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    vardt                          shift and go to state 75
+
+state 43
+
+    (46) factor -> vardt .
+
+    TIMES           reduce using rule 46 (factor -> vardt .)
+    DIVIDE          reduce using rule 46 (factor -> vardt .)
+    PLUS            reduce using rule 46 (factor -> vardt .)
+    MINUS           reduce using rule 46 (factor -> vardt .)
+    GREATER         reduce using rule 46 (factor -> vardt .)
+    LOWER           reduce using rule 46 (factor -> vardt .)
+    SAME            reduce using rule 46 (factor -> vardt .)
+    LEQUAL          reduce using rule 46 (factor -> vardt .)
+    GEQUAL          reduce using rule 46 (factor -> vardt .)
+    NOTEQUAL        reduce using rule 46 (factor -> vardt .)
+    AND             reduce using rule 46 (factor -> vardt .)
+    OR              reduce using rule 46 (factor -> vardt .)
+    PNTCOMMA        reduce using rule 46 (factor -> vardt .)
+    RPAREN          reduce using rule 46 (factor -> vardt .)
+    COMMA           reduce using rule 46 (factor -> vardt .)
+    RBRCKT          reduce using rule 46 (factor -> vardt .)
+
+
+state 44
+
+    (45) factor -> MINUS . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    vardt                          shift and go to state 76
+
+state 45
+
+    (48) vardt -> DTI .
+
+    TIMES           reduce using rule 48 (vardt -> DTI .)
+    DIVIDE          reduce using rule 48 (vardt -> DTI .)
+    PLUS            reduce using rule 48 (vardt -> DTI .)
+    MINUS           reduce using rule 48 (vardt -> DTI .)
+    GREATER         reduce using rule 48 (vardt -> DTI .)
+    LOWER           reduce using rule 48 (vardt -> DTI .)
+    SAME            reduce using rule 48 (vardt -> DTI .)
+    LEQUAL          reduce using rule 48 (vardt -> DTI .)
+    GEQUAL          reduce using rule 48 (vardt -> DTI .)
+    NOTEQUAL        reduce using rule 48 (vardt -> DTI .)
+    AND             reduce using rule 48 (vardt -> DTI .)
+    OR              reduce using rule 48 (vardt -> DTI .)
+    PNTCOMMA        reduce using rule 48 (vardt -> DTI .)
+    RPAREN          reduce using rule 48 (vardt -> DTI .)
+    COMMA           reduce using rule 48 (vardt -> DTI .)
+    RBRCKT          reduce using rule 48 (vardt -> DTI .)
+
+
+state 46
+
+    (49) vardt -> DTF .
+
+    TIMES           reduce using rule 49 (vardt -> DTF .)
+    DIVIDE          reduce using rule 49 (vardt -> DTF .)
+    PLUS            reduce using rule 49 (vardt -> DTF .)
+    MINUS           reduce using rule 49 (vardt -> DTF .)
+    GREATER         reduce using rule 49 (vardt -> DTF .)
+    LOWER           reduce using rule 49 (vardt -> DTF .)
+    SAME            reduce using rule 49 (vardt -> DTF .)
+    LEQUAL          reduce using rule 49 (vardt -> DTF .)
+    GEQUAL          reduce using rule 49 (vardt -> DTF .)
+    NOTEQUAL        reduce using rule 49 (vardt -> DTF .)
+    AND             reduce using rule 49 (vardt -> DTF .)
+    OR              reduce using rule 49 (vardt -> DTF .)
+    PNTCOMMA        reduce using rule 49 (vardt -> DTF .)
+    RPAREN          reduce using rule 49 (vardt -> DTF .)
+    COMMA           reduce using rule 49 (vardt -> DTF .)
+    RBRCKT          reduce using rule 49 (vardt -> DTF .)
+
+
+state 47
+
+    (50) vardt -> DTB .
+
+    TIMES           reduce using rule 50 (vardt -> DTB .)
+    DIVIDE          reduce using rule 50 (vardt -> DTB .)
+    PLUS            reduce using rule 50 (vardt -> DTB .)
+    MINUS           reduce using rule 50 (vardt -> DTB .)
+    GREATER         reduce using rule 50 (vardt -> DTB .)
+    LOWER           reduce using rule 50 (vardt -> DTB .)
+    SAME            reduce using rule 50 (vardt -> DTB .)
+    LEQUAL          reduce using rule 50 (vardt -> DTB .)
+    GEQUAL          reduce using rule 50 (vardt -> DTB .)
+    NOTEQUAL        reduce using rule 50 (vardt -> DTB .)
+    AND             reduce using rule 50 (vardt -> DTB .)
+    OR              reduce using rule 50 (vardt -> DTB .)
+    PNTCOMMA        reduce using rule 50 (vardt -> DTB .)
+    RPAREN          reduce using rule 50 (vardt -> DTB .)
+    COMMA           reduce using rule 50 (vardt -> DTB .)
+    RBRCKT          reduce using rule 50 (vardt -> DTB .)
+
+
+state 48
+
+    (51) vardt -> DTS .
+
+    TIMES           reduce using rule 51 (vardt -> DTS .)
+    DIVIDE          reduce using rule 51 (vardt -> DTS .)
+    PLUS            reduce using rule 51 (vardt -> DTS .)
+    MINUS           reduce using rule 51 (vardt -> DTS .)
+    GREATER         reduce using rule 51 (vardt -> DTS .)
+    LOWER           reduce using rule 51 (vardt -> DTS .)
+    SAME            reduce using rule 51 (vardt -> DTS .)
+    LEQUAL          reduce using rule 51 (vardt -> DTS .)
+    GEQUAL          reduce using rule 51 (vardt -> DTS .)
+    NOTEQUAL        reduce using rule 51 (vardt -> DTS .)
+    AND             reduce using rule 51 (vardt -> DTS .)
+    OR              reduce using rule 51 (vardt -> DTS .)
+    PNTCOMMA        reduce using rule 51 (vardt -> DTS .)
+    RPAREN          reduce using rule 51 (vardt -> DTS .)
+    COMMA           reduce using rule 51 (vardt -> DTS .)
+    RBRCKT          reduce using rule 51 (vardt -> DTS .)
+
+
+state 49
+
+    (11) noinicializada -> ARR tipo ID bracket . PNTCOMMA
+    (20) asignacioninicialarr -> ID bracket . EQUALS looparreglo PNTCOMMA
+
+    PNTCOMMA        shift and go to state 77
+    EQUALS          shift and go to state 78
+
+
+state 50
+
+    (13) bracket -> LBRCKT . DTI RBRCKT
+    (14) bracket -> LBRCKT . ID RBRCKT
+
+    DTI             shift and go to state 79
+    ID              shift and go to state 80
+
+
+state 51
+
+    (12) noinicializada -> MAT tipo ID bracket . bracket PNTCOMMA
+    (21) asignacioninicialmat -> ID bracket . bracket EQUALS looparreglo looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 81
+
+state 52
+
+    (20) asignacioninicialarr -> ID bracket . EQUALS looparreglo PNTCOMMA
+
+    EQUALS          shift and go to state 78
+
+
+state 53
+
+    (21) asignacioninicialmat -> ID bracket . bracket EQUALS looparreglo looparreglo PNTCOMMA
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 82
+
+state 54
+
+    (52) vardt -> ID bracket .
+    (53) vardt -> ID bracket . bracket
+    (13) bracket -> . LBRCKT DTI RBRCKT
+    (14) bracket -> . LBRCKT ID RBRCKT
+
+    TIMES           reduce using rule 52 (vardt -> ID bracket .)
+    DIVIDE          reduce using rule 52 (vardt -> ID bracket .)
+    PLUS            reduce using rule 52 (vardt -> ID bracket .)
+    MINUS           reduce using rule 52 (vardt -> ID bracket .)
+    GREATER         reduce using rule 52 (vardt -> ID bracket .)
+    LOWER           reduce using rule 52 (vardt -> ID bracket .)
+    SAME            reduce using rule 52 (vardt -> ID bracket .)
+    LEQUAL          reduce using rule 52 (vardt -> ID bracket .)
+    GEQUAL          reduce using rule 52 (vardt -> ID bracket .)
+    NOTEQUAL        reduce using rule 52 (vardt -> ID bracket .)
+    AND             reduce using rule 52 (vardt -> ID bracket .)
+    OR              reduce using rule 52 (vardt -> ID bracket .)
+    PNTCOMMA        reduce using rule 52 (vardt -> ID bracket .)
+    RPAREN          reduce using rule 52 (vardt -> ID bracket .)
+    COMMA           reduce using rule 52 (vardt -> ID bracket .)
+    RBRCKT          reduce using rule 52 (vardt -> ID bracket .)
+    LBRCKT          shift and go to state 50
+
+    bracket                        shift and go to state 83
+
+state 55
+
+    (19) asignacion -> ID EQUALS expresion PNTCOMMA .
+
+    CONS            reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    ARR             reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    MAT             reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    INT             reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    FLOAT           reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    BOOL            reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    STRING          reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    END             reduce using rule 19 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+
+
+state 56
+
+    (25) expresion -> exp expresionrelacional .
+
+    PNTCOMMA        reduce using rule 25 (expresion -> exp expresionrelacional .)
+    RPAREN          reduce using rule 25 (expresion -> exp expresionrelacional .)
+    COMMA           reduce using rule 25 (expresion -> exp expresionrelacional .)
+    RBRCKT          reduce using rule 25 (expresion -> exp expresionrelacional .)
+
+
+state 57
+
+    (26) expresionrelacional -> GREATER . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 84
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 58
+
+    (27) expresionrelacional -> LOWER . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 85
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 59
+
+    (28) expresionrelacional -> SAME . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 86
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 60
+
+    (29) expresionrelacional -> LEQUAL . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 87
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 61
+
+    (30) expresionrelacional -> GEQUAL . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 88
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 62
+
+    (31) expresionrelacional -> NOTEQUAL . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 89
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 63
+
+    (32) expresionrelacional -> AND . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 90
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 64
+
+    (33) expresionrelacional -> OR . exp
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    exp                            shift and go to state 91
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 65
+
+    (34) expresionrelacional -> empty .
+
+    PNTCOMMA        reduce using rule 34 (expresionrelacional -> empty .)
+    RPAREN          reduce using rule 34 (expresionrelacional -> empty .)
+    COMMA           reduce using rule 34 (expresionrelacional -> empty .)
+    RBRCKT          reduce using rule 34 (expresionrelacional -> empty .)
+
+
+state 66
+
+    (35) exp -> termino expsumres .
+
+    GREATER         reduce using rule 35 (exp -> termino expsumres .)
+    LOWER           reduce using rule 35 (exp -> termino expsumres .)
+    SAME            reduce using rule 35 (exp -> termino expsumres .)
+    LEQUAL          reduce using rule 35 (exp -> termino expsumres .)
+    GEQUAL          reduce using rule 35 (exp -> termino expsumres .)
+    NOTEQUAL        reduce using rule 35 (exp -> termino expsumres .)
+    AND             reduce using rule 35 (exp -> termino expsumres .)
+    OR              reduce using rule 35 (exp -> termino expsumres .)
+    PNTCOMMA        reduce using rule 35 (exp -> termino expsumres .)
+    RPAREN          reduce using rule 35 (exp -> termino expsumres .)
+    COMMA           reduce using rule 35 (exp -> termino expsumres .)
+    RBRCKT          reduce using rule 35 (exp -> termino expsumres .)
+
+
+state 67
+
+    (36) expsumres -> PLUS . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    termino                        shift and go to state 92
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 68
+
+    (37) expsumres -> MINUS . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    termino                        shift and go to state 93
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 69
+
+    (38) expsumres -> empty .
+
+    GREATER         reduce using rule 38 (expsumres -> empty .)
+    LOWER           reduce using rule 38 (expsumres -> empty .)
+    SAME            reduce using rule 38 (expsumres -> empty .)
+    LEQUAL          reduce using rule 38 (expsumres -> empty .)
+    GEQUAL          reduce using rule 38 (expsumres -> empty .)
+    NOTEQUAL        reduce using rule 38 (expsumres -> empty .)
+    AND             reduce using rule 38 (expsumres -> empty .)
+    OR              reduce using rule 38 (expsumres -> empty .)
+    PNTCOMMA        reduce using rule 38 (expsumres -> empty .)
+    RPAREN          reduce using rule 38 (expsumres -> empty .)
+    COMMA           reduce using rule 38 (expsumres -> empty .)
+    RBRCKT          reduce using rule 38 (expsumres -> empty .)
+
+
+state 70
+
+    (39) termino -> factor terminomuldiv .
+
+    PLUS            reduce using rule 39 (termino -> factor terminomuldiv .)
+    MINUS           reduce using rule 39 (termino -> factor terminomuldiv .)
+    GREATER         reduce using rule 39 (termino -> factor terminomuldiv .)
+    LOWER           reduce using rule 39 (termino -> factor terminomuldiv .)
+    SAME            reduce using rule 39 (termino -> factor terminomuldiv .)
+    LEQUAL          reduce using rule 39 (termino -> factor terminomuldiv .)
+    GEQUAL          reduce using rule 39 (termino -> factor terminomuldiv .)
+    NOTEQUAL        reduce using rule 39 (termino -> factor terminomuldiv .)
+    AND             reduce using rule 39 (termino -> factor terminomuldiv .)
+    OR              reduce using rule 39 (termino -> factor terminomuldiv .)
+    PNTCOMMA        reduce using rule 39 (termino -> factor terminomuldiv .)
+    RPAREN          reduce using rule 39 (termino -> factor terminomuldiv .)
+    COMMA           reduce using rule 39 (termino -> factor terminomuldiv .)
+    RBRCKT          reduce using rule 39 (termino -> factor terminomuldiv .)
+
+
+state 71
+
+    (40) terminomuldiv -> TIMES . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    factor                         shift and go to state 94
+    vardt                          shift and go to state 43
+
+state 72
+
+    (41) terminomuldiv -> DIVIDE . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    factor                         shift and go to state 95
+    vardt                          shift and go to state 43
+
+state 73
+
+    (42) terminomuldiv -> empty .
+
+    PLUS            reduce using rule 42 (terminomuldiv -> empty .)
+    MINUS           reduce using rule 42 (terminomuldiv -> empty .)
+    GREATER         reduce using rule 42 (terminomuldiv -> empty .)
+    LOWER           reduce using rule 42 (terminomuldiv -> empty .)
+    SAME            reduce using rule 42 (terminomuldiv -> empty .)
+    LEQUAL          reduce using rule 42 (terminomuldiv -> empty .)
+    GEQUAL          reduce using rule 42 (terminomuldiv -> empty .)
+    NOTEQUAL        reduce using rule 42 (terminomuldiv -> empty .)
+    AND             reduce using rule 42 (terminomuldiv -> empty .)
+    OR              reduce using rule 42 (terminomuldiv -> empty .)
+    PNTCOMMA        reduce using rule 42 (terminomuldiv -> empty .)
+    RPAREN          reduce using rule 42 (terminomuldiv -> empty .)
+    COMMA           reduce using rule 42 (terminomuldiv -> empty .)
+    RBRCKT          reduce using rule 42 (terminomuldiv -> empty .)
+
+
+state 74
+
+    (43) factor -> LPAREN expresion . RPAREN
+
+    RPAREN          shift and go to state 96
+
+
+state 75
+
+    (44) factor -> PLUS vardt .
+
+    TIMES           reduce using rule 44 (factor -> PLUS vardt .)
+    DIVIDE          reduce using rule 44 (factor -> PLUS vardt .)
+    PLUS            reduce using rule 44 (factor -> PLUS vardt .)
+    MINUS           reduce using rule 44 (factor -> PLUS vardt .)
+    GREATER         reduce using rule 44 (factor -> PLUS vardt .)
+    LOWER           reduce using rule 44 (factor -> PLUS vardt .)
+    SAME            reduce using rule 44 (factor -> PLUS vardt .)
+    LEQUAL          reduce using rule 44 (factor -> PLUS vardt .)
+    GEQUAL          reduce using rule 44 (factor -> PLUS vardt .)
+    NOTEQUAL        reduce using rule 44 (factor -> PLUS vardt .)
+    AND             reduce using rule 44 (factor -> PLUS vardt .)
+    OR              reduce using rule 44 (factor -> PLUS vardt .)
+    PNTCOMMA        reduce using rule 44 (factor -> PLUS vardt .)
+    RPAREN          reduce using rule 44 (factor -> PLUS vardt .)
+    COMMA           reduce using rule 44 (factor -> PLUS vardt .)
+    RBRCKT          reduce using rule 44 (factor -> PLUS vardt .)
+
+
+state 76
+
+    (45) factor -> MINUS vardt .
+
+    TIMES           reduce using rule 45 (factor -> MINUS vardt .)
+    DIVIDE          reduce using rule 45 (factor -> MINUS vardt .)
+    PLUS            reduce using rule 45 (factor -> MINUS vardt .)
+    MINUS           reduce using rule 45 (factor -> MINUS vardt .)
+    GREATER         reduce using rule 45 (factor -> MINUS vardt .)
+    LOWER           reduce using rule 45 (factor -> MINUS vardt .)
+    SAME            reduce using rule 45 (factor -> MINUS vardt .)
+    LEQUAL          reduce using rule 45 (factor -> MINUS vardt .)
+    GEQUAL          reduce using rule 45 (factor -> MINUS vardt .)
+    NOTEQUAL        reduce using rule 45 (factor -> MINUS vardt .)
+    AND             reduce using rule 45 (factor -> MINUS vardt .)
+    OR              reduce using rule 45 (factor -> MINUS vardt .)
+    PNTCOMMA        reduce using rule 45 (factor -> MINUS vardt .)
+    RPAREN          reduce using rule 45 (factor -> MINUS vardt .)
+    COMMA           reduce using rule 45 (factor -> MINUS vardt .)
+    RBRCKT          reduce using rule 45 (factor -> MINUS vardt .)
+
+
+state 77
+
+    (11) noinicializada -> ARR tipo ID bracket PNTCOMMA .
+
+    CONS            reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    ARR             reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    MAT             reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    INT             reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    FLOAT           reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    BOOL            reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    STRING          reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+    END             reduce using rule 11 (noinicializada -> ARR tipo ID bracket PNTCOMMA .)
+
+
+state 78
+
+    (20) asignacioninicialarr -> ID bracket EQUALS . looparreglo PNTCOMMA
+    (22) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 98
+
+    looparreglo                    shift and go to state 97
+
+state 79
+
+    (13) bracket -> LBRCKT DTI . RBRCKT
+
+    RBRCKT          shift and go to state 99
+
+
+state 80
+
+    (14) bracket -> LBRCKT ID . RBRCKT
+
+    RBRCKT          shift and go to state 100
+
+
+state 81
+
+    (12) noinicializada -> MAT tipo ID bracket bracket . PNTCOMMA
+    (21) asignacioninicialmat -> ID bracket bracket . EQUALS looparreglo looparreglo PNTCOMMA
+
+    PNTCOMMA        shift and go to state 101
+    EQUALS          shift and go to state 102
+
+
+state 82
+
+    (21) asignacioninicialmat -> ID bracket bracket . EQUALS looparreglo looparreglo PNTCOMMA
+
+    EQUALS          shift and go to state 102
+
+
+state 83
+
+    (53) vardt -> ID bracket bracket .
+
+    TIMES           reduce using rule 53 (vardt -> ID bracket bracket .)
+    DIVIDE          reduce using rule 53 (vardt -> ID bracket bracket .)
+    PLUS            reduce using rule 53 (vardt -> ID bracket bracket .)
+    MINUS           reduce using rule 53 (vardt -> ID bracket bracket .)
+    GREATER         reduce using rule 53 (vardt -> ID bracket bracket .)
+    LOWER           reduce using rule 53 (vardt -> ID bracket bracket .)
+    SAME            reduce using rule 53 (vardt -> ID bracket bracket .)
+    LEQUAL          reduce using rule 53 (vardt -> ID bracket bracket .)
+    GEQUAL          reduce using rule 53 (vardt -> ID bracket bracket .)
+    NOTEQUAL        reduce using rule 53 (vardt -> ID bracket bracket .)
+    AND             reduce using rule 53 (vardt -> ID bracket bracket .)
+    OR              reduce using rule 53 (vardt -> ID bracket bracket .)
+    PNTCOMMA        reduce using rule 53 (vardt -> ID bracket bracket .)
+    RPAREN          reduce using rule 53 (vardt -> ID bracket bracket .)
+    COMMA           reduce using rule 53 (vardt -> ID bracket bracket .)
+    RBRCKT          reduce using rule 53 (vardt -> ID bracket bracket .)
+
+
+state 84
+
+    (26) expresionrelacional -> GREATER exp .
+
+    PNTCOMMA        reduce using rule 26 (expresionrelacional -> GREATER exp .)
+    RPAREN          reduce using rule 26 (expresionrelacional -> GREATER exp .)
+    COMMA           reduce using rule 26 (expresionrelacional -> GREATER exp .)
+    RBRCKT          reduce using rule 26 (expresionrelacional -> GREATER exp .)
+
+
+state 85
+
+    (27) expresionrelacional -> LOWER exp .
+
+    PNTCOMMA        reduce using rule 27 (expresionrelacional -> LOWER exp .)
+    RPAREN          reduce using rule 27 (expresionrelacional -> LOWER exp .)
+    COMMA           reduce using rule 27 (expresionrelacional -> LOWER exp .)
+    RBRCKT          reduce using rule 27 (expresionrelacional -> LOWER exp .)
+
+
+state 86
+
+    (28) expresionrelacional -> SAME exp .
+
+    PNTCOMMA        reduce using rule 28 (expresionrelacional -> SAME exp .)
+    RPAREN          reduce using rule 28 (expresionrelacional -> SAME exp .)
+    COMMA           reduce using rule 28 (expresionrelacional -> SAME exp .)
+    RBRCKT          reduce using rule 28 (expresionrelacional -> SAME exp .)
+
+
+state 87
+
+    (29) expresionrelacional -> LEQUAL exp .
+
+    PNTCOMMA        reduce using rule 29 (expresionrelacional -> LEQUAL exp .)
+    RPAREN          reduce using rule 29 (expresionrelacional -> LEQUAL exp .)
+    COMMA           reduce using rule 29 (expresionrelacional -> LEQUAL exp .)
+    RBRCKT          reduce using rule 29 (expresionrelacional -> LEQUAL exp .)
+
+
+state 88
+
+    (30) expresionrelacional -> GEQUAL exp .
+
+    PNTCOMMA        reduce using rule 30 (expresionrelacional -> GEQUAL exp .)
+    RPAREN          reduce using rule 30 (expresionrelacional -> GEQUAL exp .)
+    COMMA           reduce using rule 30 (expresionrelacional -> GEQUAL exp .)
+    RBRCKT          reduce using rule 30 (expresionrelacional -> GEQUAL exp .)
+
+
+state 89
+
+    (31) expresionrelacional -> NOTEQUAL exp .
+
+    PNTCOMMA        reduce using rule 31 (expresionrelacional -> NOTEQUAL exp .)
+    RPAREN          reduce using rule 31 (expresionrelacional -> NOTEQUAL exp .)
+    COMMA           reduce using rule 31 (expresionrelacional -> NOTEQUAL exp .)
+    RBRCKT          reduce using rule 31 (expresionrelacional -> NOTEQUAL exp .)
+
+
+state 90
+
+    (32) expresionrelacional -> AND exp .
+
+    PNTCOMMA        reduce using rule 32 (expresionrelacional -> AND exp .)
+    RPAREN          reduce using rule 32 (expresionrelacional -> AND exp .)
+    COMMA           reduce using rule 32 (expresionrelacional -> AND exp .)
+    RBRCKT          reduce using rule 32 (expresionrelacional -> AND exp .)
+
+
+state 91
+
+    (33) expresionrelacional -> OR exp .
+
+    PNTCOMMA        reduce using rule 33 (expresionrelacional -> OR exp .)
+    RPAREN          reduce using rule 33 (expresionrelacional -> OR exp .)
+    COMMA           reduce using rule 33 (expresionrelacional -> OR exp .)
+    RBRCKT          reduce using rule 33 (expresionrelacional -> OR exp .)
+
+
+state 92
+
+    (36) expsumres -> PLUS termino . expsumres
+    (36) expsumres -> . PLUS termino expsumres
+    (37) expsumres -> . MINUS termino expsumres
+    (38) expsumres -> . empty
+    (54) empty -> .
+
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expsumres                      shift and go to state 103
+    empty                          shift and go to state 69
+
+state 93
+
+    (37) expsumres -> MINUS termino . expsumres
+    (36) expsumres -> . PLUS termino expsumres
+    (37) expsumres -> . MINUS termino expsumres
+    (38) expsumres -> . empty
+    (54) empty -> .
+
+    PLUS            shift and go to state 67
+    MINUS           shift and go to state 68
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expsumres                      shift and go to state 104
+    empty                          shift and go to state 69
+
+state 94
+
+    (40) terminomuldiv -> TIMES factor . terminomuldiv
+    (40) terminomuldiv -> . TIMES factor terminomuldiv
+    (41) terminomuldiv -> . DIVIDE factor terminomuldiv
+    (42) terminomuldiv -> . empty
+    (54) empty -> .
+
+    TIMES           shift and go to state 71
+    DIVIDE          shift and go to state 72
+    PLUS            reduce using rule 54 (empty -> .)
+    MINUS           reduce using rule 54 (empty -> .)
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    terminomuldiv                  shift and go to state 105
+    empty                          shift and go to state 73
+
+state 95
+
+    (41) terminomuldiv -> DIVIDE factor . terminomuldiv
+    (40) terminomuldiv -> . TIMES factor terminomuldiv
+    (41) terminomuldiv -> . DIVIDE factor terminomuldiv
+    (42) terminomuldiv -> . empty
+    (54) empty -> .
+
+    TIMES           shift and go to state 71
+    DIVIDE          shift and go to state 72
+    PLUS            reduce using rule 54 (empty -> .)
+    MINUS           reduce using rule 54 (empty -> .)
+    GREATER         reduce using rule 54 (empty -> .)
+    LOWER           reduce using rule 54 (empty -> .)
+    SAME            reduce using rule 54 (empty -> .)
+    LEQUAL          reduce using rule 54 (empty -> .)
+    GEQUAL          reduce using rule 54 (empty -> .)
+    NOTEQUAL        reduce using rule 54 (empty -> .)
+    AND             reduce using rule 54 (empty -> .)
+    OR              reduce using rule 54 (empty -> .)
+    PNTCOMMA        reduce using rule 54 (empty -> .)
+    RPAREN          reduce using rule 54 (empty -> .)
+    COMMA           reduce using rule 54 (empty -> .)
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    terminomuldiv                  shift and go to state 106
+    empty                          shift and go to state 73
+
+state 96
+
+    (43) factor -> LPAREN expresion RPAREN .
+
+    TIMES           reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    DIVIDE          reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    GREATER         reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    LOWER           reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    SAME            reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    LEQUAL          reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    GEQUAL          reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    NOTEQUAL        reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    AND             reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    OR              reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    PNTCOMMA        reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    COMMA           reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+    RBRCKT          reduce using rule 43 (factor -> LPAREN expresion RPAREN .)
+
+
+state 97
+
+    (20) asignacioninicialarr -> ID bracket EQUALS looparreglo . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 107
+
+
+state 98
+
+    (22) looparreglo -> LBRCKT . expresion expresionloop RBRCKT
+    (25) expresion -> . exp expresionrelacional
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    expresion                      shift and go to state 108
+    exp                            shift and go to state 38
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 99
+
+    (13) bracket -> LBRCKT DTI RBRCKT .
+
+    PNTCOMMA        reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    EQUALS          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    LBRCKT          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    TIMES           reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    DIVIDE          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    PLUS            reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    MINUS           reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    GREATER         reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    LOWER           reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    SAME            reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    LEQUAL          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    GEQUAL          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    NOTEQUAL        reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    AND             reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    OR              reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    RPAREN          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    COMMA           reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+    RBRCKT          reduce using rule 13 (bracket -> LBRCKT DTI RBRCKT .)
+
+
+state 100
+
+    (14) bracket -> LBRCKT ID RBRCKT .
+
+    PNTCOMMA        reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    EQUALS          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    LBRCKT          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    TIMES           reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    DIVIDE          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    PLUS            reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    MINUS           reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    GREATER         reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    LOWER           reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    SAME            reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    LEQUAL          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    GEQUAL          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    NOTEQUAL        reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    AND             reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    OR              reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    RPAREN          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    COMMA           reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+    RBRCKT          reduce using rule 14 (bracket -> LBRCKT ID RBRCKT .)
+
+
+state 101
+
+    (12) noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .
+
+    CONS            reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    ARR             reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    MAT             reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    INT             reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    FLOAT           reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    BOOL            reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    STRING          reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+    END             reduce using rule 12 (noinicializada -> MAT tipo ID bracket bracket PNTCOMMA .)
+
+
+state 102
+
+    (21) asignacioninicialmat -> ID bracket bracket EQUALS . looparreglo looparreglo PNTCOMMA
+    (22) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 98
+
+    looparreglo                    shift and go to state 109
+
+state 103
+
+    (36) expsumres -> PLUS termino expsumres .
+
+    GREATER         reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    LOWER           reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    SAME            reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    LEQUAL          reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    GEQUAL          reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    NOTEQUAL        reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    AND             reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    OR              reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    PNTCOMMA        reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    RPAREN          reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    COMMA           reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+    RBRCKT          reduce using rule 36 (expsumres -> PLUS termino expsumres .)
+
+
+state 104
+
+    (37) expsumres -> MINUS termino expsumres .
+
+    GREATER         reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    LOWER           reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    SAME            reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    LEQUAL          reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    GEQUAL          reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    NOTEQUAL        reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    AND             reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    OR              reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    PNTCOMMA        reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    RPAREN          reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    COMMA           reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+    RBRCKT          reduce using rule 37 (expsumres -> MINUS termino expsumres .)
+
+
+state 105
+
+    (40) terminomuldiv -> TIMES factor terminomuldiv .
+
+    PLUS            reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    MINUS           reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    GREATER         reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    LOWER           reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    SAME            reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    LEQUAL          reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    GEQUAL          reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    NOTEQUAL        reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    AND             reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    OR              reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    PNTCOMMA        reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    RPAREN          reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    COMMA           reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+    RBRCKT          reduce using rule 40 (terminomuldiv -> TIMES factor terminomuldiv .)
+
+
+state 106
+
+    (41) terminomuldiv -> DIVIDE factor terminomuldiv .
+
+    PLUS            reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    MINUS           reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    GREATER         reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    LOWER           reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    SAME            reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    LEQUAL          reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    GEQUAL          reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    NOTEQUAL        reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    AND             reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    OR              reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    PNTCOMMA        reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    RPAREN          reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    COMMA           reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+    RBRCKT          reduce using rule 41 (terminomuldiv -> DIVIDE factor terminomuldiv .)
+
+
+state 107
+
+    (20) asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .
+
+    CONS            reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    ARR             reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    MAT             reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    INT             reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    FLOAT           reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    BOOL            reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    STRING          reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+    END             reduce using rule 20 (asignacioninicialarr -> ID bracket EQUALS looparreglo PNTCOMMA .)
+
+
+state 108
+
+    (22) looparreglo -> LBRCKT expresion . expresionloop RBRCKT
+    (23) expresionloop -> . COMMA expresion expresionloop
+    (24) expresionloop -> . empty
+    (54) empty -> .
+
+    COMMA           shift and go to state 111
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expresionloop                  shift and go to state 110
+    empty                          shift and go to state 112
+
+state 109
+
+    (21) asignacioninicialmat -> ID bracket bracket EQUALS looparreglo . looparreglo PNTCOMMA
+    (22) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 98
+
+    looparreglo                    shift and go to state 113
+
+state 110
+
+    (22) looparreglo -> LBRCKT expresion expresionloop . RBRCKT
+
+    RBRCKT          shift and go to state 114
+
+
+state 111
+
+    (23) expresionloop -> COMMA . expresion expresionloop
+    (25) expresion -> . exp expresionrelacional
+    (35) exp -> . termino expsumres
+    (39) termino -> . factor terminomuldiv
+    (43) factor -> . LPAREN expresion RPAREN
+    (44) factor -> . PLUS vardt
+    (45) factor -> . MINUS vardt
+    (46) factor -> . vardt
+    (47) vardt -> . ID
+    (48) vardt -> . DTI
+    (49) vardt -> . DTF
+    (50) vardt -> . DTB
+    (51) vardt -> . DTS
+    (52) vardt -> . ID bracket
+    (53) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 41
+    PLUS            shift and go to state 42
+    MINUS           shift and go to state 44
+    ID              shift and go to state 36
+    DTI             shift and go to state 45
+    DTF             shift and go to state 46
+    DTB             shift and go to state 47
+    DTS             shift and go to state 48
+
+    expresion                      shift and go to state 115
+    exp                            shift and go to state 38
+    termino                        shift and go to state 39
+    factor                         shift and go to state 40
+    vardt                          shift and go to state 43
+
+state 112
+
+    (24) expresionloop -> empty .
+
+    RBRCKT          reduce using rule 24 (expresionloop -> empty .)
+
+
+state 113
+
+    (21) asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 116
+
+
+state 114
+
+    (22) looparreglo -> LBRCKT expresion expresionloop RBRCKT .
+
+    PNTCOMMA        reduce using rule 22 (looparreglo -> LBRCKT expresion expresionloop RBRCKT .)
+    LBRCKT          reduce using rule 22 (looparreglo -> LBRCKT expresion expresionloop RBRCKT .)
+
+
+state 115
+
+    (23) expresionloop -> COMMA expresion . expresionloop
+    (23) expresionloop -> . COMMA expresion expresionloop
+    (24) expresionloop -> . empty
+    (54) empty -> .
+
+    COMMA           shift and go to state 111
+    RBRCKT          reduce using rule 54 (empty -> .)
+
+    expresionloop                  shift and go to state 117
+    empty                          shift and go to state 112
+
+state 116
+
+    (21) asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .
+
+    CONS            reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    ARR             reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    MAT             reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    INT             reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    FLOAT           reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    BOOL            reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    STRING          reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+    END             reduce using rule 21 (asignacioninicialmat -> ID bracket bracket EQUALS looparreglo looparreglo PNTCOMMA .)
+
+
+state 117
+
+    (23) expresionloop -> COMMA expresion expresionloop .
+
+    RBRCKT          reduce using rule 23 (expresionloop -> COMMA expresion expresionloop .)
+
