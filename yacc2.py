@@ -3,11 +3,7 @@ import ply.yacc as yacc
 from calc import tokens
 from SymbolTable import SymbolTable
 
-tabla_varibles = SymbolTable()
-type = None
-scope = None
-name = None
-id = None
+vars_t = SymbolTable()
 
 # PROGRAMA
 def p_programa(p):
@@ -20,23 +16,8 @@ def p_programa(p):
 #Existen: 0 o mas
 def p_globales(p):
     '''
-    globales : pn_crearsubdirectorio loopglobales
+    globales : declarar globales
              | empty
-    '''
-
-def p_pn_crearsubdirectorio(p):
-    '''
-    pn_crearsubdirectorio : empty
-    '''
-    global scope
-    scope = 'global'
-    name = 'global'
-    tabla_varibles.create_table(name,scope)
-
-def p_loopglobales(p):
-    '''
-    loopglobales : declarar loopglobales
-                 | empty
     '''
 
 def p_declarar(p):
@@ -48,39 +29,11 @@ def p_declarar(p):
 
 def p_noinicializada(p):
     '''
-    noinicializada : tipo ID pn_currentid PNTCOMMA
-                   | ARR tipo ID pn_currentid bracket PNTCOMMA
-                   | MAT tipo ID pn_currentid bracket bracket PNTCOMMA
+    noinicializada : tipo ID PNTCOMMA
+                   | ARR tipo ID bracket PNTCOMMA
+                   | MAT tipo ID bracket bracket PNTCOMMA
     '''
-
-def p_inicializada(p):
-    '''
-    inicializada : tipo asignacion
-                 | ARR tipo asignacioninicialarr
-                 | MAT tipo asignacioninicialmat
-    '''
-
-# TIPO
-def p_tipo(p):
-    '''
-    tipo : INT pn_currenttype
-         | FLOAT pn_currenttype
-         | BOOL pn_currenttype
-         | STRING pn_currenttype
-    '''
-
-def p_pn_currenttype(p):
-    '''
-    pn_currenttype : empty
-    '''
-    type = p[-1]
-
-def p_pn_currentid(p):
-    '''
-    pn_currentid : empty
-    '''
-    id = p[-1]
-    tabla_varibles.insert_variable(id, type, scope)
+    vars_t.insert_var(p[2],p[1])
 
 #Funciones
 #Existen: 0 o mas
@@ -92,31 +45,50 @@ def p_pn_currentid(p):
 
 #Principal
 #Existen: 1
-def p_principal(p):
-    '''
-    principal : LCORCHO principalloop RCORCHO
-    '''
+#def p_principal(p):
+#    '''
+#    principal : LCORCHO principalloop RCORCHO
+#    '''
 
-def p_principalloop(p):
-    '''
-    principalloop : estatuto principalloop
-                  | estatuto
-                  | empty
-    '''
+#def p_principalloop(p):
+#    '''
+#    principalloop : estatuto principalloop
+#                  | estatuto
+#                  | empty
+#    '''
 
 #ESTATUTO
-def p_estatuto(p):
-    '''
-    estatuto : declarar
-             | asignacion
-             | asignacionarr
-    '''
+#def p_estatuto(p):
+#    '''
+#    estatuto : declarar
+#             | asignacion
+#             | asignacionarr
+#    '''
+
+
+
+#def p_inicializada(p):
+#    '''
+#    inicializada : tipo asignacion
+#                 | ARR tipo asignacioninicialarr
+#                 | MAT tipo asignacioninicialmat
+#    '''
 
 def p_bracket(p):
     '''
     bracket : LBRCKT DTI RBRCKT
             | LBRCKT ID RBRCKT
     '''
+
+# TIPO
+def p_tipo(p):
+    '''
+    tipo : INT
+         | FLOAT
+         | BOOL
+         | STRING
+    '''
+    p[0] = p[1]
 
 # asignacion
 def p_asignacion(p):
@@ -218,7 +190,6 @@ def p_vardt(p):
 
 def p_empty(p):
     '''empty :'''
-    pass
 
 def p_error(p):
     print("ERROR {}".format(p))
@@ -240,4 +211,4 @@ if __name__ == '__main__':
     except EOFError:
         print(EOFError)
 
-print(tabla_varibles.diccionario)
+print(vars_t.diccionario)
