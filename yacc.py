@@ -81,6 +81,9 @@ def p_pn_currentid(p):
     '''
     id = p[-1]
     tabla_varibles.insert_variable(id, type, scope)
+    global prueba_errortext
+    prueba_errortext = tabla_varibles.prueba_error()
+    print(prueba_errortext)
 
 #Funciones
 #Existen: 0 o mas

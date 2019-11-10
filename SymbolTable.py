@@ -5,6 +5,10 @@ class SymbolTable:
     def test(self):
         print("here")
 
+    def prueba_error(self):
+        error = ("La variable ya esta registrada")
+        return error
+
     def create_table(self, name, scope):
         new_table = {
             'name': name,
@@ -12,7 +16,6 @@ class SymbolTable:
             'vars' : {}
         }
         self.diccionario['dirFunc'][name] = new_table
-        print(self.diccionario)
 
     def insert_variable(self, id, type, scope):
         new_variable = {
