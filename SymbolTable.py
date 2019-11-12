@@ -1,3 +1,5 @@
+import sys
+sys.tracebacklimit = 0
 class SymbolTable:
     def __init__(self):
         self.diccionario ={'dirFunc':{}}
@@ -26,6 +28,6 @@ class SymbolTable:
 
     def lookup_variable(self, id, type, scope):
         if id in self.diccionario['dirFunc'][scope]['vars'].keys():
-            print("Simon")
+            raise TypeError("Variable: {} already declared".format(id))
         else:
             print("Nel Pastel")
