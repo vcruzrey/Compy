@@ -18,7 +18,7 @@ def semantic(left, right, operator):
             elif(operator in booleanOp):
                 return 'bool'
             else:
-                return 'error'
+                raise TypeError("Bad operator", operator, " for types", left, ", ", right)
         #INT - FLOAT
         elif(right == 'float'):
             if(operator in aritmetic or math):

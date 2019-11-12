@@ -2,6 +2,7 @@ import sys
 import ply.yacc as yacc
 from calc import tokens
 from SymbolTable import SymbolTable
+from SemanticCube import semantic
 
 tabla_varibles = SymbolTable()
 type = None
