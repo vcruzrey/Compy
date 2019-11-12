@@ -2,13 +2,10 @@ import sys
 import ply.yacc as yacc
 from calc import tokens
 from SymbolTable import SymbolTable
-from SemanticCube import semantic
+from Dato import Dato
 
 tabla_varibles = SymbolTable()
-type = None
-scope = None
-name = None
-id = None
+aux_dato = Dato()
 
 # PROGRAMA
 def p_programa(p):
@@ -43,9 +40,16 @@ def p_loopglobales(p):
 def p_declarar(p):
     '''
     declarar : inicializada
-             | CONS inicializada
+             | CONS pn_currentcons inicializada
              | noinicializada
+             | CONS pn_currentcons noinicializada
     '''
+
+def p_pn_currentcons(p):
+    '''
+    pn_currentcons : empty
+    '''
+    aux_dato.cons = True
 
 def p_noinicializada(p):
     '''
@@ -74,25 +78,30 @@ def p_pn_currenttype(p):
     '''
     pn_currenttype : empty
     '''
-    type = p[-1]
+    aux_dato.type = p[-1]
 
 def p_pn_currentid(p):
     '''
     pn_currentid : empty
     '''
-    id = p[-1]
-    tabla_varibles.insert_variable(id, type, scope)
-    global prueba_errortext
-    prueba_errortext = tabla_varibles.prueba_error()
-    print(prueba_errortext)
+    aux_dato.id = p[-1]
+    tabla_varibles.lookup_variable(aux_dato.id, aux_dato.type, scope)
+    tabla_varibles.insert_variable(aux_dato.id, aux_dato.type, scope)
+    print(aux_dato.cons)
+    aux_dato.reset()
+
+    #global prueba_errortext
+    #prueba_errortext = tabla_varibles.prueba_error()
+    #print(prueba_errortext)
+
 
 #Funciones
 #Existen: 0 o mas
-#def p_funciones(p):
-#    '''
-#    funciones : metodos funciones
-#              | empty
-#    '''
+def p_funciones(p):
+    '''
+    funciones : funciones
+              | empty
+    '''
 
 #Principal
 #Existen: 1

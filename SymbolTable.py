@@ -23,3 +23,9 @@ class SymbolTable:
             'type': type
         }
         self.diccionario['dirFunc'][scope]['vars'][id] = new_variable
+
+    def lookup_variable(self, id, type, scope):
+        if id in self.diccionario['dirFunc'][scope]['vars'].keys():
+            print("Simon")
+        else:
+            print("Nel Pastel")

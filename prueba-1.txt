@@ -1,3 +1,5 @@
-int perroangas;
+cons int perroangas;
+int fast;
+float fast;
 float mama;
 end
