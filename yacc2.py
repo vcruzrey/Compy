@@ -8,7 +8,7 @@ vars_t = SymbolTable()
 # PROGRAMA
 def p_programa(p):
     '''
-    programa : globales END
+    programa : globales principal END
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -469,3 +469,18 @@ if __name__ == '__main__':
         print(EOFError)
 
 print(tabla_varibles.diccionario)
+
+
+        if (self.POper[-1] == '+' or '-'):
+            right_operand = self.PilaO.Pop()
+            left_operand = self.PilaO.Pop()
+            right_Type = self.PTypes.Pop()
+            left_Type = self.PTypes.Pop()
+            operator = self.POper.Pop()
+            result_Type = semantic(left_Type, right_Type, operator)
+            if (result_Type == 'errorbadop'):
+                raise TypeError("Unable to assign "+operator+" to types "+left_operand+", "+right_operand)
+            elif (result_Type == 'errorbaddt'):
+                raise TypeError("Incompatible Data Type")
+            else:
+                print("CreateQuad")

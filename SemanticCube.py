@@ -5,7 +5,6 @@ booleanOp = ['==', '!=', '>', '<', '>=', '<=']
 math = ['pi','%']
 equal = '='
 logicalOp = ['&&', '||']
-sys.tracebacklimit = 0
 #SEMANTIC CUBE FUNCTION: defines what value is returned from an operation of two types of data
 def semantic(left, right, operator):
     #INTEGERS
@@ -19,8 +18,8 @@ def semantic(left, right, operator):
             elif(operator in booleanOp):
                 return 'bool'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
-                
+                return 'errorbadop'
+
         #INT - FLOAT
         elif(right == 'float'):
             if(operator in aritmetic or math):
@@ -28,9 +27,9 @@ def semantic(left, right, operator):
             elif(operator in booleanOp):
                 return 'bool'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
+                return 'errorbadop'
         else:
-            raise TypeError("Incompatible Data Types")
+            return 'errorbaddt'
     #FLOATS
     elif(left == 'float'):
         #FLOAT - FLOAT
@@ -40,17 +39,17 @@ def semantic(left, right, operator):
             elif(operator in booleanOp):
                 return 'bool'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
-        #FLOAT - INT  
+                return 'errorbadop'
+        #FLOAT - INT
         elif(right == 'int'):
             if(operator in aritmetic or operator in math):
                 return 'float'
             elif(operator in booleanOp):
                 return 'bool'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
+                return 'errorbadop'
         else:
-            raise TypeError("Incompatible Data Types")
+            return 'Incompatible Data Types'
     #STRINGS
     elif(left == 'string'):
         if(right == 'string'):
@@ -62,18 +61,18 @@ def semantic(left, right, operator):
             elif(operator == '+'):
                 return 'string'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
+                return 'errorbadop'
         else:
-            raise TypeError("Incompatible Data Types")
+            return 'errorbaddt'
     #BOOLEANS
     elif(left == 'bool'):
         if(right == 'bool'):
             if(operator == equal or operator == '==' or operator in logicalOp or  operator == '!='):
                 return 'bool'
             else:
-                raise TypeError("Unable to assign "+operator+" to types "+left+", "+right)
+                return 'errorbadop'
         else:
-            raise TypeError("Incompatible Data Types")
+            return 'errorbaddt'
 
     else:
         raise TypeError("Unrecognized Data Type")

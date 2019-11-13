@@ -1,18 +1,22 @@
+import json
 import sys
 import ply.yacc as yacc
 from calc import tokens
 from SymbolTable import SymbolTable
 from Dato import Dato
+from Quadruples import Quadruples
 
 tabla_varibles = SymbolTable()
 aux_dato = Dato()
+Quadruples = Quadruples()
 
 # PROGRAMA
 def p_programa(p):
     '''
-    programa : globales END
+    programa : globales principal END
     '''
     p[0] = "PROGRAM COMPILED"
+    #tabla_varibles = SymbolTable()
 
 #Variables globales
 #Existen: 0 o mas
@@ -37,12 +41,12 @@ def p_loopglobales(p):
                  | empty
     '''
 
+#Declaracion
 def p_declarar(p):
     '''
-    declarar : inicializada
+    declarar : noinicializada
+             | inicializada
              | CONS pn_currentcons inicializada
-             | noinicializada
-             | CONS pn_currentcons noinicializada
     '''
 
 def p_pn_currentcons(p):
@@ -60,12 +64,11 @@ def p_noinicializada(p):
 
 def p_inicializada(p):
     '''
-    inicializada : tipo asignacion
+    inicializada : tipo ID pn_currentid inicializada_asignacion
                  | ARR tipo asignacioninicialarr
                  | MAT tipo asignacioninicialmat
     '''
 
-# TIPO
 def p_tipo(p):
     '''
     tipo : INT pn_currenttype
@@ -85,9 +88,7 @@ def p_pn_currentid(p):
     pn_currentid : empty
     '''
     aux_dato.id = p[-1]
-    tabla_varibles.lookup_variable(aux_dato.id, aux_dato.type, scope)
-    tabla_varibles.insert_variable(aux_dato.id, aux_dato.type, scope)
-    print(aux_dato.cons)
+    tabla_varibles.insert_variable(aux_dato, scope)
     aux_dato.reset()
 
     #global prueba_errortext
@@ -107,13 +108,12 @@ def p_funciones(p):
 #Existen: 1
 def p_principal(p):
     '''
-    principal : LCORCHO principalloop RCORCHO
+    principal : MAIN LCORCHO principalloop RCORCHO
     '''
 
 def p_principalloop(p):
     '''
-    principalloop : estatuto principalloop
-                  | estatuto
+    principalloop : asignacion principalloop
                   | empty
     '''
 
@@ -135,6 +135,11 @@ def p_bracket(p):
 def p_asignacion(p):
     '''
     asignacion : ID EQUALS expresion PNTCOMMA
+    '''
+
+def p_inicializada_asignacion(p):
+    '''
+    inicializada_asignacion : EQUALS expresion PNTCOMMA
     '''
 
 def p_asignacionarr(p):
@@ -185,13 +190,13 @@ def p_expresionrelacional(p):
 # EXP
 def p_exp(p):
     '''
-    exp : termino expsumres
+    exp : termino pn_quadruples_checksum expsumres
     '''
 
 def p_expsumres(p):
     '''
-    expsumres : PLUS termino expsumres
-              | MINUS termino expsumres
+    expsumres : PLUS pn_quadruples_sum termino pn_quadruples_checksum expsumres
+              | MINUS pn_quadruples_sum termino pn_quadruples_checksum expsumres
               | empty
     '''
 
@@ -203,8 +208,8 @@ def p_termino(p):
 
 def p_terminomuldiv(p):
     '''
-    terminomuldiv : TIMES factor terminomuldiv
-                  | DIVIDE factor terminomuldiv
+    terminomuldiv : TIMES pn_quadruples_mult factor terminomuldiv
+                  | DIVIDE pn_quadruples_mult factor terminomuldiv
                   | empty
     '''
 
@@ -220,7 +225,7 @@ def p_factor(p):
 #VARDT
 def p_vardt(p):
     '''
-    vardt : ID
+    vardt : ID pn_quadruples_getvariable
           | DTI
           | DTF
           | DTB
@@ -229,12 +234,43 @@ def p_vardt(p):
           | ID bracket bracket
     '''
 
+#VARDT
+def p_pn_quadruples_getvariable(p):
+    '''
+    pn_quadruples_getvariable : empty
+    '''
+    Quadruples.PilaO.append(p[-1])
+    Quadruples.PTypes.append('int')
+
+#VARDT
+def p_pn_quadruples_sum(p):
+    '''
+    pn_quadruples_sum : empty
+    '''
+    Quadruples.POper.append(p[-1])
+
+def p_pn_quadruples_mult(p):
+    '''
+    pn_quadruples_mult : empty
+    '''
+    Quadruples.POper.append(p[-1])
+
+def p_pn_quadruples_checksum(p):
+    '''
+    pn_quadruples_checksum : empty
+    '''
+    Quadruples.checksum()
+
 def p_empty(p):
     '''empty :'''
     pass
 
 def p_error(p):
     print("ERROR {}".format(p))
+
+
+
+#Cambios Rolando
 
 yacc.yacc()
 
@@ -253,4 +289,7 @@ if __name__ == '__main__':
     except EOFError:
         print(EOFError)
 
-print(tabla_varibles.diccionario)
+with open('data.json', 'w') as outfile:
+    json.dump(tabla_varibles.diccionario, outfile)
+
+Quadruples.print_quad()
