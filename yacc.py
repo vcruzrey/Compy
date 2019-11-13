@@ -188,6 +188,7 @@ def p_expresionrelacional(p):
     '''
 
 # EXP
+#rolando quad mult
 def p_exp(p):
     '''
     exp : termino pn_quadruples_checksum expsumres
@@ -199,21 +200,23 @@ def p_expsumres(p):
               | MINUS pn_quadruples_sum termino pn_quadruples_checksum expsumres
               | empty
     '''
-
+#Rolando - multdiv
+#fin rolando
 #Termino
 def p_termino(p):
     '''
-    termino : factor terminomuldiv
+    termino : factor pn_quadruples_checkmult terminomuldiv
     '''
 
 def p_terminomuldiv(p):
     '''
-    terminomuldiv : TIMES pn_quadruples_mult factor terminomuldiv
-                  | DIVIDE pn_quadruples_mult factor terminomuldiv
+    terminomuldiv : TIMES pn_quadruples_mult factor pn_quadruples_checkmult terminomuldiv
+                  | DIVIDE pn_quadruples_mult factor pn_quadruples_checkmult terminomuldiv
                   | empty
     '''
 
 #Factor
+#rolando - times y divide
 def p_factor(p):
     '''
     factor : LPAREN expresion RPAREN
@@ -261,6 +264,14 @@ def p_pn_quadruples_checksum(p):
     '''
     Quadruples.checksum()
 
+#rolando - multdiv
+def p_pn_quadruples_checkmult(p):
+    '''
+    pn_quadruples_checkmult : empty
+    '''
+    Quadruples.checkmult()
+#fin Rolando
+
 def p_empty(p):
     '''empty :'''
     pass
@@ -269,8 +280,6 @@ def p_error(p):
     print("ERROR {}".format(p))
 
 
-
-#Cambios Rolando
 
 yacc.yacc()
 
