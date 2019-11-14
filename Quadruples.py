@@ -39,7 +39,8 @@ class Quadruples():
                 operator = self.POper.pop()
                 result_Type = semantic(left_Type, right_Type, operator)
                 if (result_Type == 'errorbadop'):
-                    raise TypeError("Unable to assign "+operator+" to types "+left_operand+", "+right_operand)
+                    raise TypeError("Unable to assign "+operator+
+                                    " to types "+left_operand+", "+right_operand)
                 elif (result_Type == 'errorbaddt'):
                     raise TypeError("Incompatible Data Type")
                 else:
@@ -64,7 +65,8 @@ class Quadruples():
                 operator = self.POper.pop()
                 result_Type = semantic(left_Type, right_Type, operator)
                 if (result_Type == 'errorbadop'):
-                    raise TypeError("Unable to assign "+operator+" to types "+left_operand+", "+right_operand)
+                    raise TypeError("Unable to assign "+operator+
+                                    " to types "+left_operand+", "+right_operand)
                 elif (result_Type == 'errorbaddt'):
                     raise TypeError("Incompatible Data Type")
                 else:
