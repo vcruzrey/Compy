@@ -10,6 +10,7 @@ class Quadruple:
         self.result = result
 
 class Quadruples():
+    temporales=1
     def __init__(self):
 
         self.PilaO = []
@@ -42,20 +43,20 @@ class Quadruples():
                 elif (result_Type == 'errorbaddt'):
                     raise TypeError("Incompatible Data Type")
                 else:
-                    result = "Temporal"
+                    result = "T"+str(self.temporales)
+                    self.temporales +=1
                     quadruple = Quadruple(operator, left_operand, right_operand, result)
-                    print(operator)
                     print(left_operand)
                     print(right_operand)
+                    print(operator)
                     print(result)
                     self.PilaO.append(result)
-                    self.PTypes.append('int')
+                    self.PTypes.append(result_Type)
 
-    #Rolando- MultDiv
     def checkmult(self):
         length = len(self.POper)
         if (length>0):
-            if (self.POper[length-1] == '*' or '/'):
+            if (self.POper[length-1] == '+' or '-'):
                 right_operand = self.PilaO.pop()
                 left_operand = self.PilaO.pop()
                 right_Type = self.PTypes.pop()
@@ -67,11 +68,12 @@ class Quadruples():
                 elif (result_Type == 'errorbaddt'):
                     raise TypeError("Incompatible Data Type")
                 else:
-                    result = "Temporal"
+                    result = "T"+str(self.temporales)
+                    self.temporales +=1
                     quadruple = Quadruple(operator, left_operand, right_operand, result)
-                    print(operator)
                     print(left_operand)
                     print(right_operand)
+                    print(operator)
                     print(result)
                     self.PilaO.append(result)
-                    self.PTypes.append('int')
+                    self.PTypes.append(result_Type)

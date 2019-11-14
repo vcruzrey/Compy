@@ -1,41 +1,20 @@
+arr int arreglo1[;
 
-# Test it out
-data = '''
-// hola
-/*
-string jugador1 = "Pablo";
-string jugador2 = "Pedro";
-cons int prueba = 23.90;
-bool gano = false;
-bool Prueba;
+int vsiI;
+string vsiS;
+float vsiF;
+bool vsiB;
 
-cons arr int arreglo[4] = [1,2,3,4];
-mat string matriz[2][2] = [1,2][3,4];
+int vinI = 1;
+string vinS = "Hola";
+float vinF = 1.0;
+bool vinB = true;
 
-juagor1 = "JUAN";
-arreglo[4] = 93;
-//aber
-*/
-func funcion1(int parametro1, float parametro2, bool parametro3) {
-	parametro 1 = parametro1 + parametro2;
-	if(parametro3 == false) {
-		print(Diana);
-	}
-}
+cons int cinI = 1;
+cons string cinS = "Hola";
+cons float cinF = 1.0;
+cons bool cinB = false;
+
 main {
-	int arr arreglito[8] = [1,2,3,4,5,6,7,8];
-	int mat matriz[2][2] = [1,2][3,4];
-	return matriz;
 }
-
-'''
-
-# Give the lexer some input
-lexer.input(data)
-
-# Tokenize
-while True:
-    tok = lexer.token()
-    if not tok:
-        break      # No more input
-    print(tok)
+end

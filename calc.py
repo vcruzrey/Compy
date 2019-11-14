@@ -59,6 +59,7 @@ reserved = {
     'float' : 'FLOAT',
     'bool' : 'BOOL',
     'string' : 'STRING',
+    'void' : 'VOID',
     'cons' : 'CONS',
     'false' : 'FALSE',
     'true' : 'TRUE',

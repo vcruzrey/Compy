@@ -3,15 +3,16 @@ class Dato:
         self.scope =''
         self.name = ''
         self.id =''
-        self.array = False
-
+        self.complex = 'simple'
         self.cons = False
         self.type = ''
+        self.parameter = False
 
     def reset(self):
-        self.type = ''
         self.scope =''
         self.name = ''
         self.id =''
-        self.array = False
+        self.complex = 'simple'
         self.cons = False
+        self.type = ''
+        self.parameter = False

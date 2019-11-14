@@ -77,4 +77,4 @@ def semantic(left, right, operator):
     else:
         raise TypeError("Unrecognized Data Type")
 
-#semantic('bool','string','&')
+semantic('bool','string','&')
