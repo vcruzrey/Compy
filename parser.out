@@ -1,0 +1,3360 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AVERAGE
+    BREAK
+    CASE
+    COLON
+    DO
+    ELSE
+    FALSE
+    FOR
+    IF
+    MEAN
+    MODE
+    MODULE
+    NOT
+    PI
+    POINT
+    POWER
+    PRINT
+    SQRT
+    SWITCH
+    TRUE
+    WHILE
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> globales funciones principal END
+Rule 2     globales -> pn_crearsubdirectoriog loopglobales
+Rule 3     pn_crearsubdirectoriog -> empty
+Rule 4     loopglobales -> declarar loopglobales
+Rule 5     loopglobales -> empty
+Rule 6     funciones -> funcionesloop
+Rule 7     funciones -> empty
+Rule 8     funcionesloop -> FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones
+Rule 9     pn_st_functype -> INT
+Rule 10    pn_st_functype -> FLOAT
+Rule 11    pn_st_functype -> BOOL
+Rule 12    pn_st_functype -> STRING
+Rule 13    pn_st_functype -> VOID
+Rule 14    pn_st_functionid -> empty
+Rule 15    funcparameters -> LPAREN funcparametersloop RPAREN
+Rule 16    funcparametersloop -> pn_parameter tipo ID pn_currentid funcparametersloop
+Rule 17    funcparametersloop -> COMMA pn_parameter tipo ID pn_currentid funcparametersloop
+Rule 18    funcparametersloop -> empty
+Rule 19    pn_parameter -> empty
+Rule 20    principal -> MAIN pn_crearsubdirectoriom bloque
+Rule 21    pn_crearsubdirectoriom -> empty
+Rule 22    bloque -> LCORCHO bloqueloop RCORCHO
+Rule 23    bloqueloop -> estatuto bloqueloop
+Rule 24    bloqueloop -> asignacion bloqueloop
+Rule 25    bloqueloop -> empty
+Rule 26    estatuto -> declarar
+Rule 27    declarar -> noinicializada
+Rule 28    declarar -> inicializada
+Rule 29    declarar -> CONS pn_currentcons inicializada
+Rule 30    pn_currentcons -> empty
+Rule 31    noinicializada -> tipo ID pn_currentid PNTCOMMA
+Rule 32    noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+Rule 33    noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+Rule 34    inicializada -> tipo ID pn_currentid inicializada_asignacion
+Rule 35    inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+Rule 36    inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+Rule 37    pn_currentspecial -> empty
+Rule 38    tipo -> INT pn_currenttype
+Rule 39    tipo -> FLOAT pn_currenttype
+Rule 40    tipo -> BOOL pn_currenttype
+Rule 41    tipo -> STRING pn_currenttype
+Rule 42    pn_currenttype -> empty
+Rule 43    pn_currentid -> empty
+Rule 44    bracket -> LBRCKT DTI RBRCKT
+Rule 45    bracket -> LBRCKT ID RBRCKT
+Rule 46    asignacion -> ID EQUALS expresion PNTCOMMA
+Rule 47    inicializada_asignacion -> EQUALS expresion PNTCOMMA
+Rule 48    asignacioninicialarr -> EQUALS looparreglo PNTCOMMA
+Rule 49    asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA
+Rule 50    looparreglo -> LBRCKT expresion expresionloop RBRCKT
+Rule 51    expresionloop -> COMMA expresion expresionloop
+Rule 52    expresionloop -> empty
+Rule 53    expresion -> exp expresionrelacional pn_quadruples_checkrelop
+Rule 54    expresionrelacional -> GREATER pn_quadruples_addrelop exp
+Rule 55    expresionrelacional -> LOWER pn_quadruples_addrelop exp
+Rule 56    expresionrelacional -> SAME pn_quadruples_addrelop exp
+Rule 57    expresionrelacional -> LEQUAL pn_quadruples_addrelop exp
+Rule 58    expresionrelacional -> GEQUAL pn_quadruples_addrelop exp
+Rule 59    expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp
+Rule 60    expresionrelacional -> AND pn_quadruples_addrelop exp
+Rule 61    expresionrelacional -> OR pn_quadruples_addrelop exp
+Rule 62    expresionrelacional -> empty
+Rule 63    pn_quadruples_addrelop -> empty
+Rule 64    pn_quadruples_checkrelop -> empty
+Rule 65    exp -> termino pn_quadruples_checksumres expsumres
+Rule 66    expsumres -> PLUS pn_quadruples_addsumres exp
+Rule 67    expsumres -> MINUS pn_quadruples_addsumres exp
+Rule 68    expsumres -> empty
+Rule 69    pn_quadruples_checksumres -> empty
+Rule 70    pn_quadruples_addsumres -> empty
+Rule 71    termino -> factor pn_quadruples_checkmuldiv terminomuldiv
+Rule 72    terminomuldiv -> TIMES pn_quadruples_addmuldiv termino
+Rule 73    terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino
+Rule 74    terminomuldiv -> empty
+Rule 75    pn_quadruples_checkmuldiv -> empty
+Rule 76    pn_quadruples_addmuldiv -> empty
+Rule 77    factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+Rule 78    factor -> vardt
+Rule 79    pn_quadruples_addfbm -> empty
+Rule 80    pn_quadruples_remfbm -> empty
+Rule 81    vardt -> ID pn_quadruples_getvariable
+Rule 82    vardt -> DTI
+Rule 83    vardt -> DTF
+Rule 84    vardt -> DTB
+Rule 85    vardt -> DTS
+Rule 86    vardt -> ID bracket
+Rule 87    vardt -> ID bracket bracket
+Rule 88    pn_quadruples_getvariable -> empty
+Rule 89    empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 60
+ARR                  : 32 35
+AVERAGE              : 
+BOOL                 : 11 40
+BREAK                : 
+CASE                 : 
+COLON                : 
+COMMA                : 17 51
+CONS                 : 29
+DIVIDE               : 73
+DO                   : 
+DTB                  : 84
+DTF                  : 83
+DTI                  : 44 82
+DTS                  : 85
+ELSE                 : 
+END                  : 1
+EQUALS               : 46 47 48 49
+FALSE                : 
+FLOAT                : 10 39
+FOR                  : 
+FUNC                 : 8
+GEQUAL               : 58
+GREATER              : 54
+ID                   : 8 16 17 31 32 33 34 35 36 45 46 81 86 87
+IF                   : 
+INT                  : 9 38
+LBRCKT               : 44 45 50
+LCORCHO              : 22
+LEQUAL               : 57
+LOWER                : 55
+LPAREN               : 15 77
+MAIN                 : 20
+MAT                  : 33 36
+MEAN                 : 
+MINUS                : 67
+MODE                 : 
+MODULE               : 
+NOT                  : 
+NOTEQUAL             : 59
+OR                   : 61
+PI                   : 
+PLUS                 : 66
+PNTCOMMA             : 31 32 33 46 47 48 49
+POINT                : 
+POWER                : 
+PRINT                : 
+RBRCKT               : 44 45 50
+RCORCHO              : 22
+RPAREN               : 15 77
+SAME                 : 56
+SQRT                 : 
+STRING               : 12 41
+SWITCH               : 
+TIMES                : 72
+TRUE                 : 
+VOID                 : 13
+WHILE                : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+asignacion           : 24
+asignacioninicialarr : 35
+asignacioninicialmat : 36
+bloque               : 8 20
+bloqueloop           : 22 23 24
+bracket              : 32 33 33 35 36 36 86 87 87
+declarar             : 4 26
+empty                : 3 5 7 14 18 19 21 25 30 37 42 43 52 62 63 64 68 69 70 74 75 76 79 80 88
+estatuto             : 23
+exp                  : 53 54 55 56 57 58 59 60 61 66 67
+expresion            : 46 47 50 51 77
+expresionloop        : 50 51
+expresionrelacional  : 53
+expsumres            : 65
+factor               : 71
+funciones            : 1 8
+funcionesloop        : 6
+funcparameters       : 8
+funcparametersloop   : 15 16 17
+globales             : 1
+inicializada         : 28 29
+inicializada_asignacion : 34
+looparreglo          : 48 49 49
+loopglobales         : 2 4
+noinicializada       : 27
+pn_crearsubdirectoriog : 2
+pn_crearsubdirectoriom : 20
+pn_currentcons       : 29
+pn_currentid         : 16 17 31 32 33 34 35 36
+pn_currentspecial    : 32 33 35 36
+pn_currenttype       : 38 39 40 41
+pn_parameter         : 16 17
+pn_quadruples_addfbm : 77
+pn_quadruples_addmuldiv : 72 73
+pn_quadruples_addrelop : 54 55 56 57 58 59 60 61
+pn_quadruples_addsumres : 66 67
+pn_quadruples_checkmuldiv : 71
+pn_quadruples_checkrelop : 53
+pn_quadruples_checksumres : 65
+pn_quadruples_getvariable : 81
+pn_quadruples_remfbm : 77
+pn_st_functionid     : 8
+pn_st_functype       : 8
+principal            : 1
+programa             : 0
+termino              : 65 72 73
+terminomuldiv        : 71
+tipo                 : 16 17 31 32 33 34 35 36
+vardt                : 78
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . globales funciones principal END
+    (2) globales -> . pn_crearsubdirectoriog loopglobales
+    (3) pn_crearsubdirectoriog -> . empty
+    (89) empty -> .
+
+    CONS            reduce using rule 89 (empty -> .)
+    ARR             reduce using rule 89 (empty -> .)
+    MAT             reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+    FUNC            reduce using rule 89 (empty -> .)
+    MAIN            reduce using rule 89 (empty -> .)
+
+    programa                       shift and go to state 1
+    globales                       shift and go to state 2
+    pn_crearsubdirectoriog         shift and go to state 3
+    empty                          shift and go to state 4
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> globales . funciones principal END
+    (6) funciones -> . funcionesloop
+    (7) funciones -> . empty
+    (8) funcionesloop -> . FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones
+    (89) empty -> .
+
+    FUNC            shift and go to state 8
+    MAIN            reduce using rule 89 (empty -> .)
+
+    funciones                      shift and go to state 5
+    funcionesloop                  shift and go to state 6
+    empty                          shift and go to state 7
+
+state 3
+
+    (2) globales -> pn_crearsubdirectoriog . loopglobales
+    (4) loopglobales -> . declarar loopglobales
+    (5) loopglobales -> . empty
+    (27) declarar -> . noinicializada
+    (28) declarar -> . inicializada
+    (29) declarar -> . CONS pn_currentcons inicializada
+    (89) empty -> .
+    (31) noinicializada -> . tipo ID pn_currentid PNTCOMMA
+    (32) noinicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (33) noinicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    CONS            shift and go to state 14
+    FUNC            reduce using rule 89 (empty -> .)
+    MAIN            reduce using rule 89 (empty -> .)
+    ARR             shift and go to state 16
+    MAT             shift and go to state 17
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    loopglobales                   shift and go to state 9
+    declarar                       shift and go to state 10
+    empty                          shift and go to state 11
+    noinicializada                 shift and go to state 12
+    inicializada                   shift and go to state 13
+    tipo                           shift and go to state 15
+
+state 4
+
+    (3) pn_crearsubdirectoriog -> empty .
+
+    CONS            reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    ARR             reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    MAT             reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    INT             reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    FLOAT           reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    BOOL            reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    STRING          reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    FUNC            reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+    MAIN            reduce using rule 3 (pn_crearsubdirectoriog -> empty .)
+
+
+state 5
+
+    (1) programa -> globales funciones . principal END
+    (20) principal -> . MAIN pn_crearsubdirectoriom bloque
+
+    MAIN            shift and go to state 23
+
+    principal                      shift and go to state 22
+
+state 6
+
+    (6) funciones -> funcionesloop .
+
+    MAIN            reduce using rule 6 (funciones -> funcionesloop .)
+
+
+state 7
+
+    (7) funciones -> empty .
+
+    MAIN            reduce using rule 7 (funciones -> empty .)
+
+
+state 8
+
+    (8) funcionesloop -> FUNC . pn_st_functype ID pn_st_functionid funcparameters bloque funciones
+    (9) pn_st_functype -> . INT
+    (10) pn_st_functype -> . FLOAT
+    (11) pn_st_functype -> . BOOL
+    (12) pn_st_functype -> . STRING
+    (13) pn_st_functype -> . VOID
+
+    INT             shift and go to state 25
+    FLOAT           shift and go to state 26
+    BOOL            shift and go to state 27
+    STRING          shift and go to state 28
+    VOID            shift and go to state 29
+
+    pn_st_functype                 shift and go to state 24
+
+state 9
+
+    (2) globales -> pn_crearsubdirectoriog loopglobales .
+
+    FUNC            reduce using rule 2 (globales -> pn_crearsubdirectoriog loopglobales .)
+    MAIN            reduce using rule 2 (globales -> pn_crearsubdirectoriog loopglobales .)
+
+
+state 10
+
+    (4) loopglobales -> declarar . loopglobales
+    (4) loopglobales -> . declarar loopglobales
+    (5) loopglobales -> . empty
+    (27) declarar -> . noinicializada
+    (28) declarar -> . inicializada
+    (29) declarar -> . CONS pn_currentcons inicializada
+    (89) empty -> .
+    (31) noinicializada -> . tipo ID pn_currentid PNTCOMMA
+    (32) noinicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (33) noinicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    CONS            shift and go to state 14
+    FUNC            reduce using rule 89 (empty -> .)
+    MAIN            reduce using rule 89 (empty -> .)
+    ARR             shift and go to state 16
+    MAT             shift and go to state 17
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    declarar                       shift and go to state 10
+    loopglobales                   shift and go to state 30
+    empty                          shift and go to state 11
+    noinicializada                 shift and go to state 12
+    inicializada                   shift and go to state 13
+    tipo                           shift and go to state 15
+
+state 11
+
+    (5) loopglobales -> empty .
+
+    FUNC            reduce using rule 5 (loopglobales -> empty .)
+    MAIN            reduce using rule 5 (loopglobales -> empty .)
+
+
+state 12
+
+    (27) declarar -> noinicializada .
+
+    CONS            reduce using rule 27 (declarar -> noinicializada .)
+    ARR             reduce using rule 27 (declarar -> noinicializada .)
+    MAT             reduce using rule 27 (declarar -> noinicializada .)
+    INT             reduce using rule 27 (declarar -> noinicializada .)
+    FLOAT           reduce using rule 27 (declarar -> noinicializada .)
+    BOOL            reduce using rule 27 (declarar -> noinicializada .)
+    STRING          reduce using rule 27 (declarar -> noinicializada .)
+    FUNC            reduce using rule 27 (declarar -> noinicializada .)
+    MAIN            reduce using rule 27 (declarar -> noinicializada .)
+    ID              reduce using rule 27 (declarar -> noinicializada .)
+    RCORCHO         reduce using rule 27 (declarar -> noinicializada .)
+
+
+state 13
+
+    (28) declarar -> inicializada .
+
+    CONS            reduce using rule 28 (declarar -> inicializada .)
+    ARR             reduce using rule 28 (declarar -> inicializada .)
+    MAT             reduce using rule 28 (declarar -> inicializada .)
+    INT             reduce using rule 28 (declarar -> inicializada .)
+    FLOAT           reduce using rule 28 (declarar -> inicializada .)
+    BOOL            reduce using rule 28 (declarar -> inicializada .)
+    STRING          reduce using rule 28 (declarar -> inicializada .)
+    FUNC            reduce using rule 28 (declarar -> inicializada .)
+    MAIN            reduce using rule 28 (declarar -> inicializada .)
+    ID              reduce using rule 28 (declarar -> inicializada .)
+    RCORCHO         reduce using rule 28 (declarar -> inicializada .)
+
+
+state 14
+
+    (29) declarar -> CONS . pn_currentcons inicializada
+    (30) pn_currentcons -> . empty
+    (89) empty -> .
+
+    ARR             reduce using rule 89 (empty -> .)
+    MAT             reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_currentcons                 shift and go to state 31
+    empty                          shift and go to state 32
+
+state 15
+
+    (31) noinicializada -> tipo . ID pn_currentid PNTCOMMA
+    (34) inicializada -> tipo . ID pn_currentid inicializada_asignacion
+
+    ID              shift and go to state 33
+
+
+state 16
+
+    (32) noinicializada -> ARR . pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (35) inicializada -> ARR . pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (37) pn_currentspecial -> . empty
+    (89) empty -> .
+
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_currentspecial              shift and go to state 34
+    empty                          shift and go to state 35
+
+state 17
+
+    (33) noinicializada -> MAT . pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (36) inicializada -> MAT . pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (37) pn_currentspecial -> . empty
+    (89) empty -> .
+
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_currentspecial              shift and go to state 36
+    empty                          shift and go to state 35
+
+state 18
+
+    (38) tipo -> INT . pn_currenttype
+    (42) pn_currenttype -> . empty
+    (89) empty -> .
+
+    ID              reduce using rule 89 (empty -> .)
+
+    pn_currenttype                 shift and go to state 37
+    empty                          shift and go to state 38
+
+state 19
+
+    (39) tipo -> FLOAT . pn_currenttype
+    (42) pn_currenttype -> . empty
+    (89) empty -> .
+
+    ID              reduce using rule 89 (empty -> .)
+
+    pn_currenttype                 shift and go to state 39
+    empty                          shift and go to state 38
+
+state 20
+
+    (40) tipo -> BOOL . pn_currenttype
+    (42) pn_currenttype -> . empty
+    (89) empty -> .
+
+    ID              reduce using rule 89 (empty -> .)
+
+    pn_currenttype                 shift and go to state 40
+    empty                          shift and go to state 38
+
+state 21
+
+    (41) tipo -> STRING . pn_currenttype
+    (42) pn_currenttype -> . empty
+    (89) empty -> .
+
+    ID              reduce using rule 89 (empty -> .)
+
+    pn_currenttype                 shift and go to state 41
+    empty                          shift and go to state 38
+
+state 22
+
+    (1) programa -> globales funciones principal . END
+
+    END             shift and go to state 42
+
+
+state 23
+
+    (20) principal -> MAIN . pn_crearsubdirectoriom bloque
+    (21) pn_crearsubdirectoriom -> . empty
+    (89) empty -> .
+
+    LCORCHO         reduce using rule 89 (empty -> .)
+
+    pn_crearsubdirectoriom         shift and go to state 43
+    empty                          shift and go to state 44
+
+state 24
+
+    (8) funcionesloop -> FUNC pn_st_functype . ID pn_st_functionid funcparameters bloque funciones
+
+    ID              shift and go to state 45
+
+
+state 25
+
+    (9) pn_st_functype -> INT .
+
+    ID              reduce using rule 9 (pn_st_functype -> INT .)
+
+
+state 26
+
+    (10) pn_st_functype -> FLOAT .
+
+    ID              reduce using rule 10 (pn_st_functype -> FLOAT .)
+
+
+state 27
+
+    (11) pn_st_functype -> BOOL .
+
+    ID              reduce using rule 11 (pn_st_functype -> BOOL .)
+
+
+state 28
+
+    (12) pn_st_functype -> STRING .
+
+    ID              reduce using rule 12 (pn_st_functype -> STRING .)
+
+
+state 29
+
+    (13) pn_st_functype -> VOID .
+
+    ID              reduce using rule 13 (pn_st_functype -> VOID .)
+
+
+state 30
+
+    (4) loopglobales -> declarar loopglobales .
+
+    FUNC            reduce using rule 4 (loopglobales -> declarar loopglobales .)
+    MAIN            reduce using rule 4 (loopglobales -> declarar loopglobales .)
+
+
+state 31
+
+    (29) declarar -> CONS pn_currentcons . inicializada
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    ARR             shift and go to state 48
+    MAT             shift and go to state 49
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    inicializada                   shift and go to state 46
+    tipo                           shift and go to state 47
+
+state 32
+
+    (30) pn_currentcons -> empty .
+
+    ARR             reduce using rule 30 (pn_currentcons -> empty .)
+    MAT             reduce using rule 30 (pn_currentcons -> empty .)
+    INT             reduce using rule 30 (pn_currentcons -> empty .)
+    FLOAT           reduce using rule 30 (pn_currentcons -> empty .)
+    BOOL            reduce using rule 30 (pn_currentcons -> empty .)
+    STRING          reduce using rule 30 (pn_currentcons -> empty .)
+
+
+state 33
+
+    (31) noinicializada -> tipo ID . pn_currentid PNTCOMMA
+    (34) inicializada -> tipo ID . pn_currentid inicializada_asignacion
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    EQUALS          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 50
+    empty                          shift and go to state 51
+
+state 34
+
+    (32) noinicializada -> ARR pn_currentspecial . tipo ID pn_currentid bracket PNTCOMMA
+    (35) inicializada -> ARR pn_currentspecial . tipo ID pn_currentid bracket asignacioninicialarr
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 52
+
+state 35
+
+    (37) pn_currentspecial -> empty .
+
+    INT             reduce using rule 37 (pn_currentspecial -> empty .)
+    FLOAT           reduce using rule 37 (pn_currentspecial -> empty .)
+    BOOL            reduce using rule 37 (pn_currentspecial -> empty .)
+    STRING          reduce using rule 37 (pn_currentspecial -> empty .)
+
+
+state 36
+
+    (33) noinicializada -> MAT pn_currentspecial . tipo ID pn_currentid bracket bracket PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial . tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 53
+
+state 37
+
+    (38) tipo -> INT pn_currenttype .
+
+    ID              reduce using rule 38 (tipo -> INT pn_currenttype .)
+
+
+state 38
+
+    (42) pn_currenttype -> empty .
+
+    ID              reduce using rule 42 (pn_currenttype -> empty .)
+
+
+state 39
+
+    (39) tipo -> FLOAT pn_currenttype .
+
+    ID              reduce using rule 39 (tipo -> FLOAT pn_currenttype .)
+
+
+state 40
+
+    (40) tipo -> BOOL pn_currenttype .
+
+    ID              reduce using rule 40 (tipo -> BOOL pn_currenttype .)
+
+
+state 41
+
+    (41) tipo -> STRING pn_currenttype .
+
+    ID              reduce using rule 41 (tipo -> STRING pn_currenttype .)
+
+
+state 42
+
+    (1) programa -> globales funciones principal END .
+
+    $end            reduce using rule 1 (programa -> globales funciones principal END .)
+
+
+state 43
+
+    (20) principal -> MAIN pn_crearsubdirectoriom . bloque
+    (22) bloque -> . LCORCHO bloqueloop RCORCHO
+
+    LCORCHO         shift and go to state 55
+
+    bloque                         shift and go to state 54
+
+state 44
+
+    (21) pn_crearsubdirectoriom -> empty .
+
+    LCORCHO         reduce using rule 21 (pn_crearsubdirectoriom -> empty .)
+
+
+state 45
+
+    (8) funcionesloop -> FUNC pn_st_functype ID . pn_st_functionid funcparameters bloque funciones
+    (14) pn_st_functionid -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+
+    pn_st_functionid               shift and go to state 56
+    empty                          shift and go to state 57
+
+state 46
+
+    (29) declarar -> CONS pn_currentcons inicializada .
+
+    CONS            reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    ARR             reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    MAT             reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    INT             reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    FLOAT           reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    BOOL            reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    STRING          reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    FUNC            reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    MAIN            reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    ID              reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+    RCORCHO         reduce using rule 29 (declarar -> CONS pn_currentcons inicializada .)
+
+
+state 47
+
+    (34) inicializada -> tipo . ID pn_currentid inicializada_asignacion
+
+    ID              shift and go to state 58
+
+
+state 48
+
+    (35) inicializada -> ARR . pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (37) pn_currentspecial -> . empty
+    (89) empty -> .
+
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_currentspecial              shift and go to state 59
+    empty                          shift and go to state 35
+
+state 49
+
+    (36) inicializada -> MAT . pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (37) pn_currentspecial -> . empty
+    (89) empty -> .
+
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_currentspecial              shift and go to state 60
+    empty                          shift and go to state 35
+
+state 50
+
+    (31) noinicializada -> tipo ID pn_currentid . PNTCOMMA
+    (34) inicializada -> tipo ID pn_currentid . inicializada_asignacion
+    (47) inicializada_asignacion -> . EQUALS expresion PNTCOMMA
+
+    PNTCOMMA        shift and go to state 61
+    EQUALS          shift and go to state 63
+
+    inicializada_asignacion        shift and go to state 62
+
+state 51
+
+    (43) pn_currentid -> empty .
+
+    PNTCOMMA        reduce using rule 43 (pn_currentid -> empty .)
+    EQUALS          reduce using rule 43 (pn_currentid -> empty .)
+    LBRCKT          reduce using rule 43 (pn_currentid -> empty .)
+    COMMA           reduce using rule 43 (pn_currentid -> empty .)
+    INT             reduce using rule 43 (pn_currentid -> empty .)
+    FLOAT           reduce using rule 43 (pn_currentid -> empty .)
+    BOOL            reduce using rule 43 (pn_currentid -> empty .)
+    STRING          reduce using rule 43 (pn_currentid -> empty .)
+    RPAREN          reduce using rule 43 (pn_currentid -> empty .)
+
+
+state 52
+
+    (32) noinicializada -> ARR pn_currentspecial tipo . ID pn_currentid bracket PNTCOMMA
+    (35) inicializada -> ARR pn_currentspecial tipo . ID pn_currentid bracket asignacioninicialarr
+
+    ID              shift and go to state 64
+
+
+state 53
+
+    (33) noinicializada -> MAT pn_currentspecial tipo . ID pn_currentid bracket bracket PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial tipo . ID pn_currentid bracket bracket asignacioninicialmat
+
+    ID              shift and go to state 65
+
+
+state 54
+
+    (20) principal -> MAIN pn_crearsubdirectoriom bloque .
+
+    END             reduce using rule 20 (principal -> MAIN pn_crearsubdirectoriom bloque .)
+
+
+state 55
+
+    (22) bloque -> LCORCHO . bloqueloop RCORCHO
+    (23) bloqueloop -> . estatuto bloqueloop
+    (24) bloqueloop -> . asignacion bloqueloop
+    (25) bloqueloop -> . empty
+    (26) estatuto -> . declarar
+    (46) asignacion -> . ID EQUALS expresion PNTCOMMA
+    (89) empty -> .
+    (27) declarar -> . noinicializada
+    (28) declarar -> . inicializada
+    (29) declarar -> . CONS pn_currentcons inicializada
+    (31) noinicializada -> . tipo ID pn_currentid PNTCOMMA
+    (32) noinicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (33) noinicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    ID              shift and go to state 71
+    RCORCHO         reduce using rule 89 (empty -> .)
+    CONS            shift and go to state 14
+    ARR             shift and go to state 16
+    MAT             shift and go to state 17
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    bloqueloop                     shift and go to state 66
+    estatuto                       shift and go to state 67
+    asignacion                     shift and go to state 68
+    empty                          shift and go to state 69
+    declarar                       shift and go to state 70
+    noinicializada                 shift and go to state 12
+    inicializada                   shift and go to state 13
+    tipo                           shift and go to state 15
+
+state 56
+
+    (8) funcionesloop -> FUNC pn_st_functype ID pn_st_functionid . funcparameters bloque funciones
+    (15) funcparameters -> . LPAREN funcparametersloop RPAREN
+
+    LPAREN          shift and go to state 73
+
+    funcparameters                 shift and go to state 72
+
+state 57
+
+    (14) pn_st_functionid -> empty .
+
+    LPAREN          reduce using rule 14 (pn_st_functionid -> empty .)
+
+
+state 58
+
+    (34) inicializada -> tipo ID . pn_currentid inicializada_asignacion
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    EQUALS          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 74
+    empty                          shift and go to state 51
+
+state 59
+
+    (35) inicializada -> ARR pn_currentspecial . tipo ID pn_currentid bracket asignacioninicialarr
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 75
+
+state 60
+
+    (36) inicializada -> MAT pn_currentspecial . tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 76
+
+state 61
+
+    (31) noinicializada -> tipo ID pn_currentid PNTCOMMA .
+
+    CONS            reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    ARR             reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    MAT             reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    INT             reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    FLOAT           reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    BOOL            reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    STRING          reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    FUNC            reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    MAIN            reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    ID              reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+    RCORCHO         reduce using rule 31 (noinicializada -> tipo ID pn_currentid PNTCOMMA .)
+
+
+state 62
+
+    (34) inicializada -> tipo ID pn_currentid inicializada_asignacion .
+
+    CONS            reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    ARR             reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    MAT             reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    INT             reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    FLOAT           reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    BOOL            reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    STRING          reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    FUNC            reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    MAIN            reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    ID              reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+    RCORCHO         reduce using rule 34 (inicializada -> tipo ID pn_currentid inicializada_asignacion .)
+
+
+state 63
+
+    (47) inicializada_asignacion -> EQUALS . expresion PNTCOMMA
+    (53) expresion -> . exp expresionrelacional pn_quadruples_checkrelop
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    expresion                      shift and go to state 77
+    exp                            shift and go to state 78
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 64
+
+    (32) noinicializada -> ARR pn_currentspecial tipo ID . pn_currentid bracket PNTCOMMA
+    (35) inicializada -> ARR pn_currentspecial tipo ID . pn_currentid bracket asignacioninicialarr
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    LBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 88
+    empty                          shift and go to state 51
+
+state 65
+
+    (33) noinicializada -> MAT pn_currentspecial tipo ID . pn_currentid bracket bracket PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial tipo ID . pn_currentid bracket bracket asignacioninicialmat
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    LBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 89
+    empty                          shift and go to state 51
+
+state 66
+
+    (22) bloque -> LCORCHO bloqueloop . RCORCHO
+
+    RCORCHO         shift and go to state 90
+
+
+state 67
+
+    (23) bloqueloop -> estatuto . bloqueloop
+    (23) bloqueloop -> . estatuto bloqueloop
+    (24) bloqueloop -> . asignacion bloqueloop
+    (25) bloqueloop -> . empty
+    (26) estatuto -> . declarar
+    (46) asignacion -> . ID EQUALS expresion PNTCOMMA
+    (89) empty -> .
+    (27) declarar -> . noinicializada
+    (28) declarar -> . inicializada
+    (29) declarar -> . CONS pn_currentcons inicializada
+    (31) noinicializada -> . tipo ID pn_currentid PNTCOMMA
+    (32) noinicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (33) noinicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    ID              shift and go to state 71
+    RCORCHO         reduce using rule 89 (empty -> .)
+    CONS            shift and go to state 14
+    ARR             shift and go to state 16
+    MAT             shift and go to state 17
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    estatuto                       shift and go to state 67
+    bloqueloop                     shift and go to state 91
+    asignacion                     shift and go to state 68
+    empty                          shift and go to state 69
+    declarar                       shift and go to state 70
+    noinicializada                 shift and go to state 12
+    inicializada                   shift and go to state 13
+    tipo                           shift and go to state 15
+
+state 68
+
+    (24) bloqueloop -> asignacion . bloqueloop
+    (23) bloqueloop -> . estatuto bloqueloop
+    (24) bloqueloop -> . asignacion bloqueloop
+    (25) bloqueloop -> . empty
+    (26) estatuto -> . declarar
+    (46) asignacion -> . ID EQUALS expresion PNTCOMMA
+    (89) empty -> .
+    (27) declarar -> . noinicializada
+    (28) declarar -> . inicializada
+    (29) declarar -> . CONS pn_currentcons inicializada
+    (31) noinicializada -> . tipo ID pn_currentid PNTCOMMA
+    (32) noinicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA
+    (33) noinicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA
+    (34) inicializada -> . tipo ID pn_currentid inicializada_asignacion
+    (35) inicializada -> . ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+    (36) inicializada -> . MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    ID              shift and go to state 71
+    RCORCHO         reduce using rule 89 (empty -> .)
+    CONS            shift and go to state 14
+    ARR             shift and go to state 16
+    MAT             shift and go to state 17
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    asignacion                     shift and go to state 68
+    bloqueloop                     shift and go to state 92
+    estatuto                       shift and go to state 67
+    empty                          shift and go to state 69
+    declarar                       shift and go to state 70
+    noinicializada                 shift and go to state 12
+    inicializada                   shift and go to state 13
+    tipo                           shift and go to state 15
+
+state 69
+
+    (25) bloqueloop -> empty .
+
+    RCORCHO         reduce using rule 25 (bloqueloop -> empty .)
+
+
+state 70
+
+    (26) estatuto -> declarar .
+
+    ID              reduce using rule 26 (estatuto -> declarar .)
+    CONS            reduce using rule 26 (estatuto -> declarar .)
+    ARR             reduce using rule 26 (estatuto -> declarar .)
+    MAT             reduce using rule 26 (estatuto -> declarar .)
+    INT             reduce using rule 26 (estatuto -> declarar .)
+    FLOAT           reduce using rule 26 (estatuto -> declarar .)
+    BOOL            reduce using rule 26 (estatuto -> declarar .)
+    STRING          reduce using rule 26 (estatuto -> declarar .)
+    RCORCHO         reduce using rule 26 (estatuto -> declarar .)
+
+
+state 71
+
+    (46) asignacion -> ID . EQUALS expresion PNTCOMMA
+
+    EQUALS          shift and go to state 93
+
+
+state 72
+
+    (8) funcionesloop -> FUNC pn_st_functype ID pn_st_functionid funcparameters . bloque funciones
+    (22) bloque -> . LCORCHO bloqueloop RCORCHO
+
+    LCORCHO         shift and go to state 55
+
+    bloque                         shift and go to state 94
+
+state 73
+
+    (15) funcparameters -> LPAREN . funcparametersloop RPAREN
+    (16) funcparametersloop -> . pn_parameter tipo ID pn_currentid funcparametersloop
+    (17) funcparametersloop -> . COMMA pn_parameter tipo ID pn_currentid funcparametersloop
+    (18) funcparametersloop -> . empty
+    (19) pn_parameter -> . empty
+    (89) empty -> .
+
+    COMMA           shift and go to state 97
+    RPAREN          reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    funcparametersloop             shift and go to state 95
+    pn_parameter                   shift and go to state 96
+    empty                          shift and go to state 98
+
+state 74
+
+    (34) inicializada -> tipo ID pn_currentid . inicializada_asignacion
+    (47) inicializada_asignacion -> . EQUALS expresion PNTCOMMA
+
+    EQUALS          shift and go to state 63
+
+    inicializada_asignacion        shift and go to state 62
+
+state 75
+
+    (35) inicializada -> ARR pn_currentspecial tipo . ID pn_currentid bracket asignacioninicialarr
+
+    ID              shift and go to state 99
+
+
+state 76
+
+    (36) inicializada -> MAT pn_currentspecial tipo . ID pn_currentid bracket bracket asignacioninicialmat
+
+    ID              shift and go to state 100
+
+
+state 77
+
+    (47) inicializada_asignacion -> EQUALS expresion . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 101
+
+
+state 78
+
+    (53) expresion -> exp . expresionrelacional pn_quadruples_checkrelop
+    (54) expresionrelacional -> . GREATER pn_quadruples_addrelop exp
+    (55) expresionrelacional -> . LOWER pn_quadruples_addrelop exp
+    (56) expresionrelacional -> . SAME pn_quadruples_addrelop exp
+    (57) expresionrelacional -> . LEQUAL pn_quadruples_addrelop exp
+    (58) expresionrelacional -> . GEQUAL pn_quadruples_addrelop exp
+    (59) expresionrelacional -> . NOTEQUAL pn_quadruples_addrelop exp
+    (60) expresionrelacional -> . AND pn_quadruples_addrelop exp
+    (61) expresionrelacional -> . OR pn_quadruples_addrelop exp
+    (62) expresionrelacional -> . empty
+    (89) empty -> .
+
+    GREATER         shift and go to state 103
+    LOWER           shift and go to state 104
+    SAME            shift and go to state 105
+    LEQUAL          shift and go to state 106
+    GEQUAL          shift and go to state 107
+    NOTEQUAL        shift and go to state 108
+    AND             shift and go to state 109
+    OR              shift and go to state 110
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    expresionrelacional            shift and go to state 102
+    empty                          shift and go to state 111
+
+state 79
+
+    (65) exp -> termino . pn_quadruples_checksumres expsumres
+    (69) pn_quadruples_checksumres -> . empty
+    (89) empty -> .
+
+    PLUS            reduce using rule 89 (empty -> .)
+    MINUS           reduce using rule 89 (empty -> .)
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_quadruples_checksumres      shift and go to state 112
+    empty                          shift and go to state 113
+
+state 80
+
+    (71) termino -> factor . pn_quadruples_checkmuldiv terminomuldiv
+    (75) pn_quadruples_checkmuldiv -> . empty
+    (89) empty -> .
+
+    TIMES           reduce using rule 89 (empty -> .)
+    DIVIDE          reduce using rule 89 (empty -> .)
+    PLUS            reduce using rule 89 (empty -> .)
+    MINUS           reduce using rule 89 (empty -> .)
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_quadruples_checkmuldiv      shift and go to state 114
+    empty                          shift and go to state 115
+
+state 81
+
+    (77) factor -> LPAREN . pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (79) pn_quadruples_addfbm -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addfbm           shift and go to state 116
+    empty                          shift and go to state 117
+
+state 82
+
+    (78) factor -> vardt .
+
+    TIMES           reduce using rule 78 (factor -> vardt .)
+    DIVIDE          reduce using rule 78 (factor -> vardt .)
+    PLUS            reduce using rule 78 (factor -> vardt .)
+    MINUS           reduce using rule 78 (factor -> vardt .)
+    GREATER         reduce using rule 78 (factor -> vardt .)
+    LOWER           reduce using rule 78 (factor -> vardt .)
+    SAME            reduce using rule 78 (factor -> vardt .)
+    LEQUAL          reduce using rule 78 (factor -> vardt .)
+    GEQUAL          reduce using rule 78 (factor -> vardt .)
+    NOTEQUAL        reduce using rule 78 (factor -> vardt .)
+    AND             reduce using rule 78 (factor -> vardt .)
+    OR              reduce using rule 78 (factor -> vardt .)
+    PNTCOMMA        reduce using rule 78 (factor -> vardt .)
+    RPAREN          reduce using rule 78 (factor -> vardt .)
+    COMMA           reduce using rule 78 (factor -> vardt .)
+    RBRCKT          reduce using rule 78 (factor -> vardt .)
+
+
+state 83
+
+    (81) vardt -> ID . pn_quadruples_getvariable
+    (86) vardt -> ID . bracket
+    (87) vardt -> ID . bracket bracket
+    (88) pn_quadruples_getvariable -> . empty
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+    (89) empty -> .
+
+    LBRCKT          shift and go to state 121
+    TIMES           reduce using rule 89 (empty -> .)
+    DIVIDE          reduce using rule 89 (empty -> .)
+    PLUS            reduce using rule 89 (empty -> .)
+    MINUS           reduce using rule 89 (empty -> .)
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_quadruples_getvariable      shift and go to state 118
+    bracket                        shift and go to state 119
+    empty                          shift and go to state 120
+
+state 84
+
+    (82) vardt -> DTI .
+
+    TIMES           reduce using rule 82 (vardt -> DTI .)
+    DIVIDE          reduce using rule 82 (vardt -> DTI .)
+    PLUS            reduce using rule 82 (vardt -> DTI .)
+    MINUS           reduce using rule 82 (vardt -> DTI .)
+    GREATER         reduce using rule 82 (vardt -> DTI .)
+    LOWER           reduce using rule 82 (vardt -> DTI .)
+    SAME            reduce using rule 82 (vardt -> DTI .)
+    LEQUAL          reduce using rule 82 (vardt -> DTI .)
+    GEQUAL          reduce using rule 82 (vardt -> DTI .)
+    NOTEQUAL        reduce using rule 82 (vardt -> DTI .)
+    AND             reduce using rule 82 (vardt -> DTI .)
+    OR              reduce using rule 82 (vardt -> DTI .)
+    PNTCOMMA        reduce using rule 82 (vardt -> DTI .)
+    RPAREN          reduce using rule 82 (vardt -> DTI .)
+    COMMA           reduce using rule 82 (vardt -> DTI .)
+    RBRCKT          reduce using rule 82 (vardt -> DTI .)
+
+
+state 85
+
+    (83) vardt -> DTF .
+
+    TIMES           reduce using rule 83 (vardt -> DTF .)
+    DIVIDE          reduce using rule 83 (vardt -> DTF .)
+    PLUS            reduce using rule 83 (vardt -> DTF .)
+    MINUS           reduce using rule 83 (vardt -> DTF .)
+    GREATER         reduce using rule 83 (vardt -> DTF .)
+    LOWER           reduce using rule 83 (vardt -> DTF .)
+    SAME            reduce using rule 83 (vardt -> DTF .)
+    LEQUAL          reduce using rule 83 (vardt -> DTF .)
+    GEQUAL          reduce using rule 83 (vardt -> DTF .)
+    NOTEQUAL        reduce using rule 83 (vardt -> DTF .)
+    AND             reduce using rule 83 (vardt -> DTF .)
+    OR              reduce using rule 83 (vardt -> DTF .)
+    PNTCOMMA        reduce using rule 83 (vardt -> DTF .)
+    RPAREN          reduce using rule 83 (vardt -> DTF .)
+    COMMA           reduce using rule 83 (vardt -> DTF .)
+    RBRCKT          reduce using rule 83 (vardt -> DTF .)
+
+
+state 86
+
+    (84) vardt -> DTB .
+
+    TIMES           reduce using rule 84 (vardt -> DTB .)
+    DIVIDE          reduce using rule 84 (vardt -> DTB .)
+    PLUS            reduce using rule 84 (vardt -> DTB .)
+    MINUS           reduce using rule 84 (vardt -> DTB .)
+    GREATER         reduce using rule 84 (vardt -> DTB .)
+    LOWER           reduce using rule 84 (vardt -> DTB .)
+    SAME            reduce using rule 84 (vardt -> DTB .)
+    LEQUAL          reduce using rule 84 (vardt -> DTB .)
+    GEQUAL          reduce using rule 84 (vardt -> DTB .)
+    NOTEQUAL        reduce using rule 84 (vardt -> DTB .)
+    AND             reduce using rule 84 (vardt -> DTB .)
+    OR              reduce using rule 84 (vardt -> DTB .)
+    PNTCOMMA        reduce using rule 84 (vardt -> DTB .)
+    RPAREN          reduce using rule 84 (vardt -> DTB .)
+    COMMA           reduce using rule 84 (vardt -> DTB .)
+    RBRCKT          reduce using rule 84 (vardt -> DTB .)
+
+
+state 87
+
+    (85) vardt -> DTS .
+
+    TIMES           reduce using rule 85 (vardt -> DTS .)
+    DIVIDE          reduce using rule 85 (vardt -> DTS .)
+    PLUS            reduce using rule 85 (vardt -> DTS .)
+    MINUS           reduce using rule 85 (vardt -> DTS .)
+    GREATER         reduce using rule 85 (vardt -> DTS .)
+    LOWER           reduce using rule 85 (vardt -> DTS .)
+    SAME            reduce using rule 85 (vardt -> DTS .)
+    LEQUAL          reduce using rule 85 (vardt -> DTS .)
+    GEQUAL          reduce using rule 85 (vardt -> DTS .)
+    NOTEQUAL        reduce using rule 85 (vardt -> DTS .)
+    AND             reduce using rule 85 (vardt -> DTS .)
+    OR              reduce using rule 85 (vardt -> DTS .)
+    PNTCOMMA        reduce using rule 85 (vardt -> DTS .)
+    RPAREN          reduce using rule 85 (vardt -> DTS .)
+    COMMA           reduce using rule 85 (vardt -> DTS .)
+    RBRCKT          reduce using rule 85 (vardt -> DTS .)
+
+
+state 88
+
+    (32) noinicializada -> ARR pn_currentspecial tipo ID pn_currentid . bracket PNTCOMMA
+    (35) inicializada -> ARR pn_currentspecial tipo ID pn_currentid . bracket asignacioninicialarr
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 122
+
+state 89
+
+    (33) noinicializada -> MAT pn_currentspecial tipo ID pn_currentid . bracket bracket PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid . bracket bracket asignacioninicialmat
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 123
+
+state 90
+
+    (22) bloque -> LCORCHO bloqueloop RCORCHO .
+
+    END             reduce using rule 22 (bloque -> LCORCHO bloqueloop RCORCHO .)
+    FUNC            reduce using rule 22 (bloque -> LCORCHO bloqueloop RCORCHO .)
+    MAIN            reduce using rule 22 (bloque -> LCORCHO bloqueloop RCORCHO .)
+
+
+state 91
+
+    (23) bloqueloop -> estatuto bloqueloop .
+
+    RCORCHO         reduce using rule 23 (bloqueloop -> estatuto bloqueloop .)
+
+
+state 92
+
+    (24) bloqueloop -> asignacion bloqueloop .
+
+    RCORCHO         reduce using rule 24 (bloqueloop -> asignacion bloqueloop .)
+
+
+state 93
+
+    (46) asignacion -> ID EQUALS . expresion PNTCOMMA
+    (53) expresion -> . exp expresionrelacional pn_quadruples_checkrelop
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    expresion                      shift and go to state 124
+    exp                            shift and go to state 78
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 94
+
+    (8) funcionesloop -> FUNC pn_st_functype ID pn_st_functionid funcparameters bloque . funciones
+    (6) funciones -> . funcionesloop
+    (7) funciones -> . empty
+    (8) funcionesloop -> . FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones
+    (89) empty -> .
+
+    FUNC            shift and go to state 8
+    MAIN            reduce using rule 89 (empty -> .)
+
+    funciones                      shift and go to state 125
+    funcionesloop                  shift and go to state 6
+    empty                          shift and go to state 7
+
+state 95
+
+    (15) funcparameters -> LPAREN funcparametersloop . RPAREN
+
+    RPAREN          shift and go to state 126
+
+
+state 96
+
+    (16) funcparametersloop -> pn_parameter . tipo ID pn_currentid funcparametersloop
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 127
+
+state 97
+
+    (17) funcparametersloop -> COMMA . pn_parameter tipo ID pn_currentid funcparametersloop
+    (19) pn_parameter -> . empty
+    (89) empty -> .
+
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_parameter                   shift and go to state 128
+    empty                          shift and go to state 129
+
+state 98
+
+    (18) funcparametersloop -> empty .
+    (19) pn_parameter -> empty .
+
+    RPAREN          reduce using rule 18 (funcparametersloop -> empty .)
+    INT             reduce using rule 19 (pn_parameter -> empty .)
+    FLOAT           reduce using rule 19 (pn_parameter -> empty .)
+    BOOL            reduce using rule 19 (pn_parameter -> empty .)
+    STRING          reduce using rule 19 (pn_parameter -> empty .)
+
+
+state 99
+
+    (35) inicializada -> ARR pn_currentspecial tipo ID . pn_currentid bracket asignacioninicialarr
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    LBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 130
+    empty                          shift and go to state 51
+
+state 100
+
+    (36) inicializada -> MAT pn_currentspecial tipo ID . pn_currentid bracket bracket asignacioninicialmat
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    LBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 131
+    empty                          shift and go to state 51
+
+state 101
+
+    (47) inicializada_asignacion -> EQUALS expresion PNTCOMMA .
+
+    CONS            reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    ARR             reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    MAT             reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    INT             reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    FLOAT           reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    BOOL            reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    STRING          reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    FUNC            reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    MAIN            reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    ID              reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+    RCORCHO         reduce using rule 47 (inicializada_asignacion -> EQUALS expresion PNTCOMMA .)
+
+
+state 102
+
+    (53) expresion -> exp expresionrelacional . pn_quadruples_checkrelop
+    (64) pn_quadruples_checkrelop -> . empty
+    (89) empty -> .
+
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_quadruples_checkrelop       shift and go to state 132
+    empty                          shift and go to state 133
+
+state 103
+
+    (54) expresionrelacional -> GREATER . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 134
+    empty                          shift and go to state 135
+
+state 104
+
+    (55) expresionrelacional -> LOWER . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 136
+    empty                          shift and go to state 135
+
+state 105
+
+    (56) expresionrelacional -> SAME . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 137
+    empty                          shift and go to state 135
+
+state 106
+
+    (57) expresionrelacional -> LEQUAL . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 138
+    empty                          shift and go to state 135
+
+state 107
+
+    (58) expresionrelacional -> GEQUAL . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 139
+    empty                          shift and go to state 135
+
+state 108
+
+    (59) expresionrelacional -> NOTEQUAL . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 140
+    empty                          shift and go to state 135
+
+state 109
+
+    (60) expresionrelacional -> AND . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 141
+    empty                          shift and go to state 135
+
+state 110
+
+    (61) expresionrelacional -> OR . pn_quadruples_addrelop exp
+    (63) pn_quadruples_addrelop -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addrelop         shift and go to state 142
+    empty                          shift and go to state 135
+
+state 111
+
+    (62) expresionrelacional -> empty .
+
+    PNTCOMMA        reduce using rule 62 (expresionrelacional -> empty .)
+    RPAREN          reduce using rule 62 (expresionrelacional -> empty .)
+    COMMA           reduce using rule 62 (expresionrelacional -> empty .)
+    RBRCKT          reduce using rule 62 (expresionrelacional -> empty .)
+
+
+state 112
+
+    (65) exp -> termino pn_quadruples_checksumres . expsumres
+    (66) expsumres -> . PLUS pn_quadruples_addsumres exp
+    (67) expsumres -> . MINUS pn_quadruples_addsumres exp
+    (68) expsumres -> . empty
+    (89) empty -> .
+
+    PLUS            shift and go to state 144
+    MINUS           shift and go to state 145
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    expsumres                      shift and go to state 143
+    empty                          shift and go to state 146
+
+state 113
+
+    (69) pn_quadruples_checksumres -> empty .
+
+    PLUS            reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    MINUS           reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    GREATER         reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    LOWER           reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    SAME            reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    LEQUAL          reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    GEQUAL          reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    NOTEQUAL        reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    AND             reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    OR              reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    PNTCOMMA        reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    RPAREN          reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    COMMA           reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+    RBRCKT          reduce using rule 69 (pn_quadruples_checksumres -> empty .)
+
+
+state 114
+
+    (71) termino -> factor pn_quadruples_checkmuldiv . terminomuldiv
+    (72) terminomuldiv -> . TIMES pn_quadruples_addmuldiv termino
+    (73) terminomuldiv -> . DIVIDE pn_quadruples_addmuldiv termino
+    (74) terminomuldiv -> . empty
+    (89) empty -> .
+
+    TIMES           shift and go to state 148
+    DIVIDE          shift and go to state 149
+    PLUS            reduce using rule 89 (empty -> .)
+    MINUS           reduce using rule 89 (empty -> .)
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    terminomuldiv                  shift and go to state 147
+    empty                          shift and go to state 150
+
+state 115
+
+    (75) pn_quadruples_checkmuldiv -> empty .
+
+    TIMES           reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    DIVIDE          reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    PLUS            reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    MINUS           reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    GREATER         reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    LOWER           reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    SAME            reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    LEQUAL          reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    GEQUAL          reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    NOTEQUAL        reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    AND             reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    OR              reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    PNTCOMMA        reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    RPAREN          reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    COMMA           reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+    RBRCKT          reduce using rule 75 (pn_quadruples_checkmuldiv -> empty .)
+
+
+state 116
+
+    (77) factor -> LPAREN pn_quadruples_addfbm . expresion RPAREN pn_quadruples_remfbm
+    (53) expresion -> . exp expresionrelacional pn_quadruples_checkrelop
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    expresion                      shift and go to state 151
+    exp                            shift and go to state 78
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 117
+
+    (79) pn_quadruples_addfbm -> empty .
+
+    LPAREN          reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+    ID              reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+    DTI             reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+    DTF             reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+    DTB             reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+    DTS             reduce using rule 79 (pn_quadruples_addfbm -> empty .)
+
+
+state 118
+
+    (81) vardt -> ID pn_quadruples_getvariable .
+
+    TIMES           reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    DIVIDE          reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    PLUS            reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    MINUS           reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    GREATER         reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    LOWER           reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    SAME            reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    LEQUAL          reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    GEQUAL          reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    NOTEQUAL        reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    AND             reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    OR              reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    PNTCOMMA        reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    RPAREN          reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    COMMA           reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+    RBRCKT          reduce using rule 81 (vardt -> ID pn_quadruples_getvariable .)
+
+
+state 119
+
+    (86) vardt -> ID bracket .
+    (87) vardt -> ID bracket . bracket
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    TIMES           reduce using rule 86 (vardt -> ID bracket .)
+    DIVIDE          reduce using rule 86 (vardt -> ID bracket .)
+    PLUS            reduce using rule 86 (vardt -> ID bracket .)
+    MINUS           reduce using rule 86 (vardt -> ID bracket .)
+    GREATER         reduce using rule 86 (vardt -> ID bracket .)
+    LOWER           reduce using rule 86 (vardt -> ID bracket .)
+    SAME            reduce using rule 86 (vardt -> ID bracket .)
+    LEQUAL          reduce using rule 86 (vardt -> ID bracket .)
+    GEQUAL          reduce using rule 86 (vardt -> ID bracket .)
+    NOTEQUAL        reduce using rule 86 (vardt -> ID bracket .)
+    AND             reduce using rule 86 (vardt -> ID bracket .)
+    OR              reduce using rule 86 (vardt -> ID bracket .)
+    PNTCOMMA        reduce using rule 86 (vardt -> ID bracket .)
+    RPAREN          reduce using rule 86 (vardt -> ID bracket .)
+    COMMA           reduce using rule 86 (vardt -> ID bracket .)
+    RBRCKT          reduce using rule 86 (vardt -> ID bracket .)
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 152
+
+state 120
+
+    (88) pn_quadruples_getvariable -> empty .
+
+    TIMES           reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    DIVIDE          reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    PLUS            reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    MINUS           reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    GREATER         reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    LOWER           reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    SAME            reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    LEQUAL          reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    GEQUAL          reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    NOTEQUAL        reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    AND             reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    OR              reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    PNTCOMMA        reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    RPAREN          reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    COMMA           reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+    RBRCKT          reduce using rule 88 (pn_quadruples_getvariable -> empty .)
+
+
+state 121
+
+    (44) bracket -> LBRCKT . DTI RBRCKT
+    (45) bracket -> LBRCKT . ID RBRCKT
+
+    DTI             shift and go to state 153
+    ID              shift and go to state 154
+
+
+state 122
+
+    (32) noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket . PNTCOMMA
+    (35) inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket . asignacioninicialarr
+    (48) asignacioninicialarr -> . EQUALS looparreglo PNTCOMMA
+
+    PNTCOMMA        shift and go to state 155
+    EQUALS          shift and go to state 157
+
+    asignacioninicialarr           shift and go to state 156
+
+state 123
+
+    (33) noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket . bracket PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket . bracket asignacioninicialmat
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 158
+
+state 124
+
+    (46) asignacion -> ID EQUALS expresion . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 159
+
+
+state 125
+
+    (8) funcionesloop -> FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones .
+
+    MAIN            reduce using rule 8 (funcionesloop -> FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones .)
+
+
+state 126
+
+    (15) funcparameters -> LPAREN funcparametersloop RPAREN .
+
+    LCORCHO         reduce using rule 15 (funcparameters -> LPAREN funcparametersloop RPAREN .)
+
+
+state 127
+
+    (16) funcparametersloop -> pn_parameter tipo . ID pn_currentid funcparametersloop
+
+    ID              shift and go to state 160
+
+
+state 128
+
+    (17) funcparametersloop -> COMMA pn_parameter . tipo ID pn_currentid funcparametersloop
+    (38) tipo -> . INT pn_currenttype
+    (39) tipo -> . FLOAT pn_currenttype
+    (40) tipo -> . BOOL pn_currenttype
+    (41) tipo -> . STRING pn_currenttype
+
+    INT             shift and go to state 18
+    FLOAT           shift and go to state 19
+    BOOL            shift and go to state 20
+    STRING          shift and go to state 21
+
+    tipo                           shift and go to state 161
+
+state 129
+
+    (19) pn_parameter -> empty .
+
+    INT             reduce using rule 19 (pn_parameter -> empty .)
+    FLOAT           reduce using rule 19 (pn_parameter -> empty .)
+    BOOL            reduce using rule 19 (pn_parameter -> empty .)
+    STRING          reduce using rule 19 (pn_parameter -> empty .)
+
+
+state 130
+
+    (35) inicializada -> ARR pn_currentspecial tipo ID pn_currentid . bracket asignacioninicialarr
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 162
+
+state 131
+
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid . bracket bracket asignacioninicialmat
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 163
+
+state 132
+
+    (53) expresion -> exp expresionrelacional pn_quadruples_checkrelop .
+
+    PNTCOMMA        reduce using rule 53 (expresion -> exp expresionrelacional pn_quadruples_checkrelop .)
+    RPAREN          reduce using rule 53 (expresion -> exp expresionrelacional pn_quadruples_checkrelop .)
+    COMMA           reduce using rule 53 (expresion -> exp expresionrelacional pn_quadruples_checkrelop .)
+    RBRCKT          reduce using rule 53 (expresion -> exp expresionrelacional pn_quadruples_checkrelop .)
+
+
+state 133
+
+    (64) pn_quadruples_checkrelop -> empty .
+
+    PNTCOMMA        reduce using rule 64 (pn_quadruples_checkrelop -> empty .)
+    RPAREN          reduce using rule 64 (pn_quadruples_checkrelop -> empty .)
+    COMMA           reduce using rule 64 (pn_quadruples_checkrelop -> empty .)
+    RBRCKT          reduce using rule 64 (pn_quadruples_checkrelop -> empty .)
+
+
+state 134
+
+    (54) expresionrelacional -> GREATER pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 164
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 135
+
+    (63) pn_quadruples_addrelop -> empty .
+
+    LPAREN          reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+    ID              reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+    DTI             reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+    DTF             reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+    DTB             reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+    DTS             reduce using rule 63 (pn_quadruples_addrelop -> empty .)
+
+
+state 136
+
+    (55) expresionrelacional -> LOWER pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 165
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 137
+
+    (56) expresionrelacional -> SAME pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 166
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 138
+
+    (57) expresionrelacional -> LEQUAL pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 167
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 139
+
+    (58) expresionrelacional -> GEQUAL pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 168
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 140
+
+    (59) expresionrelacional -> NOTEQUAL pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 169
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 141
+
+    (60) expresionrelacional -> AND pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 170
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 142
+
+    (61) expresionrelacional -> OR pn_quadruples_addrelop . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 171
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 143
+
+    (65) exp -> termino pn_quadruples_checksumres expsumres .
+
+    GREATER         reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    LOWER           reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    SAME            reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    LEQUAL          reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    GEQUAL          reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    NOTEQUAL        reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    AND             reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    OR              reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    PNTCOMMA        reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    RPAREN          reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    COMMA           reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+    RBRCKT          reduce using rule 65 (exp -> termino pn_quadruples_checksumres expsumres .)
+
+
+state 144
+
+    (66) expsumres -> PLUS . pn_quadruples_addsumres exp
+    (70) pn_quadruples_addsumres -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addsumres        shift and go to state 172
+    empty                          shift and go to state 173
+
+state 145
+
+    (67) expsumres -> MINUS . pn_quadruples_addsumres exp
+    (70) pn_quadruples_addsumres -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addsumres        shift and go to state 174
+    empty                          shift and go to state 173
+
+state 146
+
+    (68) expsumres -> empty .
+
+    GREATER         reduce using rule 68 (expsumres -> empty .)
+    LOWER           reduce using rule 68 (expsumres -> empty .)
+    SAME            reduce using rule 68 (expsumres -> empty .)
+    LEQUAL          reduce using rule 68 (expsumres -> empty .)
+    GEQUAL          reduce using rule 68 (expsumres -> empty .)
+    NOTEQUAL        reduce using rule 68 (expsumres -> empty .)
+    AND             reduce using rule 68 (expsumres -> empty .)
+    OR              reduce using rule 68 (expsumres -> empty .)
+    PNTCOMMA        reduce using rule 68 (expsumres -> empty .)
+    RPAREN          reduce using rule 68 (expsumres -> empty .)
+    COMMA           reduce using rule 68 (expsumres -> empty .)
+    RBRCKT          reduce using rule 68 (expsumres -> empty .)
+
+
+state 147
+
+    (71) termino -> factor pn_quadruples_checkmuldiv terminomuldiv .
+
+    PLUS            reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    MINUS           reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    GREATER         reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    LOWER           reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    SAME            reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    LEQUAL          reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    GEQUAL          reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    NOTEQUAL        reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    AND             reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    OR              reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    PNTCOMMA        reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    RPAREN          reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    COMMA           reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+    RBRCKT          reduce using rule 71 (termino -> factor pn_quadruples_checkmuldiv terminomuldiv .)
+
+
+state 148
+
+    (72) terminomuldiv -> TIMES . pn_quadruples_addmuldiv termino
+    (76) pn_quadruples_addmuldiv -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addmuldiv        shift and go to state 175
+    empty                          shift and go to state 176
+
+state 149
+
+    (73) terminomuldiv -> DIVIDE . pn_quadruples_addmuldiv termino
+    (76) pn_quadruples_addmuldiv -> . empty
+    (89) empty -> .
+
+    LPAREN          reduce using rule 89 (empty -> .)
+    ID              reduce using rule 89 (empty -> .)
+    DTI             reduce using rule 89 (empty -> .)
+    DTF             reduce using rule 89 (empty -> .)
+    DTB             reduce using rule 89 (empty -> .)
+    DTS             reduce using rule 89 (empty -> .)
+
+    pn_quadruples_addmuldiv        shift and go to state 177
+    empty                          shift and go to state 176
+
+state 150
+
+    (74) terminomuldiv -> empty .
+
+    PLUS            reduce using rule 74 (terminomuldiv -> empty .)
+    MINUS           reduce using rule 74 (terminomuldiv -> empty .)
+    GREATER         reduce using rule 74 (terminomuldiv -> empty .)
+    LOWER           reduce using rule 74 (terminomuldiv -> empty .)
+    SAME            reduce using rule 74 (terminomuldiv -> empty .)
+    LEQUAL          reduce using rule 74 (terminomuldiv -> empty .)
+    GEQUAL          reduce using rule 74 (terminomuldiv -> empty .)
+    NOTEQUAL        reduce using rule 74 (terminomuldiv -> empty .)
+    AND             reduce using rule 74 (terminomuldiv -> empty .)
+    OR              reduce using rule 74 (terminomuldiv -> empty .)
+    PNTCOMMA        reduce using rule 74 (terminomuldiv -> empty .)
+    RPAREN          reduce using rule 74 (terminomuldiv -> empty .)
+    COMMA           reduce using rule 74 (terminomuldiv -> empty .)
+    RBRCKT          reduce using rule 74 (terminomuldiv -> empty .)
+
+
+state 151
+
+    (77) factor -> LPAREN pn_quadruples_addfbm expresion . RPAREN pn_quadruples_remfbm
+
+    RPAREN          shift and go to state 178
+
+
+state 152
+
+    (87) vardt -> ID bracket bracket .
+
+    TIMES           reduce using rule 87 (vardt -> ID bracket bracket .)
+    DIVIDE          reduce using rule 87 (vardt -> ID bracket bracket .)
+    PLUS            reduce using rule 87 (vardt -> ID bracket bracket .)
+    MINUS           reduce using rule 87 (vardt -> ID bracket bracket .)
+    GREATER         reduce using rule 87 (vardt -> ID bracket bracket .)
+    LOWER           reduce using rule 87 (vardt -> ID bracket bracket .)
+    SAME            reduce using rule 87 (vardt -> ID bracket bracket .)
+    LEQUAL          reduce using rule 87 (vardt -> ID bracket bracket .)
+    GEQUAL          reduce using rule 87 (vardt -> ID bracket bracket .)
+    NOTEQUAL        reduce using rule 87 (vardt -> ID bracket bracket .)
+    AND             reduce using rule 87 (vardt -> ID bracket bracket .)
+    OR              reduce using rule 87 (vardt -> ID bracket bracket .)
+    PNTCOMMA        reduce using rule 87 (vardt -> ID bracket bracket .)
+    RPAREN          reduce using rule 87 (vardt -> ID bracket bracket .)
+    COMMA           reduce using rule 87 (vardt -> ID bracket bracket .)
+    RBRCKT          reduce using rule 87 (vardt -> ID bracket bracket .)
+
+
+state 153
+
+    (44) bracket -> LBRCKT DTI . RBRCKT
+
+    RBRCKT          shift and go to state 179
+
+
+state 154
+
+    (45) bracket -> LBRCKT ID . RBRCKT
+
+    RBRCKT          shift and go to state 180
+
+
+state 155
+
+    (32) noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .
+
+    CONS            reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    ARR             reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    MAT             reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    INT             reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    FLOAT           reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    BOOL            reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    STRING          reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    FUNC            reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    MAIN            reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    ID              reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+    RCORCHO         reduce using rule 32 (noinicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket PNTCOMMA .)
+
+
+state 156
+
+    (35) inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .
+
+    CONS            reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    ARR             reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    MAT             reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    INT             reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    FLOAT           reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    BOOL            reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    STRING          reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    FUNC            reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    MAIN            reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    ID              reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+    RCORCHO         reduce using rule 35 (inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr .)
+
+
+state 157
+
+    (48) asignacioninicialarr -> EQUALS . looparreglo PNTCOMMA
+    (50) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 182
+
+    looparreglo                    shift and go to state 181
+
+state 158
+
+    (33) noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket . PNTCOMMA
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket . asignacioninicialmat
+    (49) asignacioninicialmat -> . EQUALS looparreglo looparreglo PNTCOMMA
+
+    PNTCOMMA        shift and go to state 183
+    EQUALS          shift and go to state 185
+
+    asignacioninicialmat           shift and go to state 184
+
+state 159
+
+    (46) asignacion -> ID EQUALS expresion PNTCOMMA .
+
+    ID              reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    CONS            reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    ARR             reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    MAT             reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    INT             reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    FLOAT           reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    BOOL            reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    STRING          reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+    RCORCHO         reduce using rule 46 (asignacion -> ID EQUALS expresion PNTCOMMA .)
+
+
+state 160
+
+    (16) funcparametersloop -> pn_parameter tipo ID . pn_currentid funcparametersloop
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    COMMA           reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 186
+    empty                          shift and go to state 51
+
+state 161
+
+    (17) funcparametersloop -> COMMA pn_parameter tipo . ID pn_currentid funcparametersloop
+
+    ID              shift and go to state 187
+
+
+state 162
+
+    (35) inicializada -> ARR pn_currentspecial tipo ID pn_currentid bracket . asignacioninicialarr
+    (48) asignacioninicialarr -> . EQUALS looparreglo PNTCOMMA
+
+    EQUALS          shift and go to state 157
+
+    asignacioninicialarr           shift and go to state 156
+
+state 163
+
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket . bracket asignacioninicialmat
+    (44) bracket -> . LBRCKT DTI RBRCKT
+    (45) bracket -> . LBRCKT ID RBRCKT
+
+    LBRCKT          shift and go to state 121
+
+    bracket                        shift and go to state 188
+
+state 164
+
+    (54) expresionrelacional -> GREATER pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 54 (expresionrelacional -> GREATER pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 54 (expresionrelacional -> GREATER pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 54 (expresionrelacional -> GREATER pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 54 (expresionrelacional -> GREATER pn_quadruples_addrelop exp .)
+
+
+state 165
+
+    (55) expresionrelacional -> LOWER pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 55 (expresionrelacional -> LOWER pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 55 (expresionrelacional -> LOWER pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 55 (expresionrelacional -> LOWER pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 55 (expresionrelacional -> LOWER pn_quadruples_addrelop exp .)
+
+
+state 166
+
+    (56) expresionrelacional -> SAME pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 56 (expresionrelacional -> SAME pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 56 (expresionrelacional -> SAME pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 56 (expresionrelacional -> SAME pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 56 (expresionrelacional -> SAME pn_quadruples_addrelop exp .)
+
+
+state 167
+
+    (57) expresionrelacional -> LEQUAL pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 57 (expresionrelacional -> LEQUAL pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 57 (expresionrelacional -> LEQUAL pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 57 (expresionrelacional -> LEQUAL pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 57 (expresionrelacional -> LEQUAL pn_quadruples_addrelop exp .)
+
+
+state 168
+
+    (58) expresionrelacional -> GEQUAL pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 58 (expresionrelacional -> GEQUAL pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 58 (expresionrelacional -> GEQUAL pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 58 (expresionrelacional -> GEQUAL pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 58 (expresionrelacional -> GEQUAL pn_quadruples_addrelop exp .)
+
+
+state 169
+
+    (59) expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 59 (expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 59 (expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 59 (expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 59 (expresionrelacional -> NOTEQUAL pn_quadruples_addrelop exp .)
+
+
+state 170
+
+    (60) expresionrelacional -> AND pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 60 (expresionrelacional -> AND pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 60 (expresionrelacional -> AND pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 60 (expresionrelacional -> AND pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 60 (expresionrelacional -> AND pn_quadruples_addrelop exp .)
+
+
+state 171
+
+    (61) expresionrelacional -> OR pn_quadruples_addrelop exp .
+
+    PNTCOMMA        reduce using rule 61 (expresionrelacional -> OR pn_quadruples_addrelop exp .)
+    RPAREN          reduce using rule 61 (expresionrelacional -> OR pn_quadruples_addrelop exp .)
+    COMMA           reduce using rule 61 (expresionrelacional -> OR pn_quadruples_addrelop exp .)
+    RBRCKT          reduce using rule 61 (expresionrelacional -> OR pn_quadruples_addrelop exp .)
+
+
+state 172
+
+    (66) expsumres -> PLUS pn_quadruples_addsumres . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 189
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 173
+
+    (70) pn_quadruples_addsumres -> empty .
+
+    LPAREN          reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+    ID              reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+    DTI             reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+    DTF             reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+    DTB             reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+    DTS             reduce using rule 70 (pn_quadruples_addsumres -> empty .)
+
+
+state 174
+
+    (67) expsumres -> MINUS pn_quadruples_addsumres . exp
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    exp                            shift and go to state 190
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 175
+
+    (72) terminomuldiv -> TIMES pn_quadruples_addmuldiv . termino
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    termino                        shift and go to state 191
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 176
+
+    (76) pn_quadruples_addmuldiv -> empty .
+
+    LPAREN          reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+    ID              reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+    DTI             reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+    DTF             reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+    DTB             reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+    DTS             reduce using rule 76 (pn_quadruples_addmuldiv -> empty .)
+
+
+state 177
+
+    (73) terminomuldiv -> DIVIDE pn_quadruples_addmuldiv . termino
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    termino                        shift and go to state 192
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 178
+
+    (77) factor -> LPAREN pn_quadruples_addfbm expresion RPAREN . pn_quadruples_remfbm
+    (80) pn_quadruples_remfbm -> . empty
+    (89) empty -> .
+
+    TIMES           reduce using rule 89 (empty -> .)
+    DIVIDE          reduce using rule 89 (empty -> .)
+    PLUS            reduce using rule 89 (empty -> .)
+    MINUS           reduce using rule 89 (empty -> .)
+    GREATER         reduce using rule 89 (empty -> .)
+    LOWER           reduce using rule 89 (empty -> .)
+    SAME            reduce using rule 89 (empty -> .)
+    LEQUAL          reduce using rule 89 (empty -> .)
+    GEQUAL          reduce using rule 89 (empty -> .)
+    NOTEQUAL        reduce using rule 89 (empty -> .)
+    AND             reduce using rule 89 (empty -> .)
+    OR              reduce using rule 89 (empty -> .)
+    PNTCOMMA        reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+    COMMA           reduce using rule 89 (empty -> .)
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    pn_quadruples_remfbm           shift and go to state 193
+    empty                          shift and go to state 194
+
+state 179
+
+    (44) bracket -> LBRCKT DTI RBRCKT .
+
+    LBRCKT          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    TIMES           reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    DIVIDE          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    PLUS            reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    MINUS           reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    GREATER         reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    LOWER           reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    SAME            reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    LEQUAL          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    GEQUAL          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    NOTEQUAL        reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    AND             reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    OR              reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    PNTCOMMA        reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    RPAREN          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    COMMA           reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    RBRCKT          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+    EQUALS          reduce using rule 44 (bracket -> LBRCKT DTI RBRCKT .)
+
+
+state 180
+
+    (45) bracket -> LBRCKT ID RBRCKT .
+
+    LBRCKT          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    TIMES           reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    DIVIDE          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    PLUS            reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    MINUS           reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    GREATER         reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    LOWER           reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    SAME            reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    LEQUAL          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    GEQUAL          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    NOTEQUAL        reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    AND             reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    OR              reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    PNTCOMMA        reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    RPAREN          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    COMMA           reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    RBRCKT          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+    EQUALS          reduce using rule 45 (bracket -> LBRCKT ID RBRCKT .)
+
+
+state 181
+
+    (48) asignacioninicialarr -> EQUALS looparreglo . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 195
+
+
+state 182
+
+    (50) looparreglo -> LBRCKT . expresion expresionloop RBRCKT
+    (53) expresion -> . exp expresionrelacional pn_quadruples_checkrelop
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    expresion                      shift and go to state 196
+    exp                            shift and go to state 78
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 183
+
+    (33) noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .
+
+    CONS            reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    ARR             reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    MAT             reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    INT             reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    FLOAT           reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    BOOL            reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    STRING          reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    FUNC            reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    MAIN            reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    ID              reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+    RCORCHO         reduce using rule 33 (noinicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket PNTCOMMA .)
+
+
+state 184
+
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .
+
+    CONS            reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    ARR             reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    MAT             reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    INT             reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    FLOAT           reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    BOOL            reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    STRING          reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    FUNC            reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    MAIN            reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    ID              reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+    RCORCHO         reduce using rule 36 (inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat .)
+
+
+state 185
+
+    (49) asignacioninicialmat -> EQUALS . looparreglo looparreglo PNTCOMMA
+    (50) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 182
+
+    looparreglo                    shift and go to state 197
+
+state 186
+
+    (16) funcparametersloop -> pn_parameter tipo ID pn_currentid . funcparametersloop
+    (16) funcparametersloop -> . pn_parameter tipo ID pn_currentid funcparametersloop
+    (17) funcparametersloop -> . COMMA pn_parameter tipo ID pn_currentid funcparametersloop
+    (18) funcparametersloop -> . empty
+    (19) pn_parameter -> . empty
+    (89) empty -> .
+
+    COMMA           shift and go to state 97
+    RPAREN          reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_parameter                   shift and go to state 96
+    funcparametersloop             shift and go to state 198
+    empty                          shift and go to state 98
+
+state 187
+
+    (17) funcparametersloop -> COMMA pn_parameter tipo ID . pn_currentid funcparametersloop
+    (43) pn_currentid -> . empty
+    (89) empty -> .
+
+    COMMA           reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+    RPAREN          reduce using rule 89 (empty -> .)
+
+    pn_currentid                   shift and go to state 199
+    empty                          shift and go to state 51
+
+state 188
+
+    (36) inicializada -> MAT pn_currentspecial tipo ID pn_currentid bracket bracket . asignacioninicialmat
+    (49) asignacioninicialmat -> . EQUALS looparreglo looparreglo PNTCOMMA
+
+    EQUALS          shift and go to state 185
+
+    asignacioninicialmat           shift and go to state 184
+
+state 189
+
+    (66) expsumres -> PLUS pn_quadruples_addsumres exp .
+
+    GREATER         reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    LOWER           reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    SAME            reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    LEQUAL          reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    GEQUAL          reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    NOTEQUAL        reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    AND             reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    OR              reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    PNTCOMMA        reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    RPAREN          reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    COMMA           reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+    RBRCKT          reduce using rule 66 (expsumres -> PLUS pn_quadruples_addsumres exp .)
+
+
+state 190
+
+    (67) expsumres -> MINUS pn_quadruples_addsumres exp .
+
+    GREATER         reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    LOWER           reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    SAME            reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    LEQUAL          reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    GEQUAL          reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    NOTEQUAL        reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    AND             reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    OR              reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    PNTCOMMA        reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    RPAREN          reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    COMMA           reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+    RBRCKT          reduce using rule 67 (expsumres -> MINUS pn_quadruples_addsumres exp .)
+
+
+state 191
+
+    (72) terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .
+
+    PLUS            reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    MINUS           reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    GREATER         reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    LOWER           reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    SAME            reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    LEQUAL          reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    GEQUAL          reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    NOTEQUAL        reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    AND             reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    OR              reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    PNTCOMMA        reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    RPAREN          reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    COMMA           reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+    RBRCKT          reduce using rule 72 (terminomuldiv -> TIMES pn_quadruples_addmuldiv termino .)
+
+
+state 192
+
+    (73) terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .
+
+    PLUS            reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    MINUS           reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    GREATER         reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    LOWER           reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    SAME            reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    LEQUAL          reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    GEQUAL          reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    NOTEQUAL        reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    AND             reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    OR              reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    PNTCOMMA        reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    RPAREN          reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    COMMA           reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+    RBRCKT          reduce using rule 73 (terminomuldiv -> DIVIDE pn_quadruples_addmuldiv termino .)
+
+
+state 193
+
+    (77) factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .
+
+    TIMES           reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    DIVIDE          reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    PLUS            reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    MINUS           reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    GREATER         reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    LOWER           reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    SAME            reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    LEQUAL          reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    GEQUAL          reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    NOTEQUAL        reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    AND             reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    OR              reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    PNTCOMMA        reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    RPAREN          reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    COMMA           reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+    RBRCKT          reduce using rule 77 (factor -> LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm .)
+
+
+state 194
+
+    (80) pn_quadruples_remfbm -> empty .
+
+    TIMES           reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    DIVIDE          reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    PLUS            reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    MINUS           reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    GREATER         reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    LOWER           reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    SAME            reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    LEQUAL          reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    GEQUAL          reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    NOTEQUAL        reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    AND             reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    OR              reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    PNTCOMMA        reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    RPAREN          reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    COMMA           reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+    RBRCKT          reduce using rule 80 (pn_quadruples_remfbm -> empty .)
+
+
+state 195
+
+    (48) asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .
+
+    CONS            reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    ARR             reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    MAT             reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    INT             reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    FLOAT           reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    BOOL            reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    STRING          reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    FUNC            reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    MAIN            reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    ID              reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+    RCORCHO         reduce using rule 48 (asignacioninicialarr -> EQUALS looparreglo PNTCOMMA .)
+
+
+state 196
+
+    (50) looparreglo -> LBRCKT expresion . expresionloop RBRCKT
+    (51) expresionloop -> . COMMA expresion expresionloop
+    (52) expresionloop -> . empty
+    (89) empty -> .
+
+    COMMA           shift and go to state 201
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    expresionloop                  shift and go to state 200
+    empty                          shift and go to state 202
+
+state 197
+
+    (49) asignacioninicialmat -> EQUALS looparreglo . looparreglo PNTCOMMA
+    (50) looparreglo -> . LBRCKT expresion expresionloop RBRCKT
+
+    LBRCKT          shift and go to state 182
+
+    looparreglo                    shift and go to state 203
+
+state 198
+
+    (16) funcparametersloop -> pn_parameter tipo ID pn_currentid funcparametersloop .
+
+    RPAREN          reduce using rule 16 (funcparametersloop -> pn_parameter tipo ID pn_currentid funcparametersloop .)
+
+
+state 199
+
+    (17) funcparametersloop -> COMMA pn_parameter tipo ID pn_currentid . funcparametersloop
+    (16) funcparametersloop -> . pn_parameter tipo ID pn_currentid funcparametersloop
+    (17) funcparametersloop -> . COMMA pn_parameter tipo ID pn_currentid funcparametersloop
+    (18) funcparametersloop -> . empty
+    (19) pn_parameter -> . empty
+    (89) empty -> .
+
+    COMMA           shift and go to state 97
+    RPAREN          reduce using rule 89 (empty -> .)
+    INT             reduce using rule 89 (empty -> .)
+    FLOAT           reduce using rule 89 (empty -> .)
+    BOOL            reduce using rule 89 (empty -> .)
+    STRING          reduce using rule 89 (empty -> .)
+
+    pn_parameter                   shift and go to state 96
+    funcparametersloop             shift and go to state 204
+    empty                          shift and go to state 98
+
+state 200
+
+    (50) looparreglo -> LBRCKT expresion expresionloop . RBRCKT
+
+    RBRCKT          shift and go to state 205
+
+
+state 201
+
+    (51) expresionloop -> COMMA . expresion expresionloop
+    (53) expresion -> . exp expresionrelacional pn_quadruples_checkrelop
+    (65) exp -> . termino pn_quadruples_checksumres expsumres
+    (71) termino -> . factor pn_quadruples_checkmuldiv terminomuldiv
+    (77) factor -> . LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    (78) factor -> . vardt
+    (81) vardt -> . ID pn_quadruples_getvariable
+    (82) vardt -> . DTI
+    (83) vardt -> . DTF
+    (84) vardt -> . DTB
+    (85) vardt -> . DTS
+    (86) vardt -> . ID bracket
+    (87) vardt -> . ID bracket bracket
+
+    LPAREN          shift and go to state 81
+    ID              shift and go to state 83
+    DTI             shift and go to state 84
+    DTF             shift and go to state 85
+    DTB             shift and go to state 86
+    DTS             shift and go to state 87
+
+    expresion                      shift and go to state 206
+    exp                            shift and go to state 78
+    termino                        shift and go to state 79
+    factor                         shift and go to state 80
+    vardt                          shift and go to state 82
+
+state 202
+
+    (52) expresionloop -> empty .
+
+    RBRCKT          reduce using rule 52 (expresionloop -> empty .)
+
+
+state 203
+
+    (49) asignacioninicialmat -> EQUALS looparreglo looparreglo . PNTCOMMA
+
+    PNTCOMMA        shift and go to state 207
+
+
+state 204
+
+    (17) funcparametersloop -> COMMA pn_parameter tipo ID pn_currentid funcparametersloop .
+
+    RPAREN          reduce using rule 17 (funcparametersloop -> COMMA pn_parameter tipo ID pn_currentid funcparametersloop .)
+
+
+state 205
+
+    (50) looparreglo -> LBRCKT expresion expresionloop RBRCKT .
+
+    PNTCOMMA        reduce using rule 50 (looparreglo -> LBRCKT expresion expresionloop RBRCKT .)
+    LBRCKT          reduce using rule 50 (looparreglo -> LBRCKT expresion expresionloop RBRCKT .)
+
+
+state 206
+
+    (51) expresionloop -> COMMA expresion . expresionloop
+    (51) expresionloop -> . COMMA expresion expresionloop
+    (52) expresionloop -> . empty
+    (89) empty -> .
+
+    COMMA           shift and go to state 201
+    RBRCKT          reduce using rule 89 (empty -> .)
+
+    expresionloop                  shift and go to state 208
+    empty                          shift and go to state 202
+
+state 207
+
+    (49) asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .
+
+    CONS            reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    ARR             reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    MAT             reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    INT             reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    FLOAT           reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    BOOL            reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    STRING          reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    FUNC            reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    MAIN            reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    ID              reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+    RCORCHO         reduce using rule 49 (asignacioninicialmat -> EQUALS looparreglo looparreglo PNTCOMMA .)
+
+
+state 208
+
+    (51) expresionloop -> COMMA expresion expresionloop .
+
+    RBRCKT          reduce using rule 51 (expresionloop -> COMMA expresion expresionloop .)
+

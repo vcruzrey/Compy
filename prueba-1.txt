@@ -1,0 +1,46 @@
+int gvsiI = hola[2][23];
+string gvinS = "Hola";
+bool gvinB;
+cons float gcinF = 1.0;
+arr int garrsiI[1];
+mat int gmatinI[2][2] = [1,2][1,2];
+cons mat int gmatcinI[2][2] = [1,2][1,2];
+
+func void func1(int perro, float barco) {
+  int fvsiI;
+  string fvinS = "Hola";
+  bool fvinB;
+  cons float fcinF = 1.0;
+  arr int farrsiI[1];
+  mat int fmatinI[2][2] = [1,2][1,2];
+  cons mat int fmatcinI[2][2] = [1,2][1,2];
+}
+
+func void func2(int perro, float barco) {
+  int fvsiI;
+  string fvinS = "Hola";
+  bool fvinB;
+  cons float fcinF = 1.0;
+  arr int farrsiI[1];
+  mat int fmatinI[2][2] = [1,2][1,2];
+  cons mat int fmatcinI[2][2] = [1,2][1,2];
+}
+
+main {
+  int perro;
+  string mvinS = "Hola";
+  bool mvinB;
+  cons float mcinF = 1.0;
+  arr int marrsiI[1];
+  mat int mmatinI[2][2] = [1,2][1,2];
+  cons mat int mmatcinI[2][2] = [1,2][1,2];
+
+  int fvsiI;
+  string fvinS = "Hola";
+  bool fvinB;
+  cons float fcinF = 1.0;
+  arr int farrsiI[1];
+  mat int fmatinI[2][2] = [1,2][1,2];
+  cons mat int fmatcinI[2][2] = [1,2][1,2];
+}
+end

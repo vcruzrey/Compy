@@ -1,0 +1,23 @@
+int a = 5;
+int b = 7;
+int c;
+int d;
+int e;
+int f;
+int g;
+int h;
+int i;
+int j;
+int k;
+int l;
+func void test (int x, int y) {
+
+}
+
+main {
+  float cat;
+  float pet;
+  float dog;
+  cat = a!=b != c;
+}
+end
