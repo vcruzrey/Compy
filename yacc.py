@@ -11,7 +11,7 @@ tabla_varibles = SymbolTable()
 aux_dato = Dato()
 aux_tabla = Tabla()
 Quadruples = Quadruples()
-
+#comentario de prueba
 #PROGRAMA
 def p_programa(p):
     '''
