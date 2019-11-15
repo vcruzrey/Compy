@@ -16,7 +16,7 @@ def semantic(left, right, operator):
             elif(operator in math):
                 return 'float'
             elif(operator in booleanOp):
-                return 'bool'
+                return 'int'
             else:
                 return 'errorbadop'
 

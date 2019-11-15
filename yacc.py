@@ -110,10 +110,12 @@ def p_bloque(p):
     '''
     bloque : LCORCHO bloqueloop RCORCHO
     '''
+    print("BLOQY")
 
 def p_bloqueloop(p):
     '''
     bloqueloop : estatuto bloqueloop
+               | asignacion bloqueloop
                | empty
     '''
 
@@ -194,7 +196,7 @@ def p_asignacion(p):
     '''
     asignacion : ID EQUALS expresion PNTCOMMA
     '''
-
+    print("Asignacion")
 def p_inicializada_asignacion(p):
     '''
     inicializada_asignacion : EQUALS expresion PNTCOMMA
@@ -224,21 +226,36 @@ def p_expresionloop(p):
 #Expresion
 def p_expresion(p):
     '''
-    expresion : exp expresionrelacional
+    expresion : exp expresionrelacional pn_quadruples_checkrelop
     '''
+    print("start")
 
 def p_expresionrelacional(p):
     '''
-    expresionrelacional : GREATER exp
-                        | LOWER exp
-                        | SAME exp
-                        | LEQUAL exp
-                        | GEQUAL exp
-                        | NOTEQUAL exp
-                        | AND exp
-                        | OR exp
+    expresionrelacional : GREATER pn_quadruples_addrelop exp
+                        | LOWER pn_quadruples_addrelop exp
+                        | SAME pn_quadruples_addrelop exp
+                        | LEQUAL pn_quadruples_addrelop exp
+                        | GEQUAL pn_quadruples_addrelop exp
+                        | NOTEQUAL pn_quadruples_addrelop exp
+                        | AND pn_quadruples_addrelop exp
+                        | OR pn_quadruples_addrelop exp
                         | empty
     '''
+
+def p_pn_quadruples_addrelop(p):
+    '''
+    pn_quadruples_addrelop : empty
+    '''
+    print("8------  "+p[-1])
+    Quadruples.POper.append(p[-1])
+
+def p_pn_quadruples_checkrelop(p):
+    '''
+    pn_quadruples_checkrelop : empty
+    '''
+    print("-----9")
+    Quadruples.checkrelop()
 
 # EXP
 def p_exp(p):
@@ -257,12 +274,14 @@ def p_pn_quadruples_checksumres(p):
     '''
     pn_quadruples_checksumres : empty
     '''
+    print("-----4")
     Quadruples.checksum()
 
 def p_pn_quadruples_addsumres(p):
     '''
     pn_quadruples_addsumres : empty
     '''
+    print("3------  "+p[-1])
     Quadruples.POper.append(p[-1])
 
 #Termino
@@ -282,19 +301,37 @@ def p_pn_quadruples_checkmuldiv(p):
     '''
     pn_quadruples_checkmuldiv : empty
     '''
+    print("-----5")
     Quadruples.checkmult()
 
 def p_pn_quadruples_addmuldiv(p):
     '''
     pn_quadruples_addmuldiv : empty
     '''
+    print("2------  "+p[-1])
     Quadruples.POper.append(p[-1])
 
 #Factor
 def p_factor(p):
     '''
-    factor : vardt
+    factor : LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+           | vardt
     '''
+
+def p_pn_quadruples_addfbm(p):
+    '''
+    pn_quadruples_addfbm : empty
+    '''
+    print("6------  "+p[-1])
+    Quadruples.POper.append(p[-1])
+
+def p_pn_quadruples_remfbm(p):
+    '''
+    pn_quadruples_remfbm : empty
+    '''
+    print("7------  "+p[-1])
+    Quadruples.POper.append(p[-1])
+    Quadruples.checkpar()
 
 #LPAREN expresion RPAREN
 #       | PLUS vardt
@@ -316,6 +353,7 @@ def p_pn_quadruples_getvariable(p):
     '''
     pn_quadruples_getvariable : empty
     '''
+    print("1------  "+p[-1])
     aux_dato.id = p[-1]
     vartest = tabla_varibles.get_variableinfo(aux_dato.id, aux_tabla.id)
     Quadruples.PilaO.append(vartest['id'])
@@ -348,5 +386,10 @@ if __name__ == '__main__':
 
 with open('data.json', 'w') as outfile:
     json.dump(tabla_varibles.diccionario, outfile)
+print("HERE")
+conta = 1
+for q in Quadruples.PQuad:
+    print(conta,q.operator,q.left_operand,q.right_operand,q.result)
+    conta += 1
 
-#∫Quadruples.print_quad()
+Quadruples.print_quad()
