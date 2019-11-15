@@ -12,6 +12,3 @@ void prueba() {
     cout<<"HOLA"<<endl;
     test();
 }
-
-dog = ((a*b-c*d)!=c+d*e/f);
-dog = ((a+b)+c*d/(e+a))!=a;
