@@ -18,6 +18,7 @@ main {
   float cat;
   float pet;
   float dog;
-  cat = a!=b != c;
+  dog = ((a*b-c*d)!=c+d*e/f);
+  dog = ((a+b)+c*d/(e+a))!=a;
 }
 end
