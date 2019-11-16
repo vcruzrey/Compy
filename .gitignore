@@ -3,3 +3,4 @@ parser.out
 parsetab.py
 test lex code.txt
 __pycache__/
+.DS_Store
