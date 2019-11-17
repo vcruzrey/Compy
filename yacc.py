@@ -1,3 +1,4 @@
+#https://github.com/yt4766269/plytype
 import json
 import sys
 import ply.yacc as yacc
@@ -110,12 +111,12 @@ def p_bloque(p):
     '''
     bloque : LCORCHO bloqueloop RCORCHO
     '''
-    print("BLOQY")
 
 def p_bloqueloop(p):
     '''
     bloqueloop : estatuto bloqueloop
                | asignacion bloqueloop
+               | condicion bloqueloop
                | empty
     '''
 
@@ -139,6 +140,7 @@ def p_pn_currentcons(p):
     '''
     aux_dato.cons = True
 
+#BETTER IMPLEMENTATION = PN DESPUES PNTCOMMA
 def p_noinicializada(p):
     '''
     noinicializada : tipo ID pn_currentid PNTCOMMA
@@ -148,11 +150,17 @@ def p_noinicializada(p):
 
 def p_inicializada(p):
     '''
-    inicializada : tipo ID pn_currentid inicializada_asignacion
-                 | ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
-                 | MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+    inicializada : tipo ID pn_currentid copy_id pn_quadruples_addvariable inicializada_asignacion
 
     '''
+#                 | ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
+#                 | MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
+
+def p_copy_id(p):
+    '''
+    copy_id : empty
+    '''
+    p[0] = p[-2]
 
 def p_pn_currentspecial(p):
     '''
@@ -194,12 +202,25 @@ def p_bracket(p):
 #Asignacion
 def p_asignacion(p):
     '''
-    asignacion : ID EQUALS expresion PNTCOMMA
+    asignacion : ID pn_quadruples_addvariable EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
     '''
-    print("Asignacion")
+
+def p_pn_quadruples_addequals(p):
+    '''
+    pn_quadruples_addequals : empty
+    '''
+    Quadruples.POper.append(p[-1])
+
+def p_pn_quadruples_checkequals(p):
+    '''
+    pn_quadruples_checkequals : empty
+    '''
+    print("PN --- 11 checkequals")
+    Quadruples.check_top_poper('equal')
+
 def p_inicializada_asignacion(p):
     '''
-    inicializada_asignacion : EQUALS expresion PNTCOMMA
+    inicializada_asignacion : EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
     '''
 
 def p_asignacioninicialarr(p):
@@ -226,38 +247,62 @@ def p_expresionloop(p):
 #Expresion
 def p_expresion(p):
     '''
-    expresion : exp expresionrelacional pn_quadruples_checkrelop
+    expresion : exprel pn_quadruples_checklogical expresionlogic
     '''
-    print("start")
 
-def p_expresionrelacional(p):
+def p_expresionlogic(p):
     '''
-    expresionrelacional : GREATER pn_quadruples_addrelop exp
-                        | LOWER pn_quadruples_addrelop exp
-                        | SAME pn_quadruples_addrelop exp
-                        | LEQUAL pn_quadruples_addrelop exp
-                        | GEQUAL pn_quadruples_addrelop exp
-                        | NOTEQUAL pn_quadruples_addrelop exp
-                        | AND pn_quadruples_addrelop exp
-                        | OR pn_quadruples_addrelop exp
+    expresionlogic : AND pn_quadruples_addlogical expresion
+                   | OR pn_quadruples_addlogical expresion
+                   | empty
+    '''
+
+def p_pn_quadruples_checklogical(p):
+    '''
+    pn_quadruples_checklogical : empty
+    '''
+    print("PN --- 11 checklogical")
+    Quadruples.check_top_poper('logical')
+
+def p_pn_quadruples_addlogical(p):
+    '''
+    pn_quadruples_addlogical : empty
+    '''
+    print("PN --- 10 addlogical " + p[-1])
+    Quadruples.POper.append(p[-1])
+
+#Expresion Relacional
+def p_exprel(p):
+    '''
+    exprel : exp expresionrelational pn_quadruples_checkrelational
+    '''
+
+def p_expresionrelational(p):
+    '''
+    expresionrelational : GREATER pn_quadruples_addrelational exp
+                        | LOWER pn_quadruples_addrelational exp
+                        | SAME pn_quadruples_addrelational exp
+                        | LEQUAL pn_quadruples_addrelational exp
+                        | GEQUAL pn_quadruples_addrelational exp
+                        | NOTEQUAL pn_quadruples_addrelational exp
                         | empty
     '''
 
-def p_pn_quadruples_addrelop(p):
+def p_pn_quadruples_checkrelational(p):
     '''
-    pn_quadruples_addrelop : empty
+    pn_quadruples_checkrelational : empty
     '''
-    print("8------  "+p[-1])
+    print("PN --- 9 checkrelational")
+    Quadruples.check_top_poper('relational')
+
+def p_pn_quadruples_addrelational(p):
+    '''
+    pn_quadruples_addrelational : empty
+    '''
+    print("PN --- 8 addrelational " + p[-1])
     Quadruples.POper.append(p[-1])
 
-def p_pn_quadruples_checkrelop(p):
-    '''
-    pn_quadruples_checkrelop : empty
-    '''
-    print("-----9")
-    Quadruples.checkrelop()
-
-# EXP
+#Exp
 def p_exp(p):
     '''
     exp : termino pn_quadruples_checksumres expsumres
@@ -274,14 +319,14 @@ def p_pn_quadruples_checksumres(p):
     '''
     pn_quadruples_checksumres : empty
     '''
-    print("-----4")
-    Quadruples.checksum()
+    print("PN --- 4 checksumres")
+    Quadruples.check_top_poper('sumres')
 
 def p_pn_quadruples_addsumres(p):
     '''
     pn_quadruples_addsumres : empty
     '''
-    print("3------  "+p[-1])
+    print("PN --- 8 addsumres " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Termino
@@ -301,37 +346,37 @@ def p_pn_quadruples_checkmuldiv(p):
     '''
     pn_quadruples_checkmuldiv : empty
     '''
-    print("-----5")
-    Quadruples.checkmult()
+    print("PN --- 3 checkmuldiv")
+    Quadruples.check_top_poper('muldiv')
 
 def p_pn_quadruples_addmuldiv(p):
     '''
     pn_quadruples_addmuldiv : empty
     '''
-    print("2------  "+p[-1])
+    print("PN --- 2 addmuldiv " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Factor
 def p_factor(p):
     '''
-    factor : LPAREN pn_quadruples_addfbm expresion RPAREN pn_quadruples_remfbm
+    factor : LPAREN pn_quadruples_addfondo expresion RPAREN pn_quadruples_remfondo
            | vardt
     '''
 
-def p_pn_quadruples_addfbm(p):
+def p_pn_quadruples_addfondo(p):
     '''
-    pn_quadruples_addfbm : empty
+    pn_quadruples_addfondo : empty
     '''
-    print("6------  "+p[-1])
+    print("PN --- 6 addfondo " + p[-1])
     Quadruples.POper.append(p[-1])
 
-def p_pn_quadruples_remfbm(p):
+def p_pn_quadruples_remfondo(p):
     '''
-    pn_quadruples_remfbm : empty
+    pn_quadruples_remfondo : empty
     '''
-    print("7------  "+p[-1])
-    Quadruples.POper.append(p[-1])
-    Quadruples.checkpar()
+    print("PN --- 7 remfondo " + p[-1])
+    Quadruples.POper.pop()
+
 
 #LPAREN expresion RPAREN
 #       | PLUS vardt
@@ -340,24 +385,88 @@ def p_pn_quadruples_remfbm(p):
 #VARDT
 def p_vardt(p):
     '''
-    vardt : ID pn_quadruples_getvariable
-          | DTI
-          | DTF
-          | DTB
-          | DTS
+    vardt : ID pn_quadruples_addvariable
+          | DTI pn_quadruples_addconstantint
+          | DTF pn_quadruples_addconstantfloat
+          | DTB pn_quadruples_addconstantbool
+          | DTS pn_quadruples_addconstantstring
           | ID bracket
           | ID bracket bracket
     '''
 
-def p_pn_quadruples_getvariable(p):
+def p_pn_quadruples_addvariable(p):
     '''
-    pn_quadruples_getvariable : empty
+    pn_quadruples_addvariable : empty
     '''
-    print("1------  "+p[-1])
+    print("PN --- 1 addvariable " + p[-1])
     aux_dato.id = p[-1]
     vartest = tabla_varibles.get_variableinfo(aux_dato.id, aux_tabla.id)
     Quadruples.PilaO.append(vartest['id'])
     Quadruples.PTypes.append(vartest['type'])
+
+def p_pn_quadruples_addconstantint(p):
+    '''
+    pn_quadruples_addconstantint : empty
+    '''
+    print("PN --- 1 addconstantint " + str(p[-1]))
+    Quadruples.PilaO.append(p[-1])
+    Quadruples.PTypes.append('int')
+
+def p_pn_quadruples_addconstantfloat(p):
+    '''
+    pn_quadruples_addconstantfloat : empty
+    '''
+    print("PN --- 1 addconstantfloat " + str(p[-1]))
+    Quadruples.PilaO.append(p[-1])
+    Quadruples.PTypes.append('float')
+
+def p_pn_quadruples_addconstantbool(p):
+    '''
+    pn_quadruples_addconstantbool : empty
+    '''
+    print("PN --- 1 addconstantbool " + str(p[-1]))
+    Quadruples.PilaO.append(p[-1])
+    Quadruples.PTypes.append('bool')
+
+def p_pn_quadruples_addconstantstring(p):
+    '''
+    pn_quadruples_addconstantstring : empty
+    '''
+    print("PN --- 1 addconstantstring " + str(p[-1]))
+    Quadruples.PilaO.append(p[-1])
+    Quadruples.PTypes.append('string')
+
+#Asignacion
+def p_condicion(p):
+    '''
+    condicion : IF condition_if
+              | WHILE condition_if
+              | DO condition_if
+    '''
+
+def p_condition_if(p):
+    '''
+    condition_if : condition_statement pn_quadruples_addgotof bloque pn_quadruples_closegotof
+    '''
+
+def p_condition_statement(p):
+    '''
+    condition_statement : LPAREN expresion RPAREN
+    '''
+
+def p_pn_quadruples_addgotof(p):
+    '''
+    pn_quadruples_addgotof : empty
+    '''
+    print("PN --- CIF 1 addgotof ")
+    Quadruples.addgotof()
+
+def p_pn_quadruples_closegotof(p):
+    '''
+    pn_quadruples_closegotof : empty
+    '''
+    print("PN --- CIF 2 closegotof ")
+    Quadruples.closegotof()
 
 def p_empty(p):
     '''empty :'''
@@ -371,7 +480,7 @@ yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        arch_name = 'prueba-3.txt'
+        arch_name = 'prueba-4.txt'
         arch = open(arch_name,'r')
         print("Leyendo archivo: " + arch_name + "...")
         info = arch.read()
@@ -386,7 +495,7 @@ if __name__ == '__main__':
 
 with open('data.json', 'w') as outfile:
     json.dump(tabla_varibles.diccionario, outfile)
-print("HERE")
+print("Quadruplos")
 conta = 1
 for q in Quadruples.PQuad:
     print(conta,q.operator,q.left_operand,q.right_operand,q.result)

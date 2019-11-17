@@ -1,0 +1,15 @@
+int a;
+int b;
+func void test (int x, int y) {
+
+}
+
+main {
+  if (a>b) {
+    if (a>b) {
+    }
+    a = a + b;
+  }
+  b = b;
+}
+end

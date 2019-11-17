@@ -1,5 +1,5 @@
-int a = 5;
-int b = 7;
+int a;
+int b;
 int c;
 int d;
 int e;
@@ -10,6 +10,9 @@ int i;
 int j;
 int k;
 int l;
+bool b1;
+bool b2;
+bool b3;
 func void test (int x, int y) {
 
 }
@@ -17,8 +20,6 @@ func void test (int x, int y) {
 main {
   float cat;
   float pet;
-  float dog;
-  dog = ((a*b-c*d)!=c+d*e/f);
-  dog = ((a+b)+c*d/(e+a))!=a;
-}
+  int dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;
+  }
 end

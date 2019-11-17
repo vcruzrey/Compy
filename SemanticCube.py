@@ -5,6 +5,20 @@ booleanOp = ['==', '!=', '>', '<', '>=', '<=']
 math = ['pi','%']
 equal = '='
 logicalOp = ['&&', '||']
+
+class Operators:
+    def __init__(self):
+        self.operator = {
+            'aritmetic' : {
+                'sumres': ['+','-'],
+                'muldiv': ['*','/'],
+            },
+            'relational' : ['==', '!=', '>', '<', '>=', '<='],
+            'math' : ['pi','%'],
+            'equal' : ['='],
+            'logical' : ['&&', '||']
+        }
+
 #SEMANTIC CUBE FUNCTION: defines what value is returned from an operation of two types of data
 def semantic(left, right, operator):
     #INTEGERS
@@ -16,7 +30,7 @@ def semantic(left, right, operator):
             elif(operator in math):
                 return 'float'
             elif(operator in booleanOp):
-                return 'int'
+                return 'bool'
             else:
                 return 'errorbadop'
 
@@ -49,7 +63,7 @@ def semantic(left, right, operator):
             else:
                 return 'errorbadop'
         else:
-            return 'Incompatible Data Types'
+            return 'errorbaddt'
     #STRINGS
     elif(left == 'string'):
         if(right == 'string'):
