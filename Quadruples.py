@@ -55,6 +55,8 @@ class Quadruples():
             elif (case == 'equal'):
                 if (self.POper[-1] in operatos.operator['equal']):
                     self.pop_poper()
+            elif (case == 'print'):
+                self.pop_print()
 
     def pop_poper(self):
         right_operand = self.PilaO.pop()
@@ -85,6 +87,13 @@ class Quadruples():
             if (self.POper[-1] == ')'):
                 self.POper.pop()
                 self.POper.pop()
+
+    def pop_print(self):
+        operand = self.PilaO.pop()
+        Type = self.PTypes.pop()
+        operator = self.POper.pop()
+        quad = Quadruple(operator, "NONE", "NONE", operand)
+        self.PQuad.append(quad)
 
     def addgotof(self):
         operand = self.PilaO.pop()

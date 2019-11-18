@@ -514,19 +514,37 @@ def p_pn_quadruples_addgotov(p):
     #Print("PN --- CIF 1 addgotof ")
     Quadruples.addgotov()
 
-#Ciclo
+#Escritura
 def p_escritura(p):
     '''
-    escritura : PRINT LPAREN escrituraloop RPAREN PNTCOMMA
+    escritura : PRINT LPAREN escritura_statement escrituraloop RPAREN PNTCOMMA
     '''
 
 def p_escrituraloop(p):
     '''
-    escrituraloop : expresion escrituraloop
-                  | expresion
+    escrituraloop : COMMA escritura_statement escrituraloop
                   | empty
     '''
 
+def p_escritura_statement(p):
+    '''
+    escritura_statement : pn_quadruples_addprint expresion pn_quadruples_checkprint
+    '''
+
+def p_pn_quadruples_addprint(p):
+    '''
+    pn_quadruples_addprint : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.POper.append('print')
+
+def p_pn_quadruples_checkprint(p):
+    '''
+    pn_quadruples_checkprint : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.check_top_poper('print')
+    
 def p_empty(p):
     '''empty :'''
     pass
