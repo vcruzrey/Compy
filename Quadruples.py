@@ -33,6 +33,9 @@ class Quadruples():
         print("Poper")
         for x in range(len(self.POper)):
             print (self.POper[x]),
+        print("PJumps")
+        for x in range(len(self.PJumps)):
+            print (self.PJumps[x]),
 
     def check_top_poper(self, case):
         length = len(self.POper)
@@ -69,7 +72,7 @@ class Quadruples():
                 result = "T"+str(self.temporales)
                 self.temporales +=1
                 self.PilaO.append(result)
-                print("PushT--  "+self.PilaO[-1])
+                #print("PushT--  "+self.PilaO[-1])
                 self.PTypes.append(result_Type)
                 quad = Quadruple(operator, left_operand, right_operand, result)
             else:
@@ -93,8 +96,30 @@ class Quadruples():
             self.PQuad.append(quad)
             self.PJumps.append(len(self.PQuad))
 
-    def closegotof(self):
+    def addgotov(self):
+        operand = self.PilaO.pop()
+        type = self.PTypes.pop()
+        if (type != 'bool'):
+            raise TypeError("Unable use expresion as condition")
+        else:
+            quadnum = self.PJumps.pop()
+            quad = Quadruple('gotov', operand, None, quadnum)
+            self.PQuad.append(quad)
+
+    def closegotodown(self):
         quadnum = self.PJumps.pop()
         jumpto = len(self.PQuad) + 1
         self.PQuad[quadnum-1].result = jumpto
-        print(self.PQuad[quadnum-1].result)
+
+    def closegotoup(self):
+        quadnum = self.PJumps.pop()
+        jumpto = self.PJumps.pop()
+        self.PQuad[quadnum-1].result = jumpto
+
+    def addgoto(self):
+        quad = Quadruple('goto', None, None, None)
+        self.PQuad.append(quad)
+        quadnum = self.PJumps.pop()
+        self.PJumps.append(len(self.PQuad))
+        jumpto = len(self.PQuad) + 1
+        self.PQuad[quadnum-1].result = jumpto

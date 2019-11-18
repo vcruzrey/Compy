@@ -1,15 +1,24 @@
 int a;
 int b;
-func void test (int x, int y) {
+int c;
+int d;
+int x;
+func void test (int q, int y) {
 
 }
 
 main {
-  if (a>b) {
-    if (a>b) {
+  if (a>b&&c<5) {
+    int y = 6;
+    if (x<3) {
+      int z = 2;
     }
-    a = a + b;
+    else {
+      int w = 44;
+    }
   }
-  b = b;
+  else {
+    int qwerty = 55;
+  }
 }
 end

@@ -23,3 +23,27 @@ main {
   int dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;
   }
 end
+
+
+main {
+  if (a>b&&c<5) {
+    int y = 6;
+    if (x<3) {
+      int z = 2;
+    }
+    else {
+      int w = 44;
+    }
+    int sa = 5;
+  }
+  else {
+    float r = 45.0;
+    if (a<8) {
+      float qe = 45.0;
+    }
+    else {
+      int qwert = 54;
+    }
+  }
+  d = d;
+}
