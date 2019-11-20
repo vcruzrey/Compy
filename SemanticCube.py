@@ -3,7 +3,7 @@ import sys
 aritmetic = ['+', '-', '*', '/','^']
 booleanOp = ['==', '!=', '>', '<', '>=', '<=']
 math = ['pi','%']
-equal = '='
+equal = ['=','parametro']
 logicalOp = ['&&', '||']
 
 class Operators:
@@ -15,7 +15,7 @@ class Operators:
             },
             'relational' : ['==', '!=', '>', '<', '>=', '<='],
             'math' : ['pi','%'],
-            'equal' : ['='],
+            'equal' : ['=','parametro'],
             'logical' : ['&&', '||']
         }
 
@@ -25,7 +25,7 @@ def semantic(left, right, operator):
     if(left == 'int'):
         #INT - INT
         if(right == 'int'):
-            if(operator in aritmetic or operator == equal):
+            if(operator in aritmetic or operator in equal):
                 return 'int'
             elif(operator in math):
                 return 'float'
@@ -48,7 +48,7 @@ def semantic(left, right, operator):
     elif(left == 'float'):
         #FLOAT - FLOAT
         if(right == 'float'):
-            if(operator in aritmetic or operator == equal or operator in math):
+            if(operator in aritmetic or operator in equal or operator in math):
                 return 'float'
             elif(operator in booleanOp):
                 return 'bool'
@@ -67,7 +67,7 @@ def semantic(left, right, operator):
     #STRINGS
     elif(left == 'string'):
         if(right == 'string'):
-            if(operator == equal):
+            if(operator in equal):
                 return 'string'
             elif(operator == '==' or operator == '!='):
                 return 'bool'

@@ -1,0 +1,21 @@
+int i;
+int j;
+int k;
+float f;
+
+func void uno() {
+}
+
+func int dos(int a, float g) {
+  int x;
+  i = a;
+  while(a>0){
+    a = a-k*j;
+    uno(a*2, a+k);
+    g = g * j-k;
+  }
+}
+
+main {
+}
+end

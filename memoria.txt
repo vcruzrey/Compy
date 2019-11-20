@@ -1,0 +1,17 @@
+int gvsiI = 5;
+string gvinS = "Hola";
+bool gvinB;
+cons float gcinF = 1.0;
+arr int garrsiI[1];
+
+func void uno (int a, int b) {
+
+}
+
+func int dos (int a, int i, float g) {
+
+}
+
+main {
+}
+end

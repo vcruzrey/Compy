@@ -16,3 +16,18 @@ class Dato:
         self.cons = False
         self.type = ''
         self.parameter = False
+
+class Parameter:
+    def __init__(self):
+        self.name = ''
+        self.type = ''
+        self.params = {}
+        self.length = 0
+        self.contador = 0
+
+    def reset(self):
+        self.name = ''
+        self.type = ''
+        self.params = {}
+        self.length = 0
+        self.contador = 0

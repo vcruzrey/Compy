@@ -55,6 +55,8 @@ class Quadruples():
             elif (case == 'equal'):
                 if (self.POper[-1] in operatos.operator['equal']):
                     self.pop_poper()
+            elif (case == 'parameter'):
+                self.pop_poper()
             elif (case == 'print'):
                 self.pop_print()
 
@@ -70,15 +72,17 @@ class Quadruples():
         elif (result_Type == 'errorbaddt'):
             raise TypeError("Incompatible Data Type")
         else:
-            if(operator!="="):
+            if(operator=="="):
+                quad = Quadruple(operator, right_operand, "NONE", left_operand)
+            elif(operator=="parametro"):
+                quad = Quadruple(operator, right_operand, "NONE", left_operand)
+            else:
                 result = "T"+str(self.temporales)
                 self.temporales +=1
                 self.PilaO.append(result)
                 #print("PushT--  "+self.PilaO[-1])
                 self.PTypes.append(result_Type)
                 quad = Quadruple(operator, left_operand, right_operand, result)
-            else:
-                quad = Quadruple(operator, right_operand, "NONE", left_operand)
             self.PQuad.append(quad)
 
     def checkpar(self):
@@ -132,3 +136,37 @@ class Quadruples():
         self.PJumps.append(len(self.PQuad))
         jumpto = len(self.PQuad) + 1
         self.PQuad[quadnum-1].result = jumpto
+
+    def addfuncid(self,funcid):
+        quad = Quadruple('ERA', funcid, None, None)
+        self.PQuad.append(quad)
+
+    def addparams(self, params, lineno):
+        contador = params.contador
+        limite = params.length
+        if(contador<limite):
+            key = list(params.params.keys())[contador]
+            aux_dic = dict(params.params[key])
+            self.PilaO.append(aux_dic['id'])
+            self.PTypes.append(aux_dic['type'])
+            self.POper.append('parametro')
+            params.contador = contador + 1
+        else:
+            raise TypeError("Exceeded parameters. \n Expected: {} Given: {}. \n At Line: {}".format(limite, contador + 1, lineno))
+
+    def checkfunclenght(self, params, lineno):
+        contador = params.contador
+        limite = params.length
+        if(contador<limite):
+            raise TypeError("Missing parameters. \n Expected: {} Given: {}. \n At Line: {}".format(limite, contador, lineno))
+        else:
+            quad = Quadruple('GOSUB', params.name, None, None)
+            self.PQuad.append(quad)
+
+    def endproc(self):
+        quad = Quadruple('ENDPROC', None, None, None)
+        self.PQuad.append(quad)
+
+    def gotomain(self):
+        quad = Quadruple('GOTO', 'main', None, None)
+        self.PQuad.append(quad)
