@@ -33,6 +33,7 @@ class SymbolTable:
         new_table = {
             'name': tabla.id,
             'scope': "funcion",
+            'type' : tabla.type,
             'params' : {},
             'vars' : {},
             'cons' : {},
@@ -100,3 +101,12 @@ class SymbolTable:
                 return self.diccionario['dirFunc'][scope]['params'][aux_dato]
         else:
             raise TypeError("Variable: {} hasnt been declared".format(aux_dato))
+
+    def get_funcinfo(self, scope, aux_parameter):
+        if scope in self.diccionario['dirFunc'].keys():
+            aux_parameter.name = scope
+            aux_parameter.type = self.diccionario['dirFunc'][scope]['type']
+            aux_parameter.params = dict(self.diccionario['dirFunc'][scope]['params'])
+            aux_parameter.length = len(aux_parameter.params)
+        else:
+            raise TypeError("Funtion: {} hasnt been declared".format(aux_dato))

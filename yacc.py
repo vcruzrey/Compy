@@ -4,19 +4,24 @@ import sys
 import ply.yacc as yacc
 from calc import tokens
 from SymbolTable import SymbolTable
+from Memoria import Memoria
 from Dato import Dato
+from Dato import Parameter
 from Tabla import Tabla
 from Quadruples import Quadruples
 
 tabla_varibles = SymbolTable()
 aux_dato = Dato()
 aux_tabla = Tabla()
+aux_memoria = Memoria()
 Quadruples = Quadruples()
+aux_parameter = Parameter()
+
 #comentario de prueba
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales funciones principal END
+    programa : pn_quadruples_gotomain globales funciones principal END
     '''
     p[0] = "PROGRAM COMPILED"
     #tabla_varibles = SymbolTable()
@@ -25,7 +30,7 @@ def p_programa(p):
 #Existen: 0 o mas
 def p_globales(p):
     '''
-    globales : pn_crearsubdirectoriog loopglobales
+    globales : pn_crearsubdirectoriog pn_memoria_crearglobales loopglobales
     '''
 
 def p_pn_crearsubdirectoriog(p):
@@ -34,6 +39,13 @@ def p_pn_crearsubdirectoriog(p):
     '''
     aux_tabla.id = 'global'
     tabla_varibles.create_table(aux_tabla.id,aux_tabla.id)
+
+def p_pn_memoria_crearglobales(p):
+    '''
+    pn_memoria_crearglobales : empty
+    '''
+    aux_memoria.create_memoria(aux_tabla.id)
+    aux_memoria.create_memoria('constantes')
 
 def p_loopglobales(p):
     '''
@@ -52,7 +64,7 @@ def p_funciones(p):
 
 def p_funcionesloop(p):
     '''
-    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloque funciones
+    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloque pn_quadruples_endproc funciones
 
     '''
 
@@ -72,6 +84,7 @@ def p_pn_st_functionid(p):
     '''
     aux_tabla.id = p[-1]
     tabla_varibles.create_functiontable(aux_tabla)
+    aux_memoria.create_memoria(aux_tabla.id)
 
 def p_funcparameters(p):
     '''
@@ -126,6 +139,7 @@ def p_estatuto(p):
              | condicion
              | ciclo
              | escritura
+             | funcionvoid
     '''
 
 #Declaracion
@@ -193,7 +207,16 @@ def p_pn_currentid(p):
     '''
     aux_dato.id = p[-1]
     tabla_varibles.insert_variable(aux_dato, aux_tabla.id)
+    aux_memoria.insert_id(aux_dato, aux_tabla.id)
     aux_dato.reset()
+    #aux_dato.reset()
+
+#def p_pn_memoria_addid(p):
+#    '''
+#    pn_memoria_addid : empty
+#    '''
+#    aux_memoria.insert_id(aux_dato, aux_tabla.id)
+#    aux_dato.reset()
 
 def p_bracket(p):
     '''
@@ -413,6 +436,11 @@ def p_pn_quadruples_addconstantint(p):
     #Print("PN --- 1 addconstantint " + str(p[-1]))
     Quadruples.PilaO.append(p[-1])
     Quadruples.PTypes.append('int')
+    aux_dato.reset()
+    aux_dato.name = p[-1]
+    aux_dato.type = 'int'
+    aux_memoria.insert_id(aux_dato, 'constantes')
+    aux_dato.reset()
 
 def p_pn_quadruples_addconstantfloat(p):
     '''
@@ -421,6 +449,11 @@ def p_pn_quadruples_addconstantfloat(p):
     #Print("PN --- 1 addconstantfloat " + str(p[-1]))
     Quadruples.PilaO.append(p[-1])
     Quadruples.PTypes.append('float')
+    aux_dato.reset()
+    aux_dato.name = p[-1]
+    aux_dato.type = 'float'
+    aux_memoria.insert_id(aux_dato, 'constantes')
+    aux_dato.reset()
 
 def p_pn_quadruples_addconstantbool(p):
     '''
@@ -429,6 +462,11 @@ def p_pn_quadruples_addconstantbool(p):
     #Print("PN --- 1 addconstantbool " + str(p[-1]))
     Quadruples.PilaO.append(p[-1])
     Quadruples.PTypes.append('bool')
+    aux_dato.reset()
+    aux_dato.name = p[-1]
+    aux_dato.type = 'bool'
+    aux_memoria.insert_id(aux_dato, 'constantes')
+    aux_dato.reset()
 
 def p_pn_quadruples_addconstantstring(p):
     '''
@@ -437,6 +475,11 @@ def p_pn_quadruples_addconstantstring(p):
     #Print("PN --- 1 addconstantstring " + str(p[-1]))
     Quadruples.PilaO.append(p[-1])
     Quadruples.PTypes.append('string')
+    aux_dato.reset()
+    aux_dato.name = p[-1]
+    aux_dato.type = 'string'
+    aux_memoria.insert_id(aux_dato, 'constantes')
+    aux_dato.reset()
 
 #Condicion
 def p_condicion(p):
@@ -544,7 +587,7 @@ def p_pn_quadruples_checkprint(p):
     '''
     #Print("PN --- CIF 1 addgotof ")
     Quadruples.check_top_poper('print')
-    
+
 def p_empty(p):
     '''empty :'''
     pass
@@ -553,11 +596,74 @@ def p_error(p):
     print("ERROR {}".format(p))
     raise TypeError
 
+#FuncionVoid
+def p_funcionvoid(p):
+    '''
+    funcionvoid : ID LPAREN pn_quadruples_getfuncid parameter_statement RPAREN pn_quadruples_checkfunclength PNTCOMMA
+    '''
+
+def p_parameter_statement(p):
+    '''
+    parameter_statement : pn_quadruples_addfuncid expresion pn_quadruples_checkfuncid parameterstatementloop
+                        | empty
+    '''
+
+def p_parameterstatementloop(p):
+    '''
+    parameterstatementloop : COMMA pn_quadruples_addfuncid expresion pn_quadruples_checkfuncid parameterstatementloop
+                           | empty
+    '''
+
+def p_pn_quadruples_getfuncid(p):
+    '''
+    pn_quadruples_getfuncid : empty
+    '''
+    #Print("PN --- 1 addvariable " + p[-1])
+    funcid = p[-2]
+    tabla_varibles.get_funcinfo(funcid, aux_parameter)
+    Quadruples.addfuncid(funcid)
+
+def p_pn_quadruples_addfuncid(p):
+    '''
+    pn_quadruples_addfuncid : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.addparams(aux_parameter, p.lineno(-1))
+
+def p_pn_quadruples_checkfuncid(p):
+    '''
+    pn_quadruples_checkfuncid : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.check_top_poper('parameter')
+
+def p_pn_quadruples_checkfunclength(p):
+    '''
+    pn_quadruples_checkfunclength : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.checkfunclenght(aux_parameter, p.lineno(-1))
+    aux_parameter.reset()
+
+def p_pn_quadruples_endproc(p):
+    '''
+    pn_quadruples_endproc : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.endproc()
+
+def p_pn_quadruples_gotomain(p):
+    '''
+    pn_quadruples_gotomain : empty
+    '''
+    #Print("PN --- CIF 1 addgotof ")
+    Quadruples.gotomain()
+
 yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        arch_name = 'prueba-7.txt'
+        arch_name = 'memoria.txt'
         arch = open(arch_name,'r')
         print("Leyendo archivo: " + arch_name + "...")
         info = arch.read()
@@ -572,6 +678,8 @@ if __name__ == '__main__':
 
 with open('data.json', 'w') as outfile:
     json.dump(tabla_varibles.diccionario, outfile)
+with open('memoria.json', 'w') as outfile:
+    json.dump(aux_memoria.diccionario, outfile)
 print("Quadruplos")
 conta = 1
 for q in Quadruples.PQuad:
