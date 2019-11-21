@@ -158,7 +158,7 @@ def p_inicializada(p):
 #                 | ARR pn_currentspecial tipo ID pn_currentid bracket asignacioninicialarr
 #                 | MAT pn_currentspecial tipo ID pn_currentid bracket bracket asignacioninicialmat
 
-def p_copy_id(p):
+def p_copy_id(p): #Punto neuralgico, pn
     '''
     copy_id : empty
     '''
