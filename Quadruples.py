@@ -21,6 +21,7 @@ class Quadruples():
         self.POper = []
         self.PQuad = []
         self.PJumps = []
+        self.PilaDato = []
 
     def print_quad(self):
         print("PRINT Stack")
@@ -37,36 +38,60 @@ class Quadruples():
         for x in range(len(self.PJumps)):
             print (self.PJumps[x]),
 
-    def check_top_poper(self, case):
+    def check_top_poper(self, case, lineno):
         length = len(self.POper)
         if (length > 0):
             if (case == 'sumres'):
                 if (self.POper[-1] in operatos.operator['aritmetic']['sumres']):
-                    self.pop_poper()
+                    self.pop_poper2(lineno)
             elif (case == 'muldiv'):
                 if (self.POper[-1] in operatos.operator['aritmetic']['muldiv']):
-                    self.pop_poper()
+                    self.pop_poper2(lineno)
             elif (case == 'relational'):
                 if (self.POper[-1] in operatos.operator['relational']):
-                    self.pop_poper()
+                    self.pop_poper2(lineno)
             elif (case == 'logical'):
                 if (self.POper[-1] in operatos.operator['logical']):
-                    self.pop_poper()
+                    self.pop_poper2(lineno)
             elif (case == 'equal'):
                 if (self.POper[-1] in operatos.operator['equal']):
-                    self.pop_poper()
+                    self.pop_poper2(lineno)
             elif (case == 'parameter'):
-                self.pop_poper()
+                self.pop_poper2(lineno)
             elif (case == 'print'):
-                self.pop_print()
+                self.pop_print(tablavariables, scope)
 
-    def pop_poper(self):
+    def pop_poper2(self, lineno):
+        right_operand = self.PilaDato.pop()
+        left_operand = self.PilaDato.pop()
+        operator = self.POper.pop()
+        result_Type = semantic(right_operand['type'], left_operand['type'], operator)
+        if (result_Type == 'errorbadop'):
+            raise TypeError("Unable to assign "+operator+" to types "+left_operand['name']+", "+right_operand['name'])
+        elif (result_Type == 'errorbaddt'):
+            raise TypeError("Incompatible Data Type")
+        else:
+            if(operator=="="):
+                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+            elif(operator=="parametro"):
+                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+            else:
+                resultName = "T"+str(self.temporales)
+                self.temporales +=1
+                result = {'name':resultName,'type':result_Type}
+                self.PilaDato.append(result)
+                quad = Quadruple(operator, left_operand['name'], right_operand['name'], result['name'])
+            self.PQuad.append(quad)
+
+    def pop_poper(self, tablavariables, scope):
         right_operand = self.PilaO.pop()
         right_Type = self.PTypes.pop()
         left_operand = self.PilaO.pop()
         left_Type = self.PTypes.pop()
         operator = self.POper.pop()
         result_Type = semantic(left_Type, right_Type, operator)
+        right_operand = self.get_direccion(right_operand, right_Type, tablavariables, scope)
+        #left_operand = self.test_memoria(left_operand, left_Type, memoria)
         if (result_Type == 'errorbadop'):
             raise TypeError("Unable to assign "+operator+" to types "+left_operand+", "+right_operand)
         elif (result_Type == 'errorbaddt'):
@@ -170,3 +195,20 @@ class Quadruples():
     def gotomain(self):
         quad = Quadruple('GOTO', 'main', None, None)
         self.PQuad.append(quad)
+
+    def get_variablearrdir(self, dato, index, lineno):
+        if(dato['complex']=="array"):
+            inferior = 0
+            superior = dato['tamano']
+            dirbase = dato['direccion']
+            quad = Quadruple('VER', index, inferior, superior)
+            self.PQuad.append(quad)
+            resultName = "T"+str(self.temporales)
+            quad = Quadruple('+', index, dirbase, resultName)
+            self.PQuad.append(quad)
+            resultName = "(T"+str(self.temporales)+")"
+            result = {'name':resultName,'type':dato['type']}
+            self.temporales +=1
+            self.PilaDato.append(result)
+        else:
+            raise TypeError("Variable {} is not an Array. At Line: {}".format(dato['name'], lineno))

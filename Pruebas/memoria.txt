@@ -5,13 +5,15 @@ cons float gcinF = 1.0;
 arr int garrsiI[1];
 
 func void uno (int a, int b) {
-
+  int j;
 }
 
 func int dos (int a, int i, float g) {
-
+  a = 45;
+  string s = "HOLA";
 }
 
 main {
+
 }
 end

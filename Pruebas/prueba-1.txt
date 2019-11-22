@@ -1,0 +1,7 @@
+int a;
+mat int perro[4][4];
+arr int jose[9];
+int b;
+
+main {
+}

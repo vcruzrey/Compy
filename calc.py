@@ -16,7 +16,7 @@ tokens = [
     'DTF', #float
     'DTB', #bool
     'DTS', #string
-    'DTSC', #concatenated string
+    'DTSIP', #string con interpolacion
 
     #Arithmetic Operators
     'EQUALS',
@@ -113,7 +113,7 @@ t_RBRCKT  = r'\]'
 t_LBRCKT  = r'\['
 t_COMMA   = r'\,'
 t_PNTCOMMA  = r'\;'
-t_DTSC = r'\"\$.*\"|\"'$'\"'
+t_DTSIP = r'\".*(\$[a-zA-Z_][a-zA-Z_0-9]+\$)+.*\"'
 t_DTS = r'\".*?\"'
 
 t_AND = r'[&][&]'

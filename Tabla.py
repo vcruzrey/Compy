@@ -1,8 +1,8 @@
 class Tabla:
     def __init__(self):
-        self.id = ''
+        self.name = ''
         self.type = ''
 
     def reset(self):
-        self.id = ''
+        self.name = ''
         self.type = ''
