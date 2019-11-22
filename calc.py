@@ -134,13 +134,13 @@ t_MODULE = r'\%'
 
 # A regular expression rule with some action code
 def t_DTF(t):
-    r'(\d*\.\d+)|(\d+\.\d*)'
+    r'(\d*\.\d+)|(\d+\.\d*)|(\-\d*\.\d+)|(\-\d+\.\d*)'
     t.value = float(t.value)
     return t
 
 #Integer definition
 def t_DTI(t):
-    r'\d+'
+    r'\d+|\-\d+'
     t.value = int(t.value)
     return t
 
@@ -180,6 +180,10 @@ lexer = lex.lex()
 # Test it out
 data = '''
 "hola $perro"
+-5
+-3.14
+.34
+-.34
 '''
 
 # Give the lexer some input

@@ -207,6 +207,6 @@ class SymbolTable:
         if not (switch.get(tipo, False)):
             raise TypeError("Variable Type: {} not valid.".format(tipo))
 
-                def prueba_error(self):
-                    error = ("La variable ya esta registrada")
-                    return error
+    def prueba_error(self):
+        error = ("La variable ya esta registrada")
+        return error
