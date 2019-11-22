@@ -115,6 +115,7 @@ t_COMMA   = r'\,'
 t_PNTCOMMA  = r'\;'
 t_DTSIP = r'\".*(\$[a-zA-Z_][a-zA-Z_0-9]+\$)+.*\"'
 t_DTS = r'\".*?\"'
+
 t_AND = r'[&][&]'
 t_OR = r'[|][|]'
 t_LCORCHO = r'\{'
@@ -176,3 +177,17 @@ def t_ID(t):
 
 # Build the lexer
 lexer = lex.lex()
+# Test it out
+data = '''
+"hola $perro"
+'''
+
+# Give the lexer some input
+lexer.input(data)
+
+# Tokenize
+while True:
+    tok = lexer.token()
+    if not tok:
+        break      # No more input
+    print(tok)
