@@ -94,7 +94,7 @@ class Quadruples():
 
     def pop_print(self):
         operand = self.PilaO.pop()
-        Type = self.PTypes.pop()
+        type = self.PTypes.pop()
         operator = self.POper.pop()
         quad = Quadruple(operator, "NONE", "NONE", operand)
         self.PQuad.append(quad)

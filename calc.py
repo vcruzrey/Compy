@@ -16,6 +16,7 @@ tokens = [
     'DTF', #float
     'DTB', #bool
     'DTS', #string
+    'DTSC', #concatenated string
 
     #Arithmetic Operators
     'EQUALS',
@@ -112,7 +113,9 @@ t_RBRCKT  = r'\]'
 t_LBRCKT  = r'\['
 t_COMMA   = r'\,'
 t_PNTCOMMA  = r'\;'
+t_DTSC = r'\"\$.*\"|\"'$'\"'
 t_DTS = r'\".*?\"'
+
 t_AND = r'[&][&]'
 t_OR = r'[|][|]'
 t_LCORCHO = r'\{'
@@ -174,3 +177,17 @@ def t_ID(t):
 
 # Build the lexer
 lexer = lex.lex()
+# Test it out
+data = '''
+"hola $perro"
+'''
+
+# Give the lexer some input
+lexer.input(data)
+
+# Tokenize
+while True:
+    tok = lexer.token()
+    if not tok:
+        break      # No more input
+    print(tok)

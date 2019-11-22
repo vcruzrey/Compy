@@ -41,7 +41,7 @@ class Memoria:
         self.contador['contador'][name] = new_contador
 
     def insert_id(self, dato, scope):
-        print(aux_dato.name)
+        # print(aux_dato.name)
         direccion = self.contador['contador'][scope][dato.type]
         self.diccionario['dirMem'][scope][dato.type].update({dato.id:direccion})
         self.contador['contador'][scope][dato.type] += 1
