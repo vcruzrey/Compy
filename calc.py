@@ -133,13 +133,13 @@ t_MODULE = r'\%'
 
 # A regular expression rule with some action code
 def t_DTF(t):
-    r'(\d*\.\d+)|(\d+\.\d*)'
+    r'(-)*(\d*\.\d+)|(-)*(\d+\.\d*)'
     t.value = float(t.value)
     return t
 
 #Integer definition
 def t_DTI(t):
-    r'\d+'
+    r'(-)*\d+'
     t.value = int(t.value)
     return t
 

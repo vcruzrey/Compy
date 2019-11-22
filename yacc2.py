@@ -484,3 +484,27 @@ print(tabla_varibles.diccionario)
                 raise TypeError("Incompatible Data Type")
             else:
                 print("CreateQuad")
+
+
+
+#Cementerio YACC1
+def p_asignacioninicialarr(p):
+    '''
+    asignacioninicialarr : EQUALS looparreglo PNTCOMMA
+    '''
+
+def p_asignacioninicialmat(p):
+    '''
+    asignacioninicialmat : EQUALS looparreglo looparreglo PNTCOMMA
+    '''
+
+def p_looparreglo(p):
+    '''
+    looparreglo : LBRCKT expresion expresionloop RBRCKT
+    '''
+
+def p_expresionloop(p):
+    '''
+    expresionloop : COMMA expresion expresionloop
+                  | empty
+    '''

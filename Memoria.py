@@ -1,19 +1,10 @@
 import sys
-from Contador import Contador
-
-globalinicio = 10000
-globalfin = 19999
-localinicio = 20000
-localfin = 20999
-constanteinicio = 30000
-constantefin = 30999
 
 class Memoria:
     def __init__(self):
         self.diccionario ={'dirMem':{}}
-        self.contador = {'contador':{}}
 
-    def create_memoria(self, name):
+    def create_memoria(self, name, contador):
         new_table = {
             'int' : {},
             'float' : {},
@@ -21,13 +12,6 @@ class Memoria:
             'bool' : {},
         }
         self.diccionario['dirMem'][name] = new_table
-
-        if(name == 'global'):
-            inicio = 10000
-        elif(name == 'constantes'):
-            inicio = 20000
-        else:
-            inicio = 30000
 
         new_contador = {
             'name' : name,
