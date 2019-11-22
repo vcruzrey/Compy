@@ -2,20 +2,20 @@ class Dato:
     def __init__(self):
         self.scope =''
         self.name = ''
-        self.id =''
         self.complex = 'simple'
         self.cons = False
         self.type = ''
         self.parameter = False
+        self.tamano = []
 
     def reset(self):
         self.scope =''
         self.name = ''
-        self.id =''
         self.complex = 'simple'
         self.cons = False
         self.type = ''
         self.parameter = False
+        self.tamano = []
 
 class Parameter:
     def __init__(self):

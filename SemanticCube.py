@@ -81,7 +81,7 @@ def semantic(left, right, operator):
     #BOOLEANS
     elif(left == 'bool'):
         if(right == 'bool'):
-            if(operator == equal or operator == '==' or operator in logicalOp or  operator == '!='):
+            if(operator == '=' or operator == '==' or operator in logicalOp or operator == '!='):
                 return 'bool'
             else:
                 return 'errorbadop'
