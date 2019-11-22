@@ -23,7 +23,6 @@ def p_programa(p):
     programa : globales pn_quadruples_gotomain principal
     '''
     p[0] = "PROGRAM COMPILED"
-    #tabla_varibles = SymbolTable()
 
 #Variables globales
 #Existen: 0 o mas
@@ -101,13 +100,13 @@ def p_pn_parameter(p):
 #Existen: 1
 def p_principal(p):
     '''
-    principal : MAIN pn_crearsubdirectoriom bloque
+    principal : MAIN pn_st_createtablemain bloque
     '''
     aux_tabla.reset()
 
-def p_pn_crearsubdirectoriom(p):
+def p_pn_st_createtablemain(p):
     '''
-    pn_crearsubdirectoriom : empty
+    pn_st_createtablemain : empty
     '''
     aux_tabla.name = 'main'
     aux_tabla.type = 'main'
@@ -131,12 +130,12 @@ def p_estatuto(p):
     estatuto : declarar
              | asignacion
     '''
-
              #| condicion
              #| ciclo
              #| escritura
              #| funcionvoid
-#Declaracion
+
+#Declarar
 def p_declarar(p):
     '''
     declarar : noinicializada
@@ -144,18 +143,11 @@ def p_declarar(p):
              | CONS pn_dato_currentcons inicializada
     '''
 
-def p_pn_dato_currentcons(p):
-    '''
-    pn_dato_currentcons : empty
-    '''
-    aux_dato.cons = True
-
-#BETTER IMPLEMENTATION = PN DESPUES PNTCOMMA
 def p_noinicializada(p):
     '''
     noinicializada : tipo ID pn_st_insertvariable PNTCOMMA
-                   | ARR pn_currentspecial tipo ID bracket copy_id pn_st_insertvariable PNTCOMMA
-                   | MAT pn_currentspecial tipo ID bracket copy_id bracket copy_id pn_st_insertvariable PNTCOMMA
+                   | ARR pn_dato_currentspecial tipo ID bracket copy_id pn_st_insertvariable PNTCOMMA
+                   | MAT pn_dato_currentspecial tipo ID bracket copy_id bracket copy_id pn_st_insertvariable PNTCOMMA
     '''
 
 def p_inicializada(p):
@@ -164,20 +156,34 @@ def p_inicializada(p):
 
     '''
 
-def p_copy_id(p): #Punto neuralgico, pn
+def p_pn_dato_currentcons(p):
+    '''
+    pn_dato_currentcons : empty
+    '''
+    aux_dato.cons = True
+
+def p_copy_id(p):
     '''
     copy_id : empty
     '''
     p[0] = p[-2]
 
-def p_pn_currentspecial(p):
+def p_pn_dato_currentspecial(p):
     '''
-    pn_currentspecial : empty
+    pn_dato_currentspecial : empty
     '''
-    if(p[-1] == 'arr'):
-        aux_dato.complex = "array"
-    elif(p[-1] == 'mat'):
-        aux_dato.complex = "matrix"
+    aux_dato.complex = p[-1]
+
+def p_bracket(p):
+    '''
+    bracket : LBRCKT DTI pn_dato_currenttamano RBRCKT
+    '''
+
+def p_pn_dato_currenttamano(p):
+    '''
+    pn_dato_currenttamano : empty
+    '''
+    aux_dato.tamano.append(p[-1])
 
 def p_tipo(p):
     '''
@@ -201,28 +207,15 @@ def p_pn_st_insertvariable(p):
     tabla_varibles.insert_variable(aux_dato, aux_tabla, p.lineno(-1))
     aux_dato.reset()
 
-#def p_pn_memoria_addid(p):
-#    '''
-#    pn_memoria_addid : empty
-#    '''
-#    aux_memoria.insert_id(aux_dato, aux_tabla.name)
-#    aux_dato.reset()
-
-def p_bracket(p):
-    '''
-    bracket : LBRCKT DTI pn_dato_currenttamano RBRCKT
-    '''
-
-def p_pn_dato_currenttamano(p):
-    '''
-    pn_dato_currenttamano : empty
-    '''
-    aux_dato.tamano.append(p[-1])
-
 #Asignacion
 def p_asignacion(p):
     '''
     asignacion : ID pn_quadruples_addvariable EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
+    '''
+
+def p_inicializada_asignacion(p):
+    '''
+    inicializada_asignacion : EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
     '''
 
 def p_pn_quadruples_addequals(p):
@@ -235,60 +228,34 @@ def p_pn_quadruples_checkequals(p):
     '''
     pn_quadruples_checkequals : empty
     '''
-    #Print("PN --- 11 checkequals")
+    #print("PN Quadruples --- 12 checkequals")
     Quadruples.check_top_poper('equal', p.lineno(-1))
-
-def p_inicializada_asignacion(p):
-    '''
-    inicializada_asignacion : EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
-    '''
-
-def p_asignacioninicialarr(p):
-    '''
-    asignacioninicialarr : EQUALS looparreglo PNTCOMMA
-    '''
-
-def p_asignacioninicialmat(p):
-    '''
-    asignacioninicialmat : EQUALS looparreglo looparreglo PNTCOMMA
-    '''
-
-def p_looparreglo(p):
-    '''
-    looparreglo : LBRCKT expresion expresionloop RBRCKT
-    '''
-
-def p_expresionloop(p):
-    '''
-    expresionloop : COMMA expresion expresionloop
-                  | empty
-    '''
 
 #Expresion
 def p_expresion(p):
     '''
-    expresion : exprel pn_quadruples_checklogical expresionlogic
+    expresion : exprel pn_quadruples_checklogical expresionlogical
     '''
 
-def p_expresionlogic(p):
+def p_expresionlogical(p):
     '''
-    expresionlogic : AND pn_quadruples_addlogical expresion
-                   | OR pn_quadruples_addlogical expresion
-                   | empty
+    expresionlogical : AND pn_quadruples_addlogical expresion
+                     | OR pn_quadruples_addlogical expresion
+                     | empty
     '''
 
 def p_pn_quadruples_checklogical(p):
     '''
     pn_quadruples_checklogical : empty
     '''
-    #Print("PN --- 11 checklogical")
+    #Print("PN Quadruples --- 11 checklogical")
     Quadruples.check_top_poper('logical', p.lineno(-1))
 
 def p_pn_quadruples_addlogical(p):
     '''
     pn_quadruples_addlogical : empty
     '''
-    #Print("PN --- 10 addlogical " + p[-1])
+    #Print("PN Quadruples --- 10 addlogical " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Expresion Relacional
@@ -312,14 +279,14 @@ def p_pn_quadruples_checkrelational(p):
     '''
     pn_quadruples_checkrelational : empty
     '''
-    #Print("PN --- 9 checkrelational")
+    #Print("PN Quadruples --- 9 checkrelational")
     Quadruples.check_top_poper('relational', p.lineno(-1))
 
 def p_pn_quadruples_addrelational(p):
     '''
     pn_quadruples_addrelational : empty
     '''
-    #Print("PN --- 8 addrelational " + p[-1])
+    #Print("PN Quadruples --- 8 addrelational " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Exp
@@ -339,14 +306,14 @@ def p_pn_quadruples_checksumres(p):
     '''
     pn_quadruples_checksumres : empty
     '''
-    #Print("PN --- 4 checksumres")
+    #Print("PN Quadruples--- 4 checksumres")
     Quadruples.check_top_poper('sumres', p.lineno(-1))
 
 def p_pn_quadruples_addsumres(p):
     '''
     pn_quadruples_addsumres : empty
     '''
-    #Print("PN --- 8 addsumres " + p[-1])
+    #Print("PN Quadruples --- 8 addsumres " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Termino
@@ -366,14 +333,14 @@ def p_pn_quadruples_checkmuldiv(p):
     '''
     pn_quadruples_checkmuldiv : empty
     '''
-    #Print("PN --- 3 checkmuldiv")
+    #Print("PN Quadruples --- 3 checkmuldiv")
     Quadruples.check_top_poper('muldiv', p.lineno(-1))
 
 def p_pn_quadruples_addmuldiv(p):
     '''
     pn_quadruples_addmuldiv : empty
     '''
-    #Print("PN --- 2 addmuldiv " + p[-1])
+    #Print("PN Quadruples --- 2 addmuldiv " + p[-1])
     Quadruples.POper.append(p[-1])
 
 #Factor
@@ -387,20 +354,15 @@ def p_pn_quadruples_addfondo(p):
     '''
     pn_quadruples_addfondo : empty
     '''
-    #Print("PN --- 6 addfondo " + p[-1])
+    #Print("PN Quadruples --- 6 addfondo " + p[-1])
     Quadruples.POper.append(p[-1])
 
 def p_pn_quadruples_remfondo(p):
     '''
     pn_quadruples_remfondo : empty
     '''
-    #Print("PN --- 7 remfondo " + p[-1])
+    #Print("PN Quadruples --- 7 remfondo " + p[-1])
     Quadruples.POper.pop()
-
-
-#LPAREN expresion RPAREN
-#       | PLUS vardt
-#       | MINUS vardt
 
 #VARDT
 def p_vardt(p):

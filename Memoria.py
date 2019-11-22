@@ -1,17 +1,28 @@
 import sys
-from Contador import Contador
 
 class Memoria:
     def __init__(self):
         self.diccionario ={'dirMem':{}}
-        self.contador={}
-    def create_memoria(self, name):
+
+    def create_memoria(self, name, contador):
         new_table = {
             'int' : {},
             'float' : {},
             'string' : {},
             'bool' : {},
         }
+        self.diccionario['dirMem'][name] = new_table
+
+        new_contador = {
+            'name' : name,
+            'inicio': inicio,
+            'limite' : 999,
+            'int' : inicio,
+            'float' : inicio + 1000,
+            'string' : inicio + 2000,
+            'bool' : inicio + 3000,
+        }
+        self.contador['contador'][name] = new_contador
 
     def insert_id(self, dato, scope):
         direccion = self.contador['contador'][scope][dato.type]

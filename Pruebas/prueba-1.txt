@@ -1,7 +1,29 @@
-int a;
-mat int perro[4][4];
-arr int jose[9];
-int b;
+int negativo = 45 - -45;
+cons int b = 23;
+mat int matriz[4][4];
+arr int jose[4];
+int c;
+
+string as;
+string bs;
+mat string matrizs[4][4];
+arr string joses[4];
+string cs;
+
+float af;
+float bf;
+mat float matrizf[4][4];
+arr float josef[4];
+float cf;
 
 main {
+bool ab;
+float bb;
+mat string matrizb[4][4];
+arr int joseb[4];
+float cb;
+int a1;
+string a2;
+float a3;
+bool a4;
 }

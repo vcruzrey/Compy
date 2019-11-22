@@ -56,29 +56,6 @@ class SymbolTable:
         }
         self.contador['contador'][name] = new_contador
 
-    def create_functiontable(self, tabla):
-        self.lookup_functiontable(tabla)
-        new_table = {
-            'name': tabla.name,
-            'inicio' : 0,
-            'fin' : 0,
-            'tamano' : 0,
-            'type' : tabla.type,
-            'params' : {},
-            'vars' : {},
-            'return var' : None
-        }
-        self.diccionario['dirFunc'][tabla.name] = new_table
-
-    def lookup_functiontable(self, tabla):
-        if tabla.name in self.diccionario['dirFunc'].keys():
-            raise TypeError("Function: {} already exists.".format(tabla.name))
-        if tabla.name in self.diccionario['dirFunc']['global']['vars'].keys():
-            raise TypeError("Function: {} already declared as global.".format(tabla.name))
-        if tabla.name in self.diccionario['dirFunc']['global']['cons'].keys():
-            raise TypeError("Function: {} already declared as global.".format(tabla.name))
-
-    #NOT FINISHED
     def insert_variable(self, dato, tabla, lineno):
         scope = tabla.name
         self.lookup_variable(dato, scope, lineno)
@@ -104,32 +81,6 @@ class SymbolTable:
             }
         self.diccionario['dirFunc'][scope]['vars'][dato.name] = new_variable
 
-    def create_direccion(self, dato, scope):
-        direccion = self.contador['contador'][scope][dato.type]
-        if(dato.complex == "simple"):
-            self.contador['contador'][scope][dato.type] += 1
-        else:
-            self.contador['contador'][scope][dato.type] += dato.tamano
-        return direccion
-
-
-    def create_complex_limits(self, dato):
-        if (dato.complex == "array"):
-            tamano = dato.tamano[0] + 1
-            return tamano, {'limite1' : tamano}
-        elif (dato.complex == "matrix"):
-            limite1 = dato.tamano[0]
-            limite2 = dato.tamano[1]
-            tamano = (limite1 + 1) * (limite2 + 1)
-            m1 = int(tamano / (limite1 + 1))
-            return tamano, {'limite1' : limite1, 'limite2' : limite2, 'm1' : m1}
-        #if (dato.parameter):
-        #    self.lookup_variablefunc(name, scope)
-        #    self.diccionario['dirFunc'][scope]['params'][dato.id] = new_variable
-        #else:
-        #    self.lookup_variable(name, scope)
-        #    self.diccionario['dirFunc'][scope]['vars'][dato.id] = new_variable
-
     def lookup_variable(self, dato, scope, lineno):
         name = dato.name
         if (scope == 'global'):
@@ -144,15 +95,36 @@ class SymbolTable:
             #    if dato.id in self.diccionario['dirFunc'][scope]['params'].keys():
             #        raise TypeError("Variable: {} already declared as parameter".format(dato.id))
 
+    def create_direccion(self, dato, scope):
+        direccion = self.contador['contador'][scope][dato.type]
+        if(dato.complex == "simple"):
+            self.contador['contador'][scope][dato.type] += 1
+        else:
+            self.contador['contador'][scope][dato.type] += dato.tamano
+        return direccion
 
-    def lookup_variablefunc(self, dato, scope):
-        if dato.id in self.diccionario['dirFunc']['global']['vars'].keys():
-            raise TypeError("Variable: {} already declared as global".format(dato.id))
-        if dato.id in self.diccionario['dirFunc']['global']['cons'].keys():
-            raise TypeError("Variable: {} already declared as global".format(dato.id))
-        if dato.id in self.diccionario['dirFunc'][scope]['params'].keys():
-            raise TypeError("Variable: {} already declared as parameter".format(dato.id))
+    def create_complex_limits(self, dato):
+        if (dato.complex == "arr"):
+            tamano = dato.tamano[0] + 1
+            return tamano, {'limite1' : tamano}
+        elif (dato.complex == "mat"):
+            limite1 = dato.tamano[0]
+            limite2 = dato.tamano[1]
+            tamano = (limite1 + 1) * (limite2 + 1)
+            m1 = int(tamano / (limite1 + 1))
+            return tamano, {'limite1' : limite1, 'limite2' : limite2, 'm1' : m1}
+        #if (dato.parameter):
+        #    self.lookup_variablefunc(name, scope)
+        #    self.diccionario['dirFunc'][scope]['params'][dato.id] = new_variable
+        #else:
+        #    self.lookup_variable(name, scope)
+        #    self.diccionario['dirFunc'][scope]['vars'][dato.id] = new_variable
 
+
+
+
+
+#Cementerio
     def get_variableinfo(self, name, scope, lineno):
         if (scope == 'global'):
             if name in self.diccionario['dirFunc']['global']['vars'].keys():
@@ -207,6 +179,34 @@ class SymbolTable:
         if not (switch.get(tipo, False)):
             raise TypeError("Variable Type: {} not valid.".format(tipo))
 
-    def prueba_error(self):
-        error = ("La variable ya esta registrada")
-        return error
+#Cementerio de funciones
+
+    def create_functiontable(self, tabla):
+        self.lookup_functiontable(tabla)
+        new_table = {
+            'name': tabla.name,
+            'inicio' : 0,
+            'fin' : 0,
+            'tamano' : 0,
+            'type' : tabla.type,
+            'params' : {},
+            'vars' : {},
+            'return var' : None
+        }
+        self.diccionario['dirFunc'][tabla.name] = new_table
+
+    def lookup_functiontable(self, tabla):
+        if tabla.name in self.diccionario['dirFunc'].keys():
+            raise TypeError("Function: {} already exists.".format(tabla.name))
+        if tabla.name in self.diccionario['dirFunc']['global']['vars'].keys():
+            raise TypeError("Function: {} already declared as global.".format(tabla.name))
+        if tabla.name in self.diccionario['dirFunc']['global']['cons'].keys():
+            raise TypeError("Function: {} already declared as global.".format(tabla.name))
+
+    def lookup_variablefunc(self, dato, scope):
+        if dato.id in self.diccionario['dirFunc']['global']['vars'].keys():
+            raise TypeError("Variable: {} already declared as global".format(dato.id))
+        if dato.id in self.diccionario['dirFunc']['global']['cons'].keys():
+            raise TypeError("Variable: {} already declared as global".format(dato.id))
+        if dato.id in self.diccionario['dirFunc'][scope]['params'].keys():
+            raise TypeError("Variable: {} already declared as parameter".format(dato.id))
