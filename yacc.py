@@ -164,7 +164,7 @@ def p_inicializada(p):
 
     '''
 
-def p_copy_id(p):
+def p_copy_id(p): #Punto neuralgico, pn
     '''
     copy_id : empty
     '''
