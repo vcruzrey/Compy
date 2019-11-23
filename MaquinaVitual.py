@@ -31,7 +31,7 @@ class MaquinaVirtual:
         quadruplesList = []
         quadruplesList.append(['+',20001,20002,40001])
         quadruplesList.append(['=',40001,20002,10001])
-        ERA
+        # ERA
         quadruplesList.append(['+',20001,20002,40001])
         quadruplesList.append(['=',40001,20002,10001])
         aux_memoria['global'][123] = test['5000']
