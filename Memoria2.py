@@ -1,13 +1,6 @@
 import sys
 from Contador import Contador
 
-globalinicio = 10000
-globalfin = 19999
-localinicio = 20000
-localfin = 20999
-constanteinicio = 30000
-constantefin = 30999
-
 class Memoria:
     def __init__(self):
         self.diccionario ={'dirMem':{}}

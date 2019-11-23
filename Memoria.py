@@ -2,34 +2,18 @@ import sys
 
 class Memoria:
     def __init__(self):
-        self.diccionario ={'dirMem':{}}
-
-    def create_memoria(self, name, contador):
-        new_table = {
+        self.directorio = {
             'int' : {},
             'float' : {},
             'string' : {},
             'bool' : {},
         }
-        self.diccionario['dirMem'][name] = new_table
 
-        new_contador = {
-            'name' : name,
-            'inicio': inicio,
-            'limite' : 999,
-            'int' : inicio,
-            'float' : inicio + 1000,
-            'string' : inicio + 2000,
-            'bool' : inicio + 3000,
-        }
-        self.contador['contador'][name] = new_contador
+class MemoriaContador:
+    def __init__(self):
+        self.listaMemoria = [{}]
+        self.contador = 0
 
-    def insert_id(self, dato, scope):
-        direccion = self.contador['contador'][scope][dato.type]
-        self.diccionario['dirMem'][scope][dato.type].update({dato.id:direccion})
-        self.contador['contador'][scope][dato.type] += 1
-
-    def insert_constant(self, name, type, scope):
-        direccion = self.contador['contador'][scope][type]
-        self.diccionario['dirMem'][scope][type].update({name:direccion})
-        self.contador['contador'][scope][type] += 1
+    def insertar_funcion(self, nombre):
+        self.listaMemoria.append({})
+        self.contador += 1
