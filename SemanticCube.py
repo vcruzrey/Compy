@@ -1,11 +1,12 @@
 import sys
 #OPERATORS
-aritmetic = ['+', '-', '*', '/','^']
-booleanOp = ['==', '!=', '>', '<', '>=', '<=']
-math = ['pi','%']
+aritmetic = ['+', '-', '*']
+aritmeticcomplex = ['pi','%', '/','^']
+relational = ['==', '!=', '>', '<', '>=', '<=']
+logical = ['&&', '||']
 equal = ['=','parametro']
-logicalOp = ['&&', '||']
 
+#Missing operators
 class Operators:
     def __init__(self):
         self.operator = {
@@ -13,88 +14,83 @@ class Operators:
                 'sumres': ['+','-'],
                 'muldiv': ['*','/'],
             },
-            'relational' : ['==', '!=', '>', '<', '>=', '<='],
             'math' : ['pi','%'],
+            'relational' : ['==', '!=', '>', '<', '>=', '<='],
             'equal' : ['=','parametro'],
             'logical' : ['&&', '||']
         }
 
-#SEMANTIC CUBE FUNCTION: defines what value is returned from an operation of two types of data
 def semantic(left, right, operator):
 
     #CHECAR CASO DEL NOT ANTES QUE CUALQUIER OTRA COMPARACIÓN
-    if(right=='bool'):
-        if (operator=='!'):
-            return bool
+    #if(right=='bool'):
+    #    if (operator=='!'):
+    #        return bool
 
-    #INTEGERS
-    elif(left == 'int'):
-        #INT - INT
+    if(left == 'int'):
         if(right == 'int'):
             if(operator in aritmetic or operator in equal):
                 return 'int'
-            elif(operator in math):
+            elif(operator in aritmeticcomplex):
                 return 'float'
-            elif(operator in booleanOp):
+            elif(operator in relational):
                 return 'bool'
             else:
                 return 'errorbadop'
 
-        #INT - FLOAT
         elif(right == 'float'):
-            if(operator in aritmetic or math):
+            if(operator in aritmetic or operator in aritmeticcomplex):
                 return 'float'
-            elif(operator in booleanOp):
+            elif(operator in relational):
                 return 'bool'
             else:
                 return 'errorbadop'
         else:
-            return 'errorbaddt int2'
-    #FLOATS
+            return 'errorbadop'
+
     elif(left == 'float'):
-        #FLOAT - FLOAT
         if(right == 'float'):
-            if(operator in aritmetic or operator in equal or operator in math):
+            if(operator in aritmetic or operator in aritmeticcomplex or operator in equal):
                 return 'float'
-            elif(operator in booleanOp):
+            elif(operator in relational):
                 return 'bool'
             else:
                 return 'errorbadop'
-        #FLOAT - INT
+
         elif(right == 'int'):
-            if(operator in aritmetic or operator in math):
+            if(operator in aritmetic or operator in aritmeticcomplex):
                 return 'float'
-            elif(operator in booleanOp):
+            elif(operator in relational):
                 return 'bool'
             else:
                 return 'errorbadop'
         else:
-            return 'errorbaddt'
-    #STRINGS
+            return 'errorbadop'
+
     elif(left == 'string'):
         if(right == 'string'):
             if(operator in equal):
                 return 'string'
             elif(operator == '==' or operator == '!='):
                 return 'bool'
-            #concatenacion de strings
             elif(operator == '+'):
                 return 'string'
             else:
                 return 'errorbadop'
+
+        elif(right == 'int' or right == 'float'):
+            if(operator == '+'):
+                return 'string'
+            else:
+                return 'errorbadop'
         else:
-            return 'errorbaddt'
-    #BOOLEANS
+            return 'errorbadop'
+
     elif(left == 'bool'):
         if(right == 'bool'):
-            if(operator == '=' or operator == '==' or operator in logicalOp or operator == '!='):
+            if(operator in relational or operator in logical or operator in equal):
                 return 'bool'
             else:
                 return 'errorbadop'
         else:
-            return 'errorbaddt'   
-
-    else:
-        raise TypeError("Unrecognized Data Type")
-
-#print(semantic('bool','bool','!'))
+            return 'errorbadop'

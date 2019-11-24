@@ -37,53 +37,69 @@ class Quadruples():
         print("PJumps")
         for x in range(len(self.PJumps)):
             print (self.PJumps[x]),
+        print("PDATO")
+        for x in range(len(self.PilaDato)):
+            print (self.PilaDato[x])
 
-    def check_top_poper(self, case, lineno):
+    def check_top_poper(self, case, tabla_varibles, lineno):
         length = len(self.POper)
         if (length > 0):
             if (case == 'sumres'):
                 if (self.POper[-1] in operatos.operator['aritmetic']['sumres']):
-                    self.pop_poper2(lineno)
+                    self.pop_poper(tabla_varibles, lineno)
             elif (case == 'muldiv'):
                 if (self.POper[-1] in operatos.operator['aritmetic']['muldiv']):
-                    self.pop_poper2(lineno)
+                    self.pop_poper(tabla_varibles, lineno)
             elif (case == 'relational'):
                 if (self.POper[-1] in operatos.operator['relational']):
-                    self.pop_poper2(lineno)
+                    self.pop_poper(tabla_varibles, lineno)
             elif (case == 'logical'):
                 if (self.POper[-1] in operatos.operator['logical']):
-                    self.pop_poper2(lineno)
+                    self.pop_poper(tabla_varibles, lineno)
             elif (case == 'equal'):
                 if (self.POper[-1] in operatos.operator['equal']):
-                    self.pop_poper2(lineno)
+                    self.pop_poper(tabla_varibles, lineno)
             elif (case == 'parameter'):
-                self.pop_poper2(lineno)
+                self.pop_poper(lineno)
             elif (case == 'print'):
                 self.pop_print(tablavariables, scope)
 
-    def pop_poper2(self, lineno):
+    def pop_poper(self, tabla_varibles, lineno):
         right_operand = self.PilaDato.pop()
         left_operand = self.PilaDato.pop()
         operator = self.POper.pop()
-        result_Type = semantic(right_operand['type'], left_operand['type'], operator)
+        result_Type = semantic(left_operand['type'], right_operand['type'], operator)
         if (result_Type == 'errorbadop'):
-            raise TypeError("Unable to assign "+operator+" to types "+left_operand['name']+", "+right_operand['name'])
-        elif (result_Type == 'errorbaddt'):
-            raise TypeError("Incompatible Data Type")
+            raise TypeError("Unable to assign operator: {} to types: {} , {}. At line: {}".format(operator, left_operand['type'], right_operand['type'], lineno))
         else:
-            if(operator=="="):
-                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
-            elif(operator=="parametro"):
-                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
-            else:
-                resultName = "T"+str(self.temporales)
-                self.temporales +=1
-                result = {'name':resultName,'type':result_Type}
-                self.PilaDato.append(result)
-                quad = Quadruple(operator, left_operand['name'], right_operand['name'], result['name'])
-            self.PQuad.append(quad)
+            if(left_operand['complex'] == "simple"):
+                if(operator=="="):
+                    if(left_operand['cons'] != True):
+                        quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+                    else:
+                        raise TypeError("Unable to rewrite cons. At line: {}".format(lineno))
+                elif(operator=="parametro"):
+                    quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+                else:
+                    resultName = "T"+str(self.temporales)
+                    self.temporales += 1
+                    result = {'name':resultName, 'type':result_Type, 'complex': "simple"}
+                    self.PilaDato.append(result)
+                    quad = Quadruple(operator, left_operand['name'], right_operand['name'], result['name'])
+                self.PQuad.append(quad)
+            #if(operator=="="):
+            #    quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+            #elif(operator=="parametro"):
+            #    quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+            #else:
+            #    resultName = "T"+str(self.temporales)
+            #    self.temporales +=1
+            #    result = {'name':resultName,'type':result_Type,'complex': "simple"}
+            #    self.PilaDato.append(result)
+            #    quad = Quadruple(operator, left_operand['name'], right_operand['name'], result['name'])
+            #self.PQuad.append(quad)
 
-    def pop_poper(self, tablavariables, scope):
+    def pop_poper2(self, tablavariables, scope):
         right_operand = self.PilaO.pop()
         right_Type = self.PTypes.pop()
         left_operand = self.PilaO.pop()
@@ -98,9 +114,9 @@ class Quadruples():
             raise TypeError("Incompatible Data Type")
         else:
             if(operator=="="):
-                quad = Quadruple(operator, right_operand, "NONE", left_operand)
+                quad = Quadruple(operator, right_operand, None, left_operand)
             elif(operator=="parametro"):
-                quad = Quadruple(operator, right_operand, "NONE", left_operand)
+                quad = Quadruple(operator, right_operand, None, left_operand)
             else:
                 result = "T"+str(self.temporales)
                 self.temporales +=1

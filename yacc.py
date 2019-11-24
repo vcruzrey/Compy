@@ -229,7 +229,7 @@ def p_pn_quadruples_checkequals(p):
     pn_quadruples_checkequals : empty
     '''
     #print("PN Quadruples --- 12 checkequals")
-    Quadruples.check_top_poper('equal', p.lineno(-1))
+    #Quadruples.check_top_poper('equal', p.lineno(-1))
 
 #Expresion
 def p_expresion(p):
@@ -249,7 +249,7 @@ def p_pn_quadruples_checklogical(p):
     pn_quadruples_checklogical : empty
     '''
     #Print("PN Quadruples --- 11 checklogical")
-    Quadruples.check_top_poper('logical', p.lineno(-1))
+    Quadruples.check_top_poper('logical', tabla_varibles, p.lineno(-1))
 
 def p_pn_quadruples_addlogical(p):
     '''
@@ -280,7 +280,7 @@ def p_pn_quadruples_checkrelational(p):
     pn_quadruples_checkrelational : empty
     '''
     #Print("PN Quadruples --- 9 checkrelational")
-    Quadruples.check_top_poper('relational', p.lineno(-1))
+    Quadruples.check_top_poper('relational', tabla_varibles, p.lineno(-1))
 
 def p_pn_quadruples_addrelational(p):
     '''
@@ -307,7 +307,7 @@ def p_pn_quadruples_checksumres(p):
     pn_quadruples_checksumres : empty
     '''
     #Print("PN Quadruples--- 4 checksumres")
-    Quadruples.check_top_poper('sumres', p.lineno(-1))
+    Quadruples.check_top_poper('sumres', tabla_varibles, p.lineno(-1))
 
 def p_pn_quadruples_addsumres(p):
     '''
@@ -334,7 +334,7 @@ def p_pn_quadruples_checkmuldiv(p):
     pn_quadruples_checkmuldiv : empty
     '''
     #Print("PN Quadruples --- 3 checkmuldiv")
-    Quadruples.check_top_poper('muldiv', p.lineno(-1))
+    Quadruples.check_top_poper('muldiv', tabla_varibles, p.lineno(-1))
 
 def p_pn_quadruples_addmuldiv(p):
     '''
@@ -379,18 +379,10 @@ def p_pn_quadruples_addvariable(p):
     '''
     pn_quadruples_addvariable : empty
     '''
-    print("PN --- 1 addvariable " + p[-1])
+    #print("PN --- 1 addvariable " + p[-1])
     aux_dato.name = p[-1]
-    vardato = tabla_varibles.get_variableinfo(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
-
-def p_pn_quadruples_checkbracket(p):
-    '''
-    pn_quadruples_checkbracket : empty
-    '''
-    print("PERRO")
-    print(p[-2])
-    #Quadruples.check_top_poper('bracket', p.lineno(-1))
 
 def p_pn_quadruples_addvariablearr(p):
     '''
@@ -409,8 +401,7 @@ def p_pn_quadruples_addconstantint(p):
     pn_quadruples_addconstantint : empty
     '''
     print("PN --- 1 addconstantint " + str(p[-1]))
-    #vardato = tabla_varibles.get_constantinfo(aux_dato.name, aux_tabla.name, p.lineno(-1))
-    vardato = tabla_varibles.get_constantinfo(p[-1], 'int', p.lineno(-1))
+    vardato = tabla_varibles.get_constant(p[-1], 'int', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
 
 def p_pn_quadruples_addconstantfloat(p):
@@ -418,7 +409,7 @@ def p_pn_quadruples_addconstantfloat(p):
     pn_quadruples_addconstantfloat : empty
     '''
     print("PN --- 1 addconstantfloat " + str(p[-1]))
-    vardato = tabla_varibles.get_constantinfo(p[-1], 'float', p.lineno(-1))
+    vardato = tabla_varibles.get_constant(p[-1], 'float', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
 
 def p_pn_quadruples_addconstantbool(p):
@@ -426,7 +417,7 @@ def p_pn_quadruples_addconstantbool(p):
     pn_quadruples_addconstantbool : empty
     '''
     print("PN --- 1 addconstantbool " + str(p[-1]))
-    vardato = tabla_varibles.get_constantinfo(p[-1], 'bool', p.lineno(-1))
+    vardato = tabla_varibles.get_constant(p[-1], 'bool', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
 
 def p_pn_quadruples_addconstantstring(p):
@@ -434,7 +425,7 @@ def p_pn_quadruples_addconstantstring(p):
     pn_quadruples_addconstantstring : empty
     '''
     print("PN --- 1 addconstantstring " + str(p[-1]))
-    vardato = tabla_varibles.get_constantinfo(p[-1], 'string', p.lineno(-1))
+    vardato = tabla_varibles.get_constant(p[-1], 'string', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
 
 #Condicion
@@ -542,7 +533,7 @@ def p_pn_quadruples_checkprint(p):
     pn_quadruples_checkprint : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
-    Quadruples.check_top_poper('print', p.lineno(-1))
+    Quadruples.check_top_poper('print', tabla_varibles, p.lineno(-1))
 
 def p_empty(p):
     '''empty :'''
@@ -591,7 +582,7 @@ def p_pn_quadruples_checkfuncid(p):
     pn_quadruples_checkfuncid : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
-    Quadruples.check_top_poper('parameter', p.lineno(-1))
+    Quadruples.check_top_poper('parameter', tabla_varibles, p.lineno(-1))
 
 def p_pn_quadruples_checkfunclength(p):
     '''
@@ -619,7 +610,7 @@ yacc.yacc()
 
 if __name__ == '__main__':
     try:
-        arch_name = 'Pruebas/prueba-1.txt'
+        arch_name = 'Pruebas/prueba-1-2.txt'
         arch = open(arch_name,'r')
         print("Leyendo archivo: " + arch_name + "...")
         info = arch.read()

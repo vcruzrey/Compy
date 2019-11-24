@@ -1,4 +1,4 @@
-int negativo = 45 - -45;
+string negativo = "STRI";
 cons int b = 23;
 mat int matriz[4][4];
 arr int jose[4];

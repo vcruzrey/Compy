@@ -19,6 +19,7 @@ class SymbolTable:
         new_table = {
             'name': name,
             'vars' : {},
+            'temps' : {},
         }
         self.diccionario['dirFunc'][name] = new_table
 
@@ -42,6 +43,7 @@ class SymbolTable:
             'fin' : 0,
             'tamano' : 0,
             'vars' : {},
+            'temps' : {},
         }
         self.diccionario['dirFunc'][name] = new_table
 
@@ -120,12 +122,7 @@ class SymbolTable:
         #    self.lookup_variable(name, scope)
         #    self.diccionario['dirFunc'][scope]['vars'][dato.id] = new_variable
 
-
-
-
-
-#Cementerio
-    def get_variableinfo(self, name, scope, lineno):
+    def get_variable(self, name, scope, lineno):
         if (scope == 'global'):
             if name in self.diccionario['dirFunc']['global']['vars'].keys():
                 return self.diccionario['dirFunc']['global']['vars'][name]
@@ -136,18 +133,17 @@ class SymbolTable:
                 return self.diccionario['dirFunc']['global']['vars'][name]
             elif name in self.diccionario['dirFunc'][scope]['vars'].keys():
                 return self.diccionario['dirFunc'][scope]['vars'][name]
-            #elif (scope != 'global' and scope != 'main'):
-                #if aux_dato in self.diccionario['dirFunc'][scope]['params'].keys():
-                #return self.diccionario['dirFunc'][scope]['params'][aux_dato]
+            elif (scope != 'global' and scope != 'main'):
+                if name in self.diccionario['dirFunc'][scope]['params'].keys():
+                    return self.diccionario['dirFunc'][scope]['params'][name]
             else:
                 raise TypeError("Variable: {} hasnt been declared. At line {}".format(name, lineno))
 
-    def get_constantinfo(self, name, type, lineno):
+    def get_constant(self, name, type, lineno):
         if name in self.diccionario['dirFunc']['constantes']['vars'].keys():
             return self.diccionario['dirFunc']['constantes']['vars'][name]
         else:
             return self.insert_constant(name,type)
-
 
     def insert_constant(self, name, type):
         direccion = self.contador['contador']['constantes'][type]
@@ -155,10 +151,20 @@ class SymbolTable:
         new_constant = {
             'name': name,
             'type': type,
-            'direccion': direccion
+            'direccion': direccion,
+            'complex' : "simple"
         }
         self.diccionario['dirFunc']['constantes']['vars'][name] = new_constant
         return new_constant
+
+
+
+
+
+
+
+
+
 
     def get_funcinfo(self, scope, aux_parameter):
         if scope in self.diccionario['dirFunc'].keys():

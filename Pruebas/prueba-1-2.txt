@@ -1,0 +1,10 @@
+int a;
+int arreglo;
+float af;
+string as;
+bool ab;
+arr int ar[4];
+
+main {
+  string exp = arreglo+a/5+arreglo;
+}
