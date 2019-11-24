@@ -27,17 +27,17 @@ class MaquinaVirtual:
         self.quadruplesList.append(['>',30000,20003,33002])
         self.quadruplesList.append(['gotof',33002,None,10])#not sure si jala
         self.quadruplesList.append(['^',31000,30000,31001])
-        self.quadruplesList.append(['print', 31001, None, None])
+        self.quadruplesList.append(['print', None, None, 31001])
         self.quadruplesList.append(['-',30000,20004,30000])
-        self.quadruplesList.append(['goto', None, None,5])
-        self.quadruplesList.append(['print',31000, None, None])
-        self.quadruplesList.append(['print',30000, None, None])
+        self.quadruplesList.append(['goto', None, None,4])
+        self.quadruplesList.append(['print',None, None, 31000])
+        self.quadruplesList.append(['print',None, None, 30000])
 
         #Escribir Constantes
-        aux_memoria.diccionario['constante'][20000] = 3
-        aux_memoria.diccionario['constante'][21000] = 6.0
-        aux_memoria.diccionario['constante'][20002] = 5
-        aux_memoria.diccionario['constante'][20003] = 0
+        aux_memoria.diccionario['constante'][20000] = 2
+        aux_memoria.diccionario['constante'][21000] = 1.0
+        aux_memoria.diccionario['constante'][20002] = 0
+        aux_memoria.diccionario['constante'][20003] = 1
         aux_memoria.diccionario['constante'][20004] = 1
 
 
@@ -100,12 +100,12 @@ class MaquinaVirtual:
 
             }
             func_op = operations_switch[operator2]
-            print(func_op)   
+            print(operator2)   
             res = func_op(self.get_value(mem_izq, izquierda), self.get_value(mem_der, derecha))
             self.set_value(mem_res, resultado, res)
             self.posicion += 1
 
-        if (operator2 == '='):
+        elif (operator2 == '='):
             print ("equals")
             res  = self.get_value(mem_izq, izquierda)
             self.set_value(mem_res, resultado, res)
@@ -118,14 +118,14 @@ class MaquinaVirtual:
           #  posicion += 1
          #   resultado = not derecha
 
-        elif (operator == 'print'):
+        elif (operator2 == 'print'):
             print("print")
             res  = self.get_value(mem_res, resultado)
             print(res)
             self.posicion += 1
 
         #FALTAN POR DEFINIR
-        elif (operator == 'gotof'):
+        elif (operator2 == 'gotof'):
             print("gotof")
             res  = self.get_value(mem_izq, izquierda)
             if (res):
@@ -134,21 +134,21 @@ class MaquinaVirtual:
             else:
                 self.posicion = resultado
 
-        elif (operator == 'gotov'):
+        elif (operator2 == 'gotov'):
             print('gotov')
             self.posicion = resultado
 
-        elif (operator == 'goto'):
+        elif (operator2 == 'goto'):
             print('goto')
             self.posicion = resultado
 
-        elif (operator == 'GOSUB'):
+        elif (operator2 == 'GOSUB'):
             print("gosub")
         
-        elif (operator  == 'ERA'):
+        elif (operator2  == 'ERA'):
             print("era")
 
-        elif (operator == 'ENDPROC'):
+        elif (operator2 == 'ENDPROC'):
             print ("endproc")
         
     def posicion_direccion(self,dir): 
@@ -162,18 +162,10 @@ class MaquinaVirtual:
             return 'local'
 
 test = MaquinaVirtual()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
-test.funciones()
+while(test):
+    test.funciones()
+
+
 print(aux_memoria.diccionario)
 print(aux_memoria.diccionario['local'].actual)
 #aux_memoria.diccionario['local'].insertar_funcion("Func")
