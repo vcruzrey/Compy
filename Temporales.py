@@ -1,88 +1,54 @@
 import sys
 from Contador import Contador
 
-globalinicio = 10000
-constanteinicio = 20000
-localinicio = 30000
+inicio = 40000
 
-class SymbolTable:
+class Temporales:
     def __init__(self):
-        self.diccionario ={'dirFunc':{}}
-        self.contador = {'contador':{}}
+        self.diccionario ={}
+        self.contador = {
+            'inicio': inicio,
+            'limite' : 999,
+            'int' : inicio,
+            'float' : inicio + 1000,
+            'string' : inicio + 2000,
+            'bool' : inicio + 3000,
+        }
+        self.numero = 0
 
-    def create_table_globalcons(self, name):
-        if(name=='global'):
-            inicio = globalinicio
-        elif(name == 'constantes'):
-            inicio = constanteinicio
-
-        new_table = {
+    def reset(self):
+        self.diccionario ={}
+        self.contador = {
+            'inicio': inicio,
+            'limite' : 999,
+            'int' : inicio,
+            'float' : inicio + 1000,
+            'string' : inicio + 2000,
+            'bool' : inicio + 3000,
+        }
+        self.numero = 0
+        
+    def get_new_simple(self, type):
+        direccion = self.contador[type]
+        self.contador[type] += 1
+        name = "T"+str(self.numero)
+        self.numero += 1
+        new_variable = {
             'name': name,
-            'vars' : {},
+            'type': type,
+            'complex': "simple",
+            'direccion': direccion
         }
-        self.diccionario['dirFunc'][name] = new_table
+        self.diccionario[name] = new_variable
+        return new_variable
 
-        new_contador = {
-            'name' : name,
-            'inicio': inicio,
-            'limite' : 999,
-            'int' : inicio,
-            'float' : inicio + 1000,
-            'string' : inicio + 2000,
-            'bool' : inicio + 3000,
-        }
-        self.contador['contador'][name] = new_contador
-
-    def create_table_function(self, tabla, lineno):
-        self.lookup_function(tabla.name, lineno)
-        inicio = localinicio
-        new_table = {
-            'name': tabla.name,
-            'type' : tabla.type,
-            'inicio' : 0,
-            'params' : {},
-            'vars' : {},
-            'return' : None
-        }
-        self.diccionario['dirFunc'][tabla.name] = new_table
-
-        new_contador = {
-            'name' : tabla.name,
-            'inicio': inicio,
-            'limite' : 999,
-            'int' : inicio,
-            'float' : inicio + 1000,
-            'string' : inicio + 2000,
-            'bool' : inicio + 3000,
-        }
-        self.contador['contador'][tabla.name] = new_contador
-
-    def lookup_function(self, name, lineno):
-        if name in self.diccionario['dirFunc'].keys():
-            raise TypeError("Function: {} already exists. At line: {}".format(tabla.name, lineno))
-        if name in self.diccionario['dirFunc']['global']['vars'].keys():
-            raise TypeError("Function: {} already declared as global variable. At line: {}".format(tabla.name, lineno))
-
-    def create_table_main(self):
-        name = "main"
-        inicio = localinicio
-        new_table = {
-            'name': "main",
-            'inicio' : 0,
-            'vars' : {},
-        }
-        self.diccionario['dirFunc'][name] = new_table
-
-        new_contador = {
-            'name' : name,
-            'inicio': inicio,
-            'limite' : 999,
-            'int' : inicio,
-            'float' : inicio + 1000,
-            'string' : inicio + 2000,
-            'bool' : inicio + 3000,
-        }
-        self.contador['contador'][name] = new_contador
+    def create_direccion(self, type, complex):
+        direccion = self.contador[type]
+        if(complex == "simple"):
+            self.contador[type] += 1
+        else:
+            self.contador[type] += dato.tamano
+        return direccion
 
     def insert_variable(self, dato, tabla, lineno):
         scope = tabla.name
@@ -107,25 +73,7 @@ class SymbolTable:
                 'limites' : limites,
                 'direccion': direccion
             }
-
-        if(dato.parameter):
-            self.diccionario['dirFunc'][scope]['params'][dato.name] = new_variable
-        else:
-            self.diccionario['dirFunc'][scope]['vars'][dato.name] = new_variable
-
-    def lookup_variable(self, dato, scope, lineno):
-        name = dato.name
-        if (scope == 'global'):
-            if name in self.diccionario['dirFunc']['global']['vars'].keys():
-                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
-        else:
-            if name in self.diccionario['dirFunc'][scope]['vars'].keys():
-                raise TypeError("Variable: {} already declared in same scope ({}). At line {}".format(dato.name, scope, lineno))
-            elif name in self.diccionario['dirFunc']['global']['vars'].keys():
-                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
-            elif (scope != 'global' and scope != 'main'):
-                if name in self.diccionario['dirFunc'][scope]['vars'].keys():
-                    raise TypeError("Variable: {} already declared as parameter. At line: {}".format(dato.name, lineno))
+        self.diccionario['dirFunc'][scope]['vars'][dato.name] = new_variable
 
     def create_direccion(self, dato, scope):
         direccion = self.contador['contador'][scope][dato.type]
@@ -138,13 +86,34 @@ class SymbolTable:
     def create_complex_limits(self, dato):
         if (dato.complex == "arr"):
             tamano = dato.tamano[0] + 1
-            return tamano, {'limite1' : dato.tamano[0]}
+            return tamano, {'limite1' : tamano}
         elif (dato.complex == "mat"):
             limite1 = dato.tamano[0]
             limite2 = dato.tamano[1]
             tamano = (limite1 + 1) * (limite2 + 1)
             m1 = int(tamano / (limite1 + 1))
             return tamano, {'limite1' : limite1, 'limite2' : limite2, 'm1' : m1}
+
+
+    def lookup_variable(self, dato, scope, lineno):
+        name = dato.name
+        if (scope == 'global'):
+            if name in self.diccionario['dirFunc']['global']['vars'].keys():
+                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
+        else:
+            if name in self.diccionario['dirFunc'][scope]['vars'].keys():
+                raise TypeError("Variable: {} already declared in same scope ({}). At line {}".format(dato.name, scope, lineno))
+            elif name in self.diccionario['dirFunc']['global']['vars'].keys():
+                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
+            #if (scope != 'global' and scope != 'main'):
+            #    if dato.id in self.diccionario['dirFunc'][scope]['params'].keys():
+            #        raise TypeError("Variable: {} already declared as parameter".format(dato.id))
+        #if (dato.parameter):
+        #    self.lookup_variablefunc(name, scope)
+        #    self.diccionario['dirFunc'][scope]['params'][dato.id] = new_variable
+        #else:
+        #    self.lookup_variable(name, scope)
+        #    self.diccionario['dirFunc'][scope]['vars'][dato.id] = new_variable
 
     def get_variable(self, name, scope, lineno):
         if (scope == 'global'):
@@ -181,7 +150,16 @@ class SymbolTable:
         self.diccionario['dirFunc']['constantes']['vars'][name] = new_constant
         return new_constant
 
-    def get_function_info(self, scope, aux_parameter):
+
+
+
+
+
+
+
+
+
+    def get_funcinfo(self, scope, aux_parameter):
         if scope in self.diccionario['dirFunc'].keys():
             aux_parameter.name = scope
             aux_parameter.type = self.diccionario['dirFunc'][scope]['type']
@@ -201,6 +179,28 @@ class SymbolTable:
             raise TypeError("Variable Type: {} not valid.".format(tipo))
 
 #Cementerio de funciones
+
+    def create_functiontable(self, tabla):
+        self.lookup_functiontable(tabla)
+        new_table = {
+            'name': tabla.name,
+            'inicio' : 0,
+            'fin' : 0,
+            'tamano' : 0,
+            'type' : tabla.type,
+            'params' : {},
+            'vars' : {},
+            'return var' : None
+        }
+        self.diccionario['dirFunc'][tabla.name] = new_table
+
+    def lookup_functiontable(self, tabla):
+        if tabla.name in self.diccionario['dirFunc'].keys():
+            raise TypeError("Function: {} already exists.".format(tabla.name))
+        if tabla.name in self.diccionario['dirFunc']['global']['vars'].keys():
+            raise TypeError("Function: {} already declared as global.".format(tabla.name))
+        if tabla.name in self.diccionario['dirFunc']['global']['cons'].keys():
+            raise TypeError("Function: {} already declared as global.".format(tabla.name))
 
     def lookup_variablefunc(self, dato, scope):
         if dato.id in self.diccionario['dirFunc']['global']['vars'].keys():

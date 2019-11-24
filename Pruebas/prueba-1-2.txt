@@ -4,7 +4,18 @@ float af;
 string as;
 bool ab;
 arr int ar[4];
-
+int x = 5 * (ar[2]) ;
 main {
-  string exp = arreglo+a/5+arreglo;
+  int y = 5 + 3 / 2 * (2+3);
 }
+dog = ((a*b-c*d)!=c+d*e/f);
+dog = ((a+b)+c*d/(e+a))!=a;
+
+dog = b1 && b2 || b3;
+dog = ((a*b-c*d)!=c+d*e/f);
+dog = ((a+b)+c*d/(e+a))!=a;
+
+dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;
+
+dog = ((a*b-c*d)<c+d*e/f)&&(g*h-j>=l-a)&&b+c!=d*f;
+dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;

@@ -72,7 +72,7 @@ reserved = {
     #Structure
     'main' : 'MAIN',
     'func' : 'FUNC',
-
+    'return' : 'RETURN',
     #Print
     'print' : 'PRINT',
 

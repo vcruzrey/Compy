@@ -32,7 +32,7 @@ def semantic(left, right, operator):
             if(operator in aritmetic or operator in equal):
                 return 'int'
             elif(operator in aritmeticcomplex):
-                return 'float'
+                return 'int'
             elif(operator in relational):
                 return 'bool'
             else:

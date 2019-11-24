@@ -1,26 +1,16 @@
-#include <iostream>
+int ag;
+arr int arg[2];
+string as = "hola" + "perro";
+float af;
+bool ab;
 
-using namespace std;
-void test() {
-    int test = 7;
-    int prueba = 8;
-    cout<<prueba<<endl;
+func int uno(int au1, int buf){
+  ag = au1 + buf;
+  int ax = au1 + buf;
 }
 
-void prueba() {
-    int test = 5;
-    cout<<"HOLA"<<endl;
-    test();
+main {
+  int m = 5+5;
+  int gl;
+  uno(m + 5,gl);
 }
-
-dog = ((a*b-c*d)!=c+d*e/f);
-dog = ((a+b)+c*d/(e+a))!=a;
-
-dog = b1 && b2 || b3;
-dog = ((a*b-c*d)!=c+d*e/f);
-dog = ((a+b)+c*d/(e+a))!=a;
-
-dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;
-
-dog = ((a*b-c*d)<c+d*e/f)&&(g*h-j>=l-a)&&b+c!=d*f;
-dog = ((a+b)*c+d*e*f+k/h*j)+g*l+h+j!=(a-c*d)/f;
