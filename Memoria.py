@@ -1,19 +1,18 @@
 import sys
 
-class Memoria:
-    def __init__(self):
-        self.directorio = {
-            'int' : {},
-            'float' : {},
-            'string' : {},
-            'bool' : {},
-        }
-
 class MemoriaContador:
     def __init__(self):
-        self.listaMemoria = [{}]
+        self.actual = [{}]
         self.contador = 0
-
+        
     def insertar_funcion(self, nombre):
-        self.listaMemoria.append({})
+        self.actual.append({})
         self.contador += 1
+
+class Memoria:
+    def __init__(self):
+        self.diccionario = {
+            'global'  : {},
+            'local' : MemoriaContador(),
+            'constante' : {}
+        }

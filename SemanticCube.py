@@ -21,8 +21,14 @@ class Operators:
 
 #SEMANTIC CUBE FUNCTION: defines what value is returned from an operation of two types of data
 def semantic(left, right, operator):
+
+    #CHECAR CASO DEL NOT ANTES QUE CUALQUIER OTRA COMPARACIÓN
+    if(right=='bool'):
+        if (operator=='!'):
+            return bool
+
     #INTEGERS
-    if(left == 'int'):
+    elif(left == 'int'):
         #INT - INT
         if(right == 'int'):
             if(operator in aritmetic or operator in equal):
@@ -43,7 +49,7 @@ def semantic(left, right, operator):
             else:
                 return 'errorbadop'
         else:
-            return 'errorbaddt'
+            return 'errorbaddt int2'
     #FLOATS
     elif(left == 'float'):
         #FLOAT - FLOAT
@@ -86,9 +92,9 @@ def semantic(left, right, operator):
             else:
                 return 'errorbadop'
         else:
-            return 'errorbaddt'
+            return 'errorbaddt'   
 
     else:
         raise TypeError("Unrecognized Data Type")
 
-semantic('bool','string','&')
+#print(semantic('bool','bool','!'))
