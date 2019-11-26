@@ -3,7 +3,6 @@ import json
 from SemanticCube import semantic
 from SemanticCube import Operators
 from Temporales import Temporales
-sys.tracebacklimit = 0
 
 operatos = Operators()
 
@@ -62,7 +61,8 @@ class Quadruples():
                 if (self.POper[-1] in operatos.operator['equal']):
                     self.pop_poper(lineno)
             elif (case == 'parameter'):
-                print("HERE")
+                self.pop_poper(lineno)
+            elif (case == 'return'):
                 self.pop_poper(lineno)
             elif (case == 'print'):
                 self.pop_print(scope)
@@ -78,6 +78,9 @@ class Quadruples():
             if(operator=="="):
                 quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
             elif(operator=="parametro"):
+                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+            elif(operator=="return"):
+                print("HEREs")
                 quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
             else:
                 result = self.Temporales.get_new_simple(result_Type)

@@ -4,7 +4,7 @@ aritmetic = ['+', '-', '*']
 aritmeticcomplex = ['pi','%', '/','^']
 relational = ['==', '!=', '>', '<', '>=', '<=']
 logical = ['&&', '||']
-equal = ['=','parametro']
+equal = ['=','parametro','return']
 
 #Missing operators
 class Operators:

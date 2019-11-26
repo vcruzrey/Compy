@@ -57,6 +57,10 @@ class SymbolTable:
         }
         self.contador['contador'][tabla.name] = new_contador
 
+        if(tabla.type != "void"):
+            self.insert_function_as_global(tabla, lineno)
+
+
     def lookup_function(self, name, lineno):
         if name in self.diccionario['dirFunc'].keys():
             raise TypeError("Function: {} already exists. At line: {}".format(tabla.name, lineno))
@@ -84,9 +88,20 @@ class SymbolTable:
         }
         self.contador['contador'][name] = new_contador
 
+    def insert_function_as_global(self, tabla, lineno):
+        direccion = self.create_direccion_simplified(tabla.type, 'global')
+        new_variable = {
+            'name': tabla.name,
+            'type': tabla.type,
+            'cons' : False,
+            'complex': "simple",
+            'direccion': direccion
+        }
+        self.diccionario['dirFunc']['global']['vars'][tabla.name] = new_variable
+
     def insert_variable(self, dato, tabla, lineno):
         scope = tabla.name
-        self.lookup_variable(dato, scope, lineno)
+        self.lookup_variable(dato.name, scope, lineno)
         if (dato.complex == "simple"):
             direccion = self.create_direccion(dato, scope)
             new_variable = {
@@ -114,18 +129,22 @@ class SymbolTable:
             self.diccionario['dirFunc'][scope]['vars'][dato.name] = new_variable
 
     def lookup_variable(self, dato, scope, lineno):
-        name = dato.name
         if (scope == 'global'):
-            if name in self.diccionario['dirFunc']['global']['vars'].keys():
-                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
+            if dato in self.diccionario['dirFunc']['global']['vars'].keys():
+                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato, lineno))
         else:
-            if name in self.diccionario['dirFunc'][scope]['vars'].keys():
-                raise TypeError("Variable: {} already declared in same scope ({}). At line {}".format(dato.name, scope, lineno))
-            elif name in self.diccionario['dirFunc']['global']['vars'].keys():
-                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato.name, lineno))
+            if dato in self.diccionario['dirFunc'][scope]['vars'].keys():
+                raise TypeError("Variable: {} already declared in same scope ({}). At line {}".format(dato, scope, lineno))
+            elif dato in self.diccionario['dirFunc']['global']['vars'].keys():
+                raise TypeError("Variable: {} already declared as global. At line: {}".format(dato, lineno))
             elif (scope != 'global' and scope != 'main'):
-                if name in self.diccionario['dirFunc'][scope]['vars'].keys():
-                    raise TypeError("Variable: {} already declared as parameter. At line: {}".format(dato.name, lineno))
+                if dato in self.diccionario['dirFunc'][scope]['vars'].keys():
+                    raise TypeError("Variable: {} already declared as parameter. At line: {}".format(dato, lineno))
+
+    def create_direccion_simplified(self, type, scope):
+        direccion = self.contador['contador'][scope][type]
+        self.contador['contador'][scope][type] += 1
+        return direccion
 
     def create_direccion(self, dato, scope):
         direccion = self.contador['contador'][scope][dato.type]

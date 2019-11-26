@@ -20,9 +20,10 @@ aux_parameter = Parameter()
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales pn_quadruples_gotomain funciones principal
+    programa : globales pn_quadruples_gotomain funciones principal muere
     '''
     p[0] = "PROGRAM COMPILED"
+    print("HERE")
 
 #Variables globales
 #Existen: 0 o mas
@@ -57,7 +58,7 @@ def p_funciones(p):
 
 def p_funcionesloop(p):
     '''
-    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloque pn_quadruples_endproc funciones
+    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloquefunc pn_quadruples_endproc funciones
 
     '''
 
@@ -133,6 +134,26 @@ def p_bloque(p):
     '''
     bloque : LCORCHO bloqueloop RCORCHO
     '''
+
+def p_bloquefunc(p):
+    '''
+    bloquefunc : LCORCHO bloqueloop return_statement RCORCHO
+    '''
+
+def p_return_statement(p):
+    '''
+    return_statement : RETURN condition_statement pn_quadruples_checkreturn PNTCOMMA
+                     | empty
+    '''
+    print("HERE")
+def p_pn_quadruples_checkreturn(p):
+    '''
+    pn_quadruples_checkreturn : empty
+    '''
+    vardato = tabla_varibles.get_variable(aux_tabla.name, 'global', p.lineno(-1))
+    Quadruples.PilaDato.append(vardato)
+    Quadruples.POper.append('return')
+    Quadruples.check_top_poper('return', p.lineno(-1))
 
 def p_bloqueloop(p):
     '''
@@ -574,7 +595,7 @@ def p_parameter_statement(p):
 
 def p_parameterstatementloop(p):
     '''
-    parameterstatementloop : COMMA pn_quadruples_addfuncid expresion pn_quadruples_checkfuncid return_statement parameterstatementloop
+    parameterstatementloop : COMMA pn_quadruples_addfuncid expresion pn_quadruples_checkfuncid parameterstatementloop
                            | empty
     '''
 
@@ -623,29 +644,19 @@ def p_pn_quadruples_gotomain(p):
     #Print("PN --- CIF 1 addgotof ")
     Quadruples.gotomain()
 
-yacc.yacc()
+def p_muere(p):
+    '''
+    muere : empty
+    '''
+    print("Quadruplos")
+    conta = 1
+    with open('JSON/datasss.json', 'w') as outfile:
+        json.dump(tabla_varibles.diccionario, outfile)
+    for q in Quadruples.PQuad:
+        print(conta,q.operator,q.left_operand,q.right_operand,q.result)
+        conta += 1
+    Quadruples.print_quad()
 
-if __name__ == '__main__':
-    try:
-        arch_name = 'Pruebas/prueba-2.txt'
-        arch = open(arch_name,'r')
-        print("Leyendo archivo: " + arch_name + "...")
-        info = arch.read()
-        # print(info)
-        arch.close()
-        if(yacc.parse(info, tracking=True) == 'PROGRAM COMPILED'):
-            print("SINTAXIS VÁLIDA")
-        else:
-            print("ERRORES EN LA SINTAXIS")
-    except EOFError:
-        print(EOFError)
-
-with open('JSON/datas.json', 'w') as outfile:
-    json.dump(tabla_varibles.diccionario, outfile)
-print("Quadruplos")
-conta = 1
-for q in Quadruples.PQuad:
-    print(conta,q.operator,q.left_operand,q.right_operand,q.result)
-    conta += 1
-
-Quadruples.print_quad()
+quads = Quadruples.PQuad
+tabla = tabla_varibles.diccionario
+parser = yacc.yacc()
