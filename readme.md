@@ -14,7 +14,7 @@ Para poder usar Compy en tu computadora, descarga este repositorio, y en tu term
 Link a la documentación completa:  
 [Documentación](https://docs.google.com/document/d/1_c1s6h-4K_8f4fVVRsr4gtIrzotpbAyFETZ-sida_Bg/edit#)
 
-##Ejemplo de código
+## Ejemplo de código
 Ejemplo muy simple de un main.
 
     main(){
@@ -30,15 +30,15 @@ Ejemplo muy simple de un main.
 	print (s);
 	}
     
-##Sintaxis
-###Declaración de funciones
+## Sintaxis
+### Declaración de funciones
 	Func1(){
 	print("func 1");
 	}
 	Func2( a,b){
 	print("func2);
 	}
-###Declaración de variables
+### Declaración de variables
 	int a;
 	int b = 4;
 	float f;
@@ -47,11 +47,11 @@ Ejemplo muy simple de un main.
 	bool b1 = true;
 	string s = "perro";
 	string s1;
-###Ciclo while
+### Ciclo while
 	while(condition){
 	
 	}
-###ciclo do while
+### ciclo do while
 	do{
 	
 	}while(condition)
@@ -63,10 +63,10 @@ Ejemplo muy simple de un main.
 	else{
 	
 	}
-###Desarrolladores
+### Desarrolladores
 Victor Cruz Reyes
 Rolando Mata Adame
-###Mentores
+### Mentores
 
 Elda Quiroga
 Héctor Ceballos
