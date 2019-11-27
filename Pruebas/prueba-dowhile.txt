@@ -1,0 +1,21 @@
+int a;
+int b;
+int c;
+int d;
+int x;
+func void test (int q, int y) {
+
+}
+
+main {
+int arroz = 55;
+  do {
+    a = 55;
+    x = 45;
+    do {
+      c = 88;
+      c = 88;
+    } while (true);
+  } while (a<b);
+}
+end
