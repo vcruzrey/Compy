@@ -50,20 +50,20 @@ class MaquinaVirtual:
             posicion = self.posicion
             #print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
             operation = self.quadruplesList[posicion].operator
-            #print("operation")
-            izquierda = self.quadruplesList[posicion].left_operand
-            #print("izquierda")
-            derecha = self.quadruplesList[posicion].right_operand
-            #print("derecha")
-            resultado = self.quadruplesList[posicion].result
-            #print("resultado")
+            #print(operation)
+            izquierda = self.check_parentesis(self.quadruplesList[posicion].left_operand)
+            #print(izquierda)
+            derecha = self.check_parentesis(self.quadruplesList[posicion].right_operand)
+            #print(derecha)
+            resultado = self.check_parentesis(self.quadruplesList[posicion].result)
+            #print(resultado)
 
             mem_izq = self.posicion_direccion(izquierda)
-            #print("mem_izq")
+            #print(mem_izq)
             mem_der = self.posicion_direccion(derecha)
-            #print("mem_der")
+            #print(mem_der)
             mem_res = self.posicion_direccion(resultado)
-            #print("mem_res")
+            #print(mem_res)
 
             if (operation in matematicas):
                 operations_switch = {
@@ -84,7 +84,7 @@ class MaquinaVirtual:
                     "!=" : operator.ne,
                 }
                 func_op = operations_switch[operation]
-                print(str(self.get_value(mem_izq, izquierda)) +" +" + str(self.get_value(mem_der, derecha)))
+                #print(str(self.get_value(mem_izq, izquierda)) +" +" + str(self.get_value(mem_der, derecha)))
                 res = func_op(self.get_value(mem_izq, izquierda), self.get_value(mem_der, derecha))
                 self.set_value(mem_res, resultado, res)
                 self.posicion += 1
@@ -118,7 +118,7 @@ class MaquinaVirtual:
                 #print("equals")
                 res  = self.get_value(mem_res, resultado)
                 self.set_value(mem_izq, izquierda, res)
-                print("RES "+str(res))
+                #print("RES "+str(res))
                 self.posicion += 1
 
             elif (operation == 'print'):
@@ -133,7 +133,7 @@ class MaquinaVirtual:
             elif (operation == 'ENDPROC'):
                 aux_memoria.diccionario['local'].liberar_funcion()
                 self.posicion = self.pilaSaltos.pop()
-                print("ENDPRCO ------------------------ " + str(self.posicion))
+                #print("ENDPRCO ------------------------ " + str(self.posicion))
 
             elif (operation == 'GOSUB'):
                 #print("GOSUB")
@@ -149,6 +149,22 @@ class MaquinaVirtual:
                 self.posicion += 1
                 #print("era end")
 
+            elif (operation  == 'VER'):
+                if(izquierda >= derecha and izquierda <= resultado):
+                    self.posicion += 1
+                    posicion = self.posicion
+                    izquierda = self.quadruplesList[posicion].left_operand
+                    derecha = self.quadruplesList[posicion].right_operand
+                    resultado = self.quadruplesList[posicion].result
+                    mem_res = self.posicion_direccion(resultado)
+                    res = derecha + izquierda
+                    self.set_value(mem_res, resultado, res)
+                    self.posicion += 1
+                else:
+                    print("Error. Out of bounds")
+                    self.posicion += 10000000
+                #print("era end")
+
             elif (operation  == 'parametro'):
                 res  = self.get_value(mem_izq, izquierda)
                 aux_memoria.diccionario['local'].memoria_nueva()
@@ -162,9 +178,20 @@ class MaquinaVirtual:
                 #aux_memoria.memoria_pasada()
         print("FINISH")
 
+    def check_parentesis(self, dir):
+        test = str(dir)
+        if(test[0]=="("):
+            apunta = int(dir[1:-1])
+            mem_apunta = self.posicion_direccion(apunta)
+            res = self.get_value(mem_apunta, apunta)
+            return res
+        return dir
+
     def posicion_direccion(self,dir):
         if(isinstance(dir,int)):
-            if (dir < 20000):
+            if (dir<1000):
+                return None
+            elif (dir < 20000):
                 return 'global'
             elif (dir < 30000):
                 return 'constante'

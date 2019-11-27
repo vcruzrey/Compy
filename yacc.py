@@ -19,7 +19,7 @@ aux_parameter = Parameter()
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales pn_quadruples_gotomain funciones principal the_final_cut muere
+    programa : globales pn_quadruples_gotomain funciones principal 
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -152,7 +152,6 @@ def p_pn_quadruples_checkreturn(p):
     Quadruples.PilaDato.append(vardato)
     Quadruples.POper.append('return')
     Quadruples.check_top_poper('return', p.lineno(-1))
-    print("check_return")
 
 def p_bloqueloop(p):
     '''
@@ -165,6 +164,7 @@ def p_estatuto(p):
     '''
     estatuto : declarar
              | asignacion
+             | asignacionarr
              | condicion
              | ciclo
              | escritura
@@ -248,6 +248,11 @@ def p_pn_st_insertvariable(p):
 def p_asignacion(p):
     '''
     asignacion : ID pn_quadruples_addvariable EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
+    '''
+
+def p_asignacionarr(p):
+    '''
+    asignacionarr : ID LBRCKT DTI RBRCKT pn_quadruples_addvariablearr EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
     '''
 
 def p_inicializada_asignacion(p):
@@ -428,17 +433,13 @@ def p_pn_quadruples_addfuncion(p):
     '''
     #print("PN --- 1 addvariable " + p[-1])
     vardato = tabla_varibles.get_variable(aux_dato.name, 'global', p.lineno(-1))
-    if(vardato['type']!="void"):
-        Quadruples.create_return_temporal(vardato)
-    else:
-        raise TypeError
+    Quadruples.create_return_temporal(vardato)
 
 def p_pn_quadruples_addvariablearr(p):
     '''
     pn_quadruples_addvariablearr : empty
     '''
     #print("PN --- 1 addvariablearr " + p[-1])
-    print("HERE")
     aux_dato.name = p[-4]
     index = p[-2]
     vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
@@ -560,7 +561,6 @@ def p_escritura(p):
     '''
     escritura : PRINT LPAREN escritura_statement escrituraloop RPAREN PNTCOMMA
     '''
-    print("AQUI")
 
 def p_escrituraloop(p):
     '''
@@ -605,7 +605,6 @@ def p_funcionvoid_vardt(p):
     '''
     funcionvoid_vardt : ID LPAREN pn_quadruples_getfuncid parameter_statement RPAREN pn_quadruples_checkfunclength
     '''
-    print("test" + p[1])
     aux_dato.name = p[1]
 
 def p_parameter_statement(p):
@@ -648,7 +647,6 @@ def p_pn_quadruples_checkfunclength(p):
     pn_quadruples_checkfunclength : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
-    print(aux_parameter)
     Quadruples.checkfunclenght(aux_parameter, p.lineno(-1))
     aux_parameter.reset()
 

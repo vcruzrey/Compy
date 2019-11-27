@@ -1,16 +1,10 @@
 int ag;
 arr int arg[2];
-string as = "hola" + "perro";
+string as ;
 float af;
 bool ab;
 
-func int uno(int au1, int buf){
-  ag = au1 + buf;
-  int ax = au1 + buf;
-  return(ag+5);
-}
-
 main {
-  int a = 23;
-  print(uno(5,5)+4);
+  arg[0] = 55;
+  print(arg[0]+5);
 }
