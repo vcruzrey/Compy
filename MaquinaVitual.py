@@ -48,7 +48,7 @@ class MaquinaVirtual:
         quadruples_length = len(self.quadruplesList)
         while(quadruples_length>self.posicion):
             posicion = self.posicion
-            print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
+            #print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
             operation = self.quadruplesList[posicion].operator
             #print("operation")
             izquierda = self.quadruplesList[posicion].left_operand
@@ -89,11 +89,20 @@ class MaquinaVirtual:
                 self.posicion += 1
 
             elif (operation == 'gotof'):
-                print("gotof")
+                #print("gotof")
                 res  = self.get_value(mem_izq, izquierda)
                 if (res):
                     self.posicion += 1
-                    print("here")
+                    #print("here")
+                else:
+                    self.posicion = resultado
+
+            elif (operation == 'gotov'):
+                #print("gotof")
+                res  = self.get_value(mem_izq, izquierda)
+                if (res):
+                    self.posicion += 1
+                    #print("here")
                 else:
                     self.posicion = resultado
 
@@ -108,6 +117,7 @@ class MaquinaVirtual:
                 #print("equals")
                 res  = self.get_value(mem_res, resultado)
                 self.set_value(mem_izq, izquierda, res)
+                print("RES "+str(res))
                 self.posicion += 1
 
             elif (operation == 'print'):
@@ -121,22 +131,22 @@ class MaquinaVirtual:
 
             elif (operation == 'ENDPROC'):
                 aux_memoria.diccionario['local'].liberar_funcion()
-                self.posicion = self.guardar_posicion
+                self.posicion = self.pilaSaltos.pop()
                 print("ENDPRCO ------------------------ " + str(self.posicion))
 
             elif (operation == 'GOSUB'):
-                print("GOSUB")
+                #print("GOSUB")
                 aux_memoria.diccionario['local'].memoria_nueva()
                 direccion = self.dirFunc['dirFunc'][izquierda]['inicio']
-                self.guardar_posicion = self.posicion + 1
+                self.pilaSaltos.append(self.posicion + 1)
                 self.posicion = direccion
-                print(direccion)
+                #print(direccion)
 
             elif (operation  == 'ERA'):
                 aux_memoria.diccionario['local'].insertar_funcion()
                 aux_memoria.diccionario['local'].memoria_pasada()
                 self.posicion += 1
-                print("era end")
+                #print("era end")
 
             elif (operation  == 'parametro'):
                 res  = self.get_value(mem_izq, izquierda)
@@ -144,8 +154,8 @@ class MaquinaVirtual:
                 self.set_value(mem_res, resultado, res)
                 aux_memoria.diccionario['local'].memoria_pasada()
                 self.posicion += 1
-                print(self.posicion)
-                print("parametro")
+                #print(self.posicion)
+                #print("parametro")
                 #aux_memoria.memoria_nueva()
 
                 #aux_memoria.memoria_pasada()
