@@ -1,6 +1,6 @@
-int a;
-int b;
-int c;
+int a=3;
+int b=0;
+int c=1;
 int d;
 int x;
 func void test (int q, int y) {
@@ -9,11 +9,10 @@ func void test (int q, int y) {
 
 main {
 int arroz = 55;
-  while (a>b&&c<5) {
-    a = 55;
-    while (a>6){
-      string dos = "THis";
-    }
+  while (a>b&&a>c) {
+    a = a - 1;
+    b = b +1;
   }
 }
-end
+
+

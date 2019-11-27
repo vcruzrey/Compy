@@ -162,12 +162,12 @@ class Quadruples():
 
     def closegotodown(self):
         quadnum = self.PJumps.pop()
-        jumpto = len(self.PQuad)
+        jumpto = len(self.PQuad) 
         self.PQuad[quadnum-1].result = jumpto
 
     def closegotoup(self):
         quadnum = self.PJumps.pop()
-        jumpto = self.PJumps.pop()
+        jumpto = self.PJumps.pop() - 1
         self.PQuad[quadnum-1].result = jumpto
 
     def addgoto(self):

@@ -1,21 +1,16 @@
-int a;
-int b;
-int c;
+int a=3;
+int b=5;
+int c=7;
 int d;
 int x;
-func void test (int q, int y) {
-
-}
 
 main {
 int arroz = 55;
   do {
-    a = 55;
+    d = 55;
     x = 45;
-    do {
-      c = 88;
-      c = 88;
-    } while (true);
+    print("do while");
+    a = a +1;
   } while (a<b);
 }
-end
+
