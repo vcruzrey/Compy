@@ -11,7 +11,6 @@ func int uno(int au1, int buf){
 }
 
 main {
-  int m = 5+5;
-  int gl;
-  uno(m + 5,gl);
+  int a = 23;
+  print(uno(5,5)+4);
 }

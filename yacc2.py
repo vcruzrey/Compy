@@ -508,3 +508,26 @@ def p_expresionloop(p):
     expresionloop : COMMA expresion expresionloop
                   | empty
     '''
+
+#FALTAN POR DEFINIR
+if (operation == 'gotof'):
+    print("gotof")
+    res  = self.get_value(mem_izq, izquierda)
+    if (res):
+        self.posicion += 1
+        print("here")
+    else:
+        self.posicion = resultado
+
+elif (operation == 'gotov'):
+    print('gotov')
+    self.posicion = resultado
+
+elif (operation == 'GOSUB'):
+    print("gosub")
+
+elif (operation  == 'ERA'):
+    print("era")
+
+elif (operation == 'ENDPROC'):
+    print ("endproc")

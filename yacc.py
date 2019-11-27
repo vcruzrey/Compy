@@ -15,15 +15,13 @@ aux_dato = Dato()
 aux_tabla = Tabla()
 Quadruples = Quadruples()
 aux_parameter = Parameter()
-
 #comentario de prueba
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales pn_quadruples_gotomain funciones principal muere
+    programa : globales pn_quadruples_gotomain funciones principal the_final_cut muere
     '''
     p[0] = "PROGRAM COMPILED"
-    print("HERE")
 
 #Variables globales
 #Existen: 0 o mas
@@ -58,7 +56,7 @@ def p_funciones(p):
 
 def p_funcionesloop(p):
     '''
-    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloquefunc pn_quadruples_endproc funciones
+    funcionesloop : FUNC pn_st_functype ID pn_st_functionid funcparameters bloque pn_quadruples_endproc funciones
 
     '''
 
@@ -77,6 +75,7 @@ def p_pn_st_functionid(p):
     pn_st_functionid : empty
     '''
     aux_tabla.name = p[-1]
+    aux_tabla.posicion_inical = Quadruples.get_position()
     tabla_varibles.create_table_function(aux_tabla, p.lineno(-1))
 
 def p_funcparameters(p):
@@ -137,23 +136,23 @@ def p_bloque(p):
 
 def p_bloquefunc(p):
     '''
-    bloquefunc : LCORCHO bloqueloop return_statement RCORCHO
+    bloquefunc : LCORCHO bloqueloop RCORCHO
     '''
 
 def p_return_statement(p):
     '''
     return_statement : RETURN condition_statement pn_quadruples_checkreturn PNTCOMMA
-                     | empty
     '''
-    print("HERE")
+
 def p_pn_quadruples_checkreturn(p):
     '''
     pn_quadruples_checkreturn : empty
     '''
-    vardato = tabla_varibles.get_variable(aux_tabla.name, 'global', p.lineno(-1))
+    vardato = tabla_varibles.get_variable(aux_tabla.name, 'return', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
     Quadruples.POper.append('return')
     Quadruples.check_top_poper('return', p.lineno(-1))
+    print("check_return")
 
 def p_bloqueloop(p):
     '''
@@ -170,6 +169,7 @@ def p_estatuto(p):
              | ciclo
              | escritura
              | funcionvoid
+             | return_statement
     '''
 
 #Declarar
@@ -410,6 +410,7 @@ def p_vardt(p):
           | DTB pn_quadruples_addconstantbool
           | DTS pn_quadruples_addconstantstring
           | ID LBRCKT DTI RBRCKT pn_quadruples_addvariablearr
+          | funcionvoid_vardt pn_quadruples_addfuncion
     '''
 
 def p_pn_quadruples_addvariable(p):
@@ -419,6 +420,14 @@ def p_pn_quadruples_addvariable(p):
     #print("PN --- 1 addvariable " + p[-1])
     aux_dato.name = p[-1]
     vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    Quadruples.PilaDato.append(vardato)
+
+def p_pn_quadruples_addfuncion(p):
+    '''
+    pn_quadruples_addfuncion : empty
+    '''
+    #print("PN --- 1 addvariable " + p[-1])
+    vardato = tabla_varibles.get_variable(aux_dato.name, 'global', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
 
 def p_pn_quadruples_addvariablearr(p):
@@ -465,6 +474,7 @@ def p_pn_quadruples_addconstantstring(p):
     #print("PN --- 1 addconstantstring " + str(p[-1]))
     vardato = tabla_varibles.get_constant(p[-1], 'string', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
+
 
 #Condicion
 def p_condicion(p):
@@ -547,6 +557,7 @@ def p_escritura(p):
     '''
     escritura : PRINT LPAREN escritura_statement escrituraloop RPAREN PNTCOMMA
     '''
+    print("AQUI")
 
 def p_escrituraloop(p):
     '''
@@ -571,7 +582,7 @@ def p_pn_quadruples_checkprint(p):
     pn_quadruples_checkprint : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
-    Quadruples.check_top_poper('print', tabla_varibles, p.lineno(-1))
+    Quadruples.check_top_poper('print', p.lineno(-1))
 
 def p_empty(p):
     '''empty :'''
@@ -586,6 +597,13 @@ def p_funcionvoid(p):
     '''
     funcionvoid : ID LPAREN pn_quadruples_getfuncid parameter_statement RPAREN pn_quadruples_checkfunclength PNTCOMMA
     '''
+
+def p_funcionvoid_vardt(p):
+    '''
+    funcionvoid_vardt : ID LPAREN pn_quadruples_getfuncid parameter_statement RPAREN pn_quadruples_checkfunclength
+    '''
+    print("test" + p[1])
+    aux_dato.name = p[1]
 
 def p_parameter_statement(p):
     '''
@@ -605,7 +623,7 @@ def p_pn_quadruples_getfuncid(p):
     '''
     #Print("PN --- 1 addvariable " + p[-1])
     funcid = p[-2]
-    tabla_varibles.get_function_info(funcid, aux_parameter)
+    tabla_varibles.get_function_info(funcid, aux_parameter, p.lineno(-1))
     Quadruples.addfuncid(funcid)
 
 def p_pn_quadruples_addfuncid(p):
@@ -627,6 +645,7 @@ def p_pn_quadruples_checkfunclength(p):
     pn_quadruples_checkfunclength : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
+    print(aux_parameter)
     Quadruples.checkfunclenght(aux_parameter, p.lineno(-1))
     aux_parameter.reset()
 
@@ -644,10 +663,17 @@ def p_pn_quadruples_gotomain(p):
     #Print("PN --- CIF 1 addgotof ")
     Quadruples.gotomain()
 
+def p_the_final_cut(p):
+    '''
+    the_final_cut : empty
+    '''
+    #tabla_varibles.get_constant_table()
+
 def p_muere(p):
     '''
     muere : empty
     '''
+    #tabla_varibles.get_constant_table()
     print("Quadruplos")
     conta = 1
     with open('JSON/datasss.json', 'w') as outfile:

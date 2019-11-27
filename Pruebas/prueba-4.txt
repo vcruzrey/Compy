@@ -21,4 +21,3 @@ main {
     int qwerty = 55;
   }
 }
-end
