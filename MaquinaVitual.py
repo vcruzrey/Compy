@@ -20,7 +20,9 @@ class MaquinaVirtual:
         self.dirFunc = dict(dirFunc)
         self.posicion = 0
         self.guardar_posicion = 0
+        self.pilaSaltos =[]
         self.insert_constant_to_memory()
+        print("INICIO ---------- ------------------------------")
         self.funciones()
 
     def insert_constant_to_memory(self):
@@ -46,7 +48,7 @@ class MaquinaVirtual:
         quadruples_length = len(self.quadruplesList)
         while(quadruples_length>self.posicion):
             posicion = self.posicion
-            #print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
+            print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
             operation = self.quadruplesList[posicion].operator
             #print("operation")
             izquierda = self.quadruplesList[posicion].left_operand
@@ -86,6 +88,15 @@ class MaquinaVirtual:
                 self.set_value(mem_res, resultado, res)
                 self.posicion += 1
 
+            elif (operation == 'gotof'):
+                print("gotof")
+                res  = self.get_value(mem_izq, izquierda)
+                if (res):
+                    self.posicion += 1
+                    print("here")
+                else:
+                    self.posicion = resultado
+
             elif (operation == '='):
                 #print("equals")
                 res  = self.get_value(mem_izq, izquierda)
@@ -111,8 +122,8 @@ class MaquinaVirtual:
             elif (operation == 'ENDPROC'):
                 aux_memoria.diccionario['local'].liberar_funcion()
                 self.posicion = self.guardar_posicion
-                self.guardar_posicion = 0
-                
+                print("ENDPRCO ------------------------ " + str(self.posicion))
+
             elif (operation == 'GOSUB'):
                 print("GOSUB")
                 aux_memoria.diccionario['local'].memoria_nueva()
