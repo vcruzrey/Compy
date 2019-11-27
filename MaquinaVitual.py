@@ -115,19 +115,13 @@ class MaquinaVirtual:
             self.posicion += 1
 
 
-        #CHECAR QUE JALE ESTE EN ESPECIFICO
-       # elif (operator == '!'):
-        #    print("not")
-          #  posicion += 1
-         #   resultado = not derecha
-
         elif (operator2 == 'print'):
             print("print")
             res  = self.get_value(mem_res, resultado)
             print(res)
             self.posicion += 1
 
-        #FALTAN POR DEFINIR
+       
         elif (operator2 == 'gotof'):
             print("gotof")
             res  = self.get_value(mem_izq, izquierda)
