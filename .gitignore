@@ -5,3 +5,4 @@ test lex code.txt
 __pycache__/
 .DS_Store
 datasss.json
+JSON/datasss.json

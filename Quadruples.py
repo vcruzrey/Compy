@@ -42,6 +42,12 @@ class Quadruples():
         for x in range(len(self.PilaDato)):
             print (self.PilaDato[x]['name'])
 
+    def create_return_temporal(self,vardato):
+        left_operand = self.Temporales.get_new_simple(vardato['type'])
+        quad = Quadruple('=', vardato['direccion'], None, left_operand['direccion'])
+        self.PQuad.append(quad)
+        self.PilaDato.append(left_operand)
+
     def check_top_poper(self, case, lineno):
         length = len(self.POper)
         if (length > 0):

@@ -19,5 +19,5 @@ func int Fibonacci(int n){
 
 main {
   int a = 23;
-  print(Fibonacci(3));
+  print(Fibonacci(10));
 }

@@ -428,7 +428,10 @@ def p_pn_quadruples_addfuncion(p):
     '''
     #print("PN --- 1 addvariable " + p[-1])
     vardato = tabla_varibles.get_variable(aux_dato.name, 'global', p.lineno(-1))
-    Quadruples.PilaDato.append(vardato)
+    if(vardato['type']!="void"):
+        Quadruples.create_return_temporal(vardato)
+    else:
+        raise TypeError
 
 def p_pn_quadruples_addvariablearr(p):
     '''

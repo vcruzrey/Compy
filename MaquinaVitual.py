@@ -84,6 +84,7 @@ class MaquinaVirtual:
                     "!=" : operator.ne,
                 }
                 func_op = operations_switch[operation]
+                print(str(self.get_value(mem_izq, izquierda)) +" +" + str(self.get_value(mem_der, derecha)))
                 res = func_op(self.get_value(mem_izq, izquierda), self.get_value(mem_der, derecha))
                 self.set_value(mem_res, resultado, res)
                 self.posicion += 1
