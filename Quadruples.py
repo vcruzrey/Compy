@@ -65,7 +65,7 @@ class Quadruples():
             elif (case == 'return'):
                 self.pop_poper(lineno)
             elif (case == 'print'):
-                self.pop_print(scope)
+                self.pop_print()
 
     def pop_poper(self, lineno):
         right_operand = self.PilaDato.pop()
@@ -76,16 +76,16 @@ class Quadruples():
             raise TypeError("Unable to assign operator: {} to types: {} , {}. At line: {}".format(operator, left_operand['type'], right_operand['type'], lineno))
         else:
             if(operator=="="):
-                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+                quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
             elif(operator=="parametro"):
-                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+                quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
             elif(operator=="return"):
-                print("HEREs")
-                quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
+                print("return")
+                quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
             else:
                 result = self.Temporales.get_new_simple(result_Type)
                 self.PilaDato.append(result)
-                quad = Quadruple(operator, left_operand['name'], right_operand['name'], result['name'])
+                quad = Quadruple(operator, left_operand['direccion'], right_operand['direccion'], result['direccion'])
             self.PQuad.append(quad)
             #if(operator=="="):
             #    quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
@@ -124,10 +124,9 @@ class Quadruples():
                 self.POper.pop()
 
     def pop_print(self):
-        operand = self.PilaO.pop()
-        type = self.PTypes.pop()
+        operand = self.PilaDato.pop()
         operator = self.POper.pop()
-        quad = Quadruple(operator, "NONE", "NONE", operand)
+        quad = Quadruple(operator, None, None, operand['direccion'])
         self.PQuad.append(quad)
 
     def gotomain(self):
@@ -144,23 +143,21 @@ class Quadruples():
         self.Temporales.reset()
 
     def addgotof(self):
-        operand = self.PilaO.pop()
-        type = self.PTypes.pop()
-        if (type != 'bool'):
+        dato = self.PilaDato.pop()
+        if (dato['type'] != 'bool'):
             raise TypeError("Unable use expresion as condition")
         else:
-            quad = Quadruple('gotof', operand, None, None)
+            quad = Quadruple('gotof', dato['direccion'], None, None)
             self.PQuad.append(quad)
             self.PJumps.append(len(self.PQuad))
 
     def addgotov(self):
-        operand = self.PilaO.pop()
-        type = self.PTypes.pop()
-        if (type != 'bool'):
+        dato = self.PilaDato.pop()
+        if (dato['type'] != 'bool'):
             raise TypeError("Unable use expresion as condition")
         else:
             quadnum = self.PJumps.pop()
-            quad = Quadruple('gotov', operand, None, quadnum)
+            quad = Quadruple('gotov', dato['direccion'], None, quadnum)
             self.PQuad.append(quad)
 
     def closegotodown(self):
@@ -210,6 +207,8 @@ class Quadruples():
         quad = Quadruple('ENDPROC', None, None, None)
         self.PQuad.append(quad)
 
+    def get_position(self):
+        return len(self.PQuad)
 
     def printTemporales(self):
         with open('JSON/temporales.json', 'w') as outfile:

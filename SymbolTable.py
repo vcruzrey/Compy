@@ -39,7 +39,7 @@ class SymbolTable:
         new_table = {
             'name': tabla.name,
             'type' : tabla.type,
-            'inicio' : 0,
+            'inicio' : tabla.posicion_inical,
             'params' : {},
             'vars' : {},
             'return' : None
@@ -166,11 +166,14 @@ class SymbolTable:
             return tamano, {'limite1' : limite1, 'limite2' : limite2, 'm1' : m1}
 
     def get_variable(self, name, scope, lineno):
-        if (scope == 'global'):
+        if (scope == 'global' or scope =='return'):
             if name in self.diccionario['dirFunc']['global']['vars'].keys():
                 return self.diccionario['dirFunc']['global']['vars'][name]
             else:
-                raise TypeError("Variable: {} hasnt been declared. At line {}".format(name, lineno))
+                if(scope == 'global'):
+                    raise TypeError("Variable: {} hasnt been declared. At line {}".format(name, lineno))
+                else:
+                    raise TypeError("Void Function: {} cant return. At line {}".format(name, lineno))
         else:
             if name in self.diccionario['dirFunc']['global']['vars'].keys():
                 return self.diccionario['dirFunc']['global']['vars'][name]
@@ -200,14 +203,14 @@ class SymbolTable:
         self.diccionario['dirFunc']['constantes']['vars'][name] = new_constant
         return new_constant
 
-    def get_function_info(self, scope, aux_parameter):
+    def get_function_info(self, scope, aux_parameter, lineno):
         if scope in self.diccionario['dirFunc'].keys():
             aux_parameter.name = scope
             aux_parameter.type = self.diccionario['dirFunc'][scope]['type']
             aux_parameter.params = dict(self.diccionario['dirFunc'][scope]['params'])
             aux_parameter.length = len(aux_parameter.params)
         else:
-            raise TypeError("Funtion: {} hasnt been declared".format(aux_dato))
+            raise TypeError("Function: {} hasnt been declared. At Line: {}".format(scope, lineno))
 
     def validdt(self, tipo):
         switch = {
@@ -218,6 +221,13 @@ class SymbolTable:
         }
         if not (switch.get(tipo, False)):
             raise TypeError("Variable Type: {} not valid.".format(tipo))
+
+    def get_constant_table(self):
+        tabla_constantes_aux = {}
+        for key in self.diccionario['dirFunc']['constantes']['vars']:
+            test = self.diccionario['dirFunc']['constantes']['vars'][key]
+            tabla_constantes_aux[test['direccion']] = test['name']
+        self.diccionario['dirFunc']['constantes'] = dict(tabla_constantes_aux)
 
 #Cementerio de funciones
 
