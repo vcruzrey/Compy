@@ -675,7 +675,7 @@ def p_muere(p):
     '''
     #tabla_varibles.get_constant_table()
     print("Quadruplos")
-    conta = 1
+    conta = 0
     with open('JSON/datasss.json', 'w') as outfile:
         json.dump(tabla_varibles.diccionario, outfile)
     for q in Quadruples.PQuad:

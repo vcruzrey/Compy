@@ -137,7 +137,7 @@ class Quadruples():
         for index, aux in enumerate(self.PQuad):
             if(aux.operator == "GOTO" and aux.left_operand == "MAIN"):
                 break
-        self.PQuad[index].result = len(self.PQuad) + 1
+        self.PQuad[index].result = len(self.PQuad)
 
     def reset_temporales(self):
         self.Temporales.reset()
@@ -162,7 +162,7 @@ class Quadruples():
 
     def closegotodown(self):
         quadnum = self.PJumps.pop()
-        jumpto = len(self.PQuad) + 1
+        jumpto = len(self.PQuad)
         self.PQuad[quadnum-1].result = jumpto
 
     def closegotoup(self):
@@ -171,11 +171,11 @@ class Quadruples():
         self.PQuad[quadnum-1].result = jumpto
 
     def addgoto(self):
-        quad = Quadruple('goto', None, None, None)
+        quad = Quadruple('GOTO', None, None, None)
         self.PQuad.append(quad)
         quadnum = self.PJumps.pop()
         self.PJumps.append(len(self.PQuad))
-        jumpto = len(self.PQuad) + 1
+        jumpto = len(self.PQuad)
         self.PQuad[quadnum-1].result = jumpto
 
     def addfuncid(self,funcid):
