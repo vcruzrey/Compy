@@ -64,10 +64,10 @@ Ejemplo muy simple de un main.
 	
 	}
 ### Desarrolladores
-Victor Cruz Reyes
-Rolando Mata Adame
+- Victor Cruz Reyes
+- Rolando Mata Adame
 ### Mentores
 
-Elda Quiroga
-Héctor Ceballos
+- Elda Quiroga
+- Héctor Ceballos
 
