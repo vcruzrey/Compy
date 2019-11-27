@@ -1,0 +1,17 @@
+int ag;
+arr int arg[2];
+string as = "hola" + "perro";
+float af;
+bool ab;
+
+func int uno(int au1, int buf){
+  ag = au1 + buf;
+  int ax = au1 + buf;
+  return(ag+5);
+}
+
+main {
+  int m = 5+5;
+  int gl;
+  uno(m + 5,gl);
+}

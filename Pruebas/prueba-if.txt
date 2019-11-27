@@ -1,0 +1,32 @@
+int a=6;
+int b=3;
+int c=4;
+int d;
+int e;
+int f;
+int g;
+int h;
+int i;
+int j;
+int k;
+int l;
+bool b1;
+bool b2;
+bool b3;
+main {
+  int x=1;
+  if (a>b&&c<5) {
+    int y = 6;
+    if (x<3) {
+      print("si es menor");
+    }
+    else {
+      print ("no es menor");
+    }
+    int sa = 5;
+  }
+  else {
+    print("no se cumple el primer if");
+  }
+  d = d;
+}
