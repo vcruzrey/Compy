@@ -101,10 +101,10 @@ class MaquinaVirtual:
                 #print("gotof")
                 res  = self.get_value(mem_izq, izquierda)
                 if (res):
-                    self.posicion += 1
+                    self.posicion = resultado
                     #print("here")
                 else:
-                    self.posicion = resultado
+                    self.posicion += 1
 
             elif (operation == '='):
                 #print("equals")
