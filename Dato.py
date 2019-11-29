@@ -31,3 +31,10 @@ class Parameter:
         self.params = {}
         self.length = 0
         self.contador = 0
+
+class SpecialFunc:
+    def __init__(self):
+        self.name = ''
+
+    def reset(self):
+        self.name = ''

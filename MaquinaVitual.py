@@ -1,3 +1,4 @@
+from collections import Counter
 from Memoria import Memoria
 from Quadruples import Quadruple
 import operator
@@ -189,6 +190,28 @@ class MaquinaVirtual:
                 res  = self.get_value(mem_izq, izquierda)
                 self.set_value(mem_res, resultado, str(res))
                 self.posicion += 1
+
+            elif (operation  == 'FSP'):
+                print("HERE")
+                pila_aux = []
+                while operation != "FSPEND":
+                    if (derecha == None):
+                        res  = self.get_value(mem_res, resultado)
+                        pila_aux.append(res)
+                        self.posicion += 1
+                    else:
+                        for i in range(derecha):
+                            res  = self.get_value(mem_res, resultado + i)
+                            pila_aux.append(res)
+                        self.posicion += 1
+                    posicion = self.posicion
+                    operation = self.quadruplesList[posicion].operator
+                    derecha = self.check_parentesis(self.quadruplesList[posicion].right_operand)
+                    resultado = self.check_parentesis(self.quadruplesList[posicion].result)
+                res_aux = self.funciones_especiales(pila_aux, izquierda)
+                mem_res = self.posicion_direccion(resultado)
+                self.set_value(mem_res, resultado, res_aux)
+                self.posicion += 1
                 #print(self.posicion)
                 #print("parametro")
                 #aux_memoria.memoria_nueva()
@@ -197,6 +220,32 @@ class MaquinaVirtual:
         #print(aux_memoria.diccionario['local'].actual[0])
         print("FINISH")
 
+    def funciones_especiales(self, pila, tipo):
+        if tipo == "average":
+            n = len(pila)
+            get_sum = sum(pila)
+            avr = get_sum / n
+            return avr
+        elif tipo == "median":
+            n = len(pila)
+            pila.sort()
+            if n % 2 == 0:
+                 median1 = pila[n//2]
+                 median2 = pila[n//2 - 1]
+                 median = (median1 + median2)/2
+            else:
+                median = pila[n//2]
+            return median
+        elif tipo == "mode":
+            n = len(pila)
+            data = Counter(pila)
+            get_mode = dict(data)
+            mode = [k for k, v in get_mode.items() if v == max(list(data.values()))]
+            if len(mode) == n:
+                get_mode = -1
+            else:
+                get_mode = ', '.join(map(str, mode))
+            return get_mode
     def check_parentesis(self, dir):
         test = str(dir)
         if(test[0]=="("):

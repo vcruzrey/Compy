@@ -73,6 +73,24 @@ class Quadruples():
             elif (case == 'print'):
                 self.pop_print()
 
+    def pop_poper_funciones_especiales(self, function, lineno):
+        vardato = self.PilaDato.pop()
+        if (vardato['type'] == 'int' or vardato['type'] == 'float'):
+            if (vardato['complex'] == "simple"):
+                quad = Quadruple("FSP", function, None, vardato['direccion'])
+                self.PQuad.append(quad)
+            else:
+                quad = Quadruple("FSP", function, vardato['tamano'], vardato['direccion'])
+                self.PQuad.append(quad)
+        else:
+            raise TypeError("Function: {} only recieves type INT or FLOAT. At line: {}".format(function, lineno))
+
+    def pop_poper_funciones_especiales_end(self):
+        result = self.Temporales.get_new_simple('float')
+        quad = Quadruple("FSPEND", None, None, result['direccion'])
+        self.PQuad.append(quad)
+        self.PilaDato.append(result)
+
     def pop_poper_parameter(self, lineno):
         right_operand = self.PilaDato.pop()
         left_operand = self.PilaDato.pop()
@@ -206,7 +224,7 @@ class Quadruples():
     def closegotodown(self):
         quadnum = self.PJumps.pop()
         jumpto = len(self.PQuad)
-        self.PQuad[quadnum-1].result = jumpto 
+        self.PQuad[quadnum-1].result = jumpto
 
     def closegotoup(self):
         quadnum = self.PJumps.pop()

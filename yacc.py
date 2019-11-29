@@ -7,6 +7,7 @@ from SymbolTable import SymbolTable
 from Memoria import Memoria
 from Dato import Dato
 from Dato import Parameter
+from Dato import SpecialFunc
 from Tabla import Tabla
 from Quadruples import Quadruples
 
@@ -15,6 +16,7 @@ aux_dato = Dato()
 aux_tabla = Tabla()
 Quadruples = Quadruples()
 aux_parameter = Parameter()
+aux_special_func = SpecialFunc()
 #comentario de prueba
 #PROGRAMA
 def p_programa(p):
@@ -433,6 +435,7 @@ def p_vardt(p):
           | funcionvoid_vardt pn_quadruples_addfuncion
           | LEN LPAREN ID RPAREN pn_quadruples_getarrlen
           | STR LPAREN ID RPAREN pn_quadruples_insert_str
+          | pn_quadruples_insert_funciones_especiales
     '''
 
 def p_pn_quadruples_addvariable(p):
@@ -602,6 +605,39 @@ def p_pn_quadruples_addgotov(p):
     '''
     #Print("PN --- CIF 1 addgotof ")
     Quadruples.addgotov()
+
+#Funciones Especiales
+def p_pn_quadruples_insert_funciones_especiales(p):
+    '''
+    pn_quadruples_insert_funciones_especiales : tipo_especial LPAREN funciones_especiales_statement funciones_especiales_end RPAREN
+    '''
+
+def p_funciones_especiales_statement_loop(p):
+    '''
+    funciones_especiales_statement_loop : COMMA funciones_especiales_statement
+                                        | empty
+    '''
+
+def p_funciones_especiales_statement(p):
+    '''
+    funciones_especiales_statement : expresion funciones_especiales_statement_loop
+    '''
+    Quadruples.pop_poper_funciones_especiales(aux_special_func.name, p.lineno(-1))
+
+def p_funciones_especiales_end(p):
+    '''
+    funciones_especiales_end : empty
+    '''
+    aux_special_func.reset()
+    Quadruples.pop_poper_funciones_especiales_end()
+
+def p_tipo_especial(p):
+    '''
+    tipo_especial : MODE
+                  | MEDIAN
+                  | AVERAGE
+    '''
+    aux_special_func.name = p[1]
 
 #Escritura
 def p_escritura(p):

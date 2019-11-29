@@ -90,8 +90,8 @@ reserved = {
     #Math Functions
     'sqrt' : 'SQRT',
     'mode' : 'MODE',
-    'mean' : 'MEAN',
-    'avg' : 'AVERAGE',
+    'median' : 'MEDIAN',
+    'average' : 'AVERAGE',
     'pi' : 'PI',
     'len' : 'LEN',
     'str' : 'STR',
