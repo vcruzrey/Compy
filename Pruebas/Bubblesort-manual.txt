@@ -1,0 +1,42 @@
+func int bubbleSort(arr int aux) {
+  int length = len(aux) - 1;
+  bool swapped = True;
+  int dummy;
+  while(swapped == True) {
+    int i = 0;
+    swapped = False;
+    while(i<length){
+      int n = i + 1;
+      if(aux[i] > aux[n]) {
+          dummy = aux[i];
+          aux[i]= aux[n];
+          aux[n] = dummy;
+          swapped = True;
+      } else {
+          i = i + 1;
+      }
+    }
+  }
+
+  int contador = 0;
+  while(contador<11) {
+    print(aux[contador]);
+    contador = contador + 1;
+  }
+}
+
+main {
+  arr int test[10];
+  test[0] = 23;
+  test[1] = 73;
+  test[2] = 0;
+  test[3] = 30;
+  test[4] = 7;
+  test[5] = 1;
+  test[6] = 100;
+  test[7] = 94;
+  test[8] = 23;
+  test[9] = 87;
+  test[10] = 19;
+  bubbleSort(test);
+}

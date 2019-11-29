@@ -29,7 +29,6 @@ main{
     test[9] = 87;
     test[10] = 19;
     int x = prueba(test, numfind);
-    print(x);
     if(x<0){
       print("El numero " + str(numfind) + " no existe en el arreglo.");
     } else {

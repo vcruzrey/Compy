@@ -1,0 +1,17 @@
+main{
+  int t1 = 0;
+  int t2 = 1;
+  int Fibo = 0;
+  int n = 233;
+  int i = 2;
+  print(t1);
+  print(t2);
+  Fibo = t1 + t2;
+  while(Fibo <= n) {
+    print(str(i) + " = " + str(Fibo));
+    t1 = t2;
+    t2 = Fibo;
+    Fibo = t1 + t2;
+    i= i+1;
+  }
+}

@@ -1,0 +1,22 @@
+main {
+  int n=12;
+  int i = 0;
+  int j;
+  int factorial;
+  while(i <= n){
+		if(i == 0){
+			factorial = 1;
+		}
+ 
+		else{
+			factorial = 1;
+			j=1;
+			while(j <= i){
+				factorial = factorial*j;
+				j= j+1;
+			}
+		}
+    print("factorial de "+str(i)+" = "+str(factorial));
+		i=i+1;
+	}
+}
