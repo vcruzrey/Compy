@@ -691,6 +691,7 @@ def p_pn_quadruples_checkfuncid(p):
     left_operand = Quadruples.PilaDato.pop()
     tabla_varibles.check_param_arr(right_operand,left_operand,aux_parameter.name, p.lineno(-1))
     inicio = tabla_varibles.diccionario['dirFunc'][aux_parameter.name]['inicio']
+    print(inicio)
     Quadruples.check_param_arr_quads(left_operand,inicio)
     Quadruples.PilaDato.append(left_operand)
     Quadruples.PilaDato.append(right_operand)
@@ -729,7 +730,7 @@ def p_muere(p):
     muere : empty
     '''
     #tabla_varibles.get_constant_table()
-    print("Quadruplos")
+    print("Quadruplos aqui")
     conta = 0
     with open('JSON/datasss.json', 'w') as outfile:
         json.dump(tabla_varibles.diccionario, outfile)

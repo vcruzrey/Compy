@@ -164,11 +164,19 @@ class MaquinaVirtual:
                 #print("era end")
 
             elif (operation  == 'parametro'):
-                res  = self.get_value(mem_izq, izquierda)
-                aux_memoria.diccionario['local'].memoria_nueva()
-                self.set_value(mem_res, resultado, res)
-                aux_memoria.diccionario['local'].memoria_pasada()
-                self.posicion += 1
+                if (derecha == None):
+                    res  = self.get_value(mem_izq, izquierda)
+                    aux_memoria.diccionario['local'].memoria_nueva()
+                    self.set_value(mem_res, resultado, res)
+                    aux_memoria.diccionario['local'].memoria_pasada()
+                    self.posicion += 1
+                else:
+                    for i in range(derecha):
+                        res  = self.get_value(mem_izq, izquierda + i)
+                        aux_memoria.diccionario['local'].memoria_nueva()
+                        self.set_value(mem_res, resultado + i, res)
+                        aux_memoria.diccionario['local'].memoria_pasada()
+                    self.posicion += 1
 
             elif (operation  == 'arr'):
                 self.posicion += 1

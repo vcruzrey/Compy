@@ -83,9 +83,10 @@ class Quadruples():
         else:
             if(right_operand['complex']=="arr"):
                 if(left_operand['complex'] =="arr"):
-                    for i in range(left_operand['tamano']):
-                        quad = Quadruple(operator, right_operand['direccion'] + i, None, left_operand['direccion'] + i)
-                        self.PQuad.append(quad)
+                    quad = Quadruple(operator, right_operand['direccion'], right_operand['tamano'], left_operand['direccion'])
+                    #for i in range(left_operand['tamano']):
+                    #    quad = Quadruple(operator, right_operand['direccion'] + i, None, left_operand['direccion'] + i)
+                    self.PQuad.append(quad)
                 else:
                     raise TypeError("Parameter: {} expects simple variable. At line: {}".format(left_operand['name'], lineno))
             else:
@@ -205,7 +206,7 @@ class Quadruples():
     def closegotodown(self):
         quadnum = self.PJumps.pop()
         jumpto = len(self.PQuad)
-        self.PQuad[quadnum-1].result = jumpto
+        self.PQuad[quadnum-1].result = jumpto 
 
     def closegotoup(self):
         quadnum = self.PJumps.pop()

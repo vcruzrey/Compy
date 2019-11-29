@@ -1,5 +1,6 @@
 func int parametro(arr int aux) {
 int index = 10;
+print(index);
 int contador = 0;
 while(contador<11) {
   print(aux[contador]);
