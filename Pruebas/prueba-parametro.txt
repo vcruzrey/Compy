@@ -1,0 +1,22 @@
+func int parametro(arr int aux) {
+int index = 10;
+int contador = 0;
+while(contador<11) {
+  print(aux[contador]);
+  contador = contador + 1;
+}
+}
+
+main {
+  int index = 10;
+  int contador = 0;
+  arr int test[10];
+  while(contador<11) {
+    test[contador] = contador;
+    contador = contador + 1;
+  }
+  parametro(test);
+
+  int tamano = len(test);
+  print ("Tamaño: " + str(tamano));
+}

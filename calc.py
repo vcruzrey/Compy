@@ -14,7 +14,6 @@ tokens = [
     #Data Types
     'DTI', #int
     'DTF', #float
-    'DTB', #bool
     'DTS', #string
     'DTSIP', #string con interpolacion
 
@@ -62,8 +61,8 @@ reserved = {
     'string' : 'STRING',
     'void' : 'VOID',
     'cons' : 'CONS',
-    'false' : 'FALSE',
-    'true' : 'TRUE',
+    'False' : 'FALSE',
+    'True' : 'TRUE',
 
     #Data Structures
     'arr' : 'ARR',
@@ -94,6 +93,9 @@ reserved = {
     'mean' : 'MEAN',
     'avg' : 'AVERAGE',
     'pi' : 'PI',
+    'len' : 'LEN',
+    'str' : 'STR',
+
 
     'end' : 'END',
 }
@@ -142,14 +144,6 @@ def t_DTF(t):
 def t_DTI(t):
     r'\d+|\-\d+'
     t.value = int(t.value)
-    return t
-
-
-#bool def
-def t_DTB(t):
-    r'(true|false)'
-    mapping = {"true": True, "false": False}
-    t.value = mapping[t.value]
     return t
 
 # Define a rule so we can track line numbers

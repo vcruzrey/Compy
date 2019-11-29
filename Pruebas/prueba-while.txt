@@ -12,7 +12,7 @@ int arroz = 55;
   while (a>b&&a>c) {
     a = a - 1;
     b = b +1;
+    print("Contador :");
+    print(a);
   }
 }
-
-

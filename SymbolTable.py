@@ -111,6 +111,16 @@ class SymbolTable:
                 'complex': dato.complex,
                 'direccion': direccion
             }
+        elif (dato.complex == "arrsn"):
+            new_variable = {
+                'name': dato.name,
+                'type': dato.type,
+                'complex': "arr",
+                'tamano' : 0,
+                'limites' : {"limite1": 10},
+                'direccion': 0
+            }
+
         else:
             dato.tamano, limites = self.create_complex_limits(dato)
             direccion = self.create_direccion(dato, scope)
@@ -144,6 +154,11 @@ class SymbolTable:
     def create_direccion_simplified(self, type, scope):
         direccion = self.contador['contador'][scope][type]
         self.contador['contador'][scope][type] += 1
+        return direccion
+
+    def create_direccion_simplified_complex(self, type, tamano, scope):
+        direccion = self.contador['contador'][scope][type]
+        self.contador['contador'][scope][type] += tamano
         return direccion
 
     def create_direccion(self, dato, scope):
@@ -228,6 +243,18 @@ class SymbolTable:
             test = self.diccionario['dirFunc']['constantes']['vars'][key]
             tabla_constantes_aux[test['direccion']] = test['name']
         self.diccionario['dirFunc']['constantes'] = dict(tabla_constantes_aux)
+
+    def check_param_arr(self, dato, parametro,scope,lineno):
+        if(parametro['complex'] == "arr"):
+            if(dato['complex']=="arr"):
+                if(parametro['direccion'] == 0):
+                    parametro['tamano'] = dato['tamano']
+                    parametro['limites'] = dato['limites']
+                    direccion = self.create_direccion_simplified_complex(parametro['type'], parametro['tamano'], scope)
+                    parametro['direccion'] = direccion
+                    self.diccionario['dirFunc'][scope]['params'][parametro['name']] = parametro
+            else:
+                raise TypeError("Function: {} Parameter: {} expects Array. At Line: {}".format(scope, parametro['name'],lineno))
 
 #Cementerio de funciones
 

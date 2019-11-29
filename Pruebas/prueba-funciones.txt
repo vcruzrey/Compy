@@ -13,5 +13,6 @@ func int uno(int au1, int buf){
 main {
   int m = 5+5;
   int gl=3;
-  uno(m + 5,gl);
+  int test = uno(m+5,gl);
+  print(test);
 }

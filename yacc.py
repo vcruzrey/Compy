@@ -19,7 +19,7 @@ aux_parameter = Parameter()
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales pn_quadruples_gotomain funciones principal 
+    programa : globales pn_quadruples_gotomain funciones principal muere
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -86,7 +86,9 @@ def p_funcparameters(p):
 def p_funcparametersloop(p):
     '''
     funcparametersloop : pn_parameter tipo ID pn_st_insertvariable funcparametersloop
+                       | pn_parameter ARR pn_dato_currentspecialsn tipo ID pn_st_insertvariable funcparametersloop
                        | COMMA pn_parameter tipo ID pn_st_insertvariable funcparametersloop
+                       | COMMA pn_parameter ARR pn_dato_currentspecialsn tipo ID pn_st_insertvariable funcparametersloop
                        | empty
     '''
 
@@ -165,6 +167,7 @@ def p_estatuto(p):
     estatuto : declarar
              | asignacion
              | asignacionarr
+             | asignacionarrvar
              | condicion
              | ciclo
              | escritura
@@ -211,6 +214,12 @@ def p_pn_dato_currentspecial(p):
     '''
     aux_dato.complex = p[-1]
 
+def p_pn_dato_currentspecialsn(p):
+    '''
+    pn_dato_currentspecialsn : empty
+    '''
+    aux_dato.complex = p[-1] + "sn"
+
 def p_bracket(p):
     '''
     bracket : LBRCKT DTI pn_dato_currenttamano RBRCKT
@@ -253,6 +262,10 @@ def p_asignacion(p):
 def p_asignacionarr(p):
     '''
     asignacionarr : ID LBRCKT DTI RBRCKT pn_quadruples_addvariablearr EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
+    '''
+def p_asignacionarrvar(p):
+    '''
+    asignacionarrvar : ID LBRCKT ID RBRCKT pn_quadruples_addvariablearrvar EQUALS pn_quadruples_addequals expresion pn_quadruples_checkequals PNTCOMMA
     '''
 
 def p_inicializada_asignacion(p):
@@ -412,10 +425,14 @@ def p_vardt(p):
     vardt : ID pn_quadruples_addvariable
           | DTI pn_quadruples_addconstantint
           | DTF pn_quadruples_addconstantfloat
-          | DTB pn_quadruples_addconstantbool
+          | TRUE pn_quadruples_addconstantbool
+          | FALSE pn_quadruples_addconstantbool
           | DTS pn_quadruples_addconstantstring
           | ID LBRCKT DTI RBRCKT pn_quadruples_addvariablearr
+          | ID LBRCKT ID RBRCKT pn_quadruples_addvariablearrvar
           | funcionvoid_vardt pn_quadruples_addfuncion
+          | LEN LPAREN ID RPAREN pn_quadruples_getarrlen
+          | STR LPAREN ID RPAREN pn_quadruples_insert_str
     '''
 
 def p_pn_quadruples_addvariable(p):
@@ -443,7 +460,19 @@ def p_pn_quadruples_addvariablearr(p):
     aux_dato.name = p[-4]
     index = p[-2]
     vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    print(vardato)
     Quadruples.get_variable_arr(vardato, index, p.lineno(-1))
+
+def p_pn_quadruples_addvariablearrvar(p):
+    '''
+    pn_quadruples_addvariablearrvar : empty
+    '''
+    #print("PN --- 1 addvariablearr " + p[-1])
+    aux_dato.name = p[-4]
+    index = tabla_varibles.get_variable(p[-2], aux_tabla.name, p.lineno(-1))
+    vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    direccion = "("+str(index['direccion'])+")"
+    Quadruples.get_variable_arr(vardato, direccion, p.lineno(-1))
     #Quadruples.PilaO.append(vartest['name'])
     #Quadruples.PTypes.append(vartest['type'])
 
@@ -478,6 +507,24 @@ def p_pn_quadruples_addconstantstring(p):
     #print("PN --- 1 addconstantstring " + str(p[-1]))
     vardato = tabla_varibles.get_constant(p[-1], 'string', p.lineno(-1))
     Quadruples.PilaDato.append(vardato)
+
+def p_pn_quadruples_getarrlen(p):
+    '''
+    pn_quadruples_getarrlen : empty
+    '''
+    #print("PN --- 1 addconstantstring " + str(p[-1]))
+    aux_dato.name = p[-2]
+    vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    Quadruples.get_variable_arr_len(vardato, p.lineno(-1))
+
+def p_pn_quadruples_insert_str(p):
+    '''
+    pn_quadruples_insert_str : empty
+    '''
+    #print("PN --- 1 addconstantstring " + str(p[-1]))
+    aux_dato.name = p[-2]
+    vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
+    Quadruples.pn_quadruples_insert_str(vardato)
 
 
 #Condicion
@@ -640,6 +687,13 @@ def p_pn_quadruples_checkfuncid(p):
     pn_quadruples_checkfuncid : empty
     '''
     #Print("PN --- CIF 1 addgotof ")
+    right_operand = Quadruples.PilaDato.pop()
+    left_operand = Quadruples.PilaDato.pop()
+    tabla_varibles.check_param_arr(right_operand,left_operand,aux_parameter.name, p.lineno(-1))
+    inicio = tabla_varibles.diccionario['dirFunc'][aux_parameter.name]['inicio']
+    Quadruples.check_param_arr_quads(left_operand,inicio)
+    Quadruples.PilaDato.append(left_operand)
+    Quadruples.PilaDato.append(right_operand)
     Quadruples.check_top_poper('parameter', p.lineno(-1))
 
 def p_pn_quadruples_checkfunclength(p):

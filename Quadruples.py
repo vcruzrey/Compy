@@ -67,11 +67,30 @@ class Quadruples():
                 if (self.POper[-1] in operatos.operator['equal']):
                     self.pop_poper(lineno)
             elif (case == 'parameter'):
-                self.pop_poper(lineno)
+                self.pop_poper_parameter(lineno)
             elif (case == 'return'):
                 self.pop_poper(lineno)
             elif (case == 'print'):
                 self.pop_print()
+
+    def pop_poper_parameter(self, lineno):
+        right_operand = self.PilaDato.pop()
+        left_operand = self.PilaDato.pop()
+        operator = self.POper.pop()
+        result_Type = semantic(left_operand['type'], right_operand['type'], operator)
+        if (result_Type == 'errorbadop'):
+            raise TypeError("Unable to assign operator: {} to types: {} , {}. At line: {}".format(operator, left_operand['type'], right_operand['type'], lineno))
+        else:
+            if(right_operand['complex']=="arr"):
+                if(left_operand['complex'] =="arr"):
+                    for i in range(left_operand['tamano']):
+                        quad = Quadruple(operator, right_operand['direccion'] + i, None, left_operand['direccion'] + i)
+                        self.PQuad.append(quad)
+                else:
+                    raise TypeError("Parameter: {} expects simple variable. At line: {}".format(left_operand['name'], lineno))
+            else:
+                quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
+                self.PQuad.append(quad)
 
     def pop_poper(self, lineno):
         right_operand = self.PilaDato.pop()
@@ -107,6 +126,8 @@ class Quadruples():
 
     def get_variable_arr(self, dato, index, lineno):
         if(dato['complex']=="arr"):
+            quad = Quadruple('arr', dato['name'], None, None)
+            self.PQuad.append(quad)
             inferior = 0
             superior = dato['limites']['limite1']
             dirbase = dato['direccion']
@@ -121,6 +142,21 @@ class Quadruples():
             self.PilaDato.append(aux)
         else:
             raise TypeError("Variable {} is not an Array. At Line: {}".format(dato['name'], lineno))
+
+    def get_variable_arr_len(self, dato, lineno):
+        if(dato['complex'] == "arr"):
+            left_operand = self.Temporales.get_new_simple('int')
+            quad = Quadruple('len', dato['name'], dato['tamano'], left_operand['direccion'])
+            self.PQuad.append(quad)
+            self.PilaDato.append(left_operand)
+        else:
+            raise TypeError("Variable {} is not an Array. At Line: {}".format(dato['name'], lineno))
+
+    def pn_quadruples_insert_str(self, dato):
+        left_operand = self.Temporales.get_new_simple('string')
+        quad = Quadruple('str', dato['direccion'], None, left_operand['direccion'])
+        self.PQuad.append(quad)
+        self.PilaDato.append(left_operand)
 
     def checkpar(self):
         length = len(self.POper)
@@ -215,6 +251,26 @@ class Quadruples():
 
     def get_position(self):
         return len(self.PQuad)
+
+    def check_param_arr_quads(self,dato,index):
+        if (dato["complex"] == "arr"):
+            notendproc = True
+            while notendproc :
+                aux_qd = self.PQuad[index]
+                if aux_qd.operator == "ENDPROC":
+                    notendproc = False
+                elif aux_qd.operator == "arr":
+                    if aux_qd.left_operand == dato['name']:
+                        self.PQuad[index + 1].result = dato['limites']['limite1']
+                        self.PQuad[index + 2].right_operand = dato['direccion']
+                        index += 3
+                elif aux_qd.operator == "len":
+                    if aux_qd.left_operand == dato['name']:
+                        self.PQuad[index].right_operand = dato['tamano']
+                        index += 1
+                else:
+                    index += 1
+
 
     def printTemporales(self):
         with open('JSON/temporales.json', 'w') as outfile:

@@ -48,23 +48,22 @@ class MaquinaVirtual:
         quadruples_length = len(self.quadruplesList)
         while(quadruples_length>self.posicion):
             posicion = self.posicion
+            #print("QUAD")
             #print(self.quadruplesList[posicion].operator,self.quadruplesList[posicion].left_operand,self.quadruplesList[posicion].right_operand,self.quadruplesList[posicion].result)
             operation = self.quadruplesList[posicion].operator
-            #print(operation)
+            #print("operation " + str(operation))
             izquierda = self.check_parentesis(self.quadruplesList[posicion].left_operand)
-            #print(izquierda)
+            #print("izquierda " + str(izquierda))
             derecha = self.check_parentesis(self.quadruplesList[posicion].right_operand)
-            #print(derecha)
+            #print("derecha " + str(derecha))
             resultado = self.check_parentesis(self.quadruplesList[posicion].result)
-            #print(resultado)
-
+            #print("resultado " + str(resultado))
             mem_izq = self.posicion_direccion(izquierda)
             #print(mem_izq)
             mem_der = self.posicion_direccion(derecha)
             #print(mem_der)
             mem_res = self.posicion_direccion(resultado)
             #print(mem_res)
-
             if (operation in matematicas):
                 operations_switch = {
                     "+" : operator.add,
@@ -108,7 +107,6 @@ class MaquinaVirtual:
                     self.posicion += 1
 
             elif (operation == '='):
-                #print("equals")
                 res  = self.get_value(mem_izq, izquierda)
                 self.set_value(mem_res, resultado, res)
                 #print(res)
@@ -153,9 +151,9 @@ class MaquinaVirtual:
                 if(izquierda >= derecha and izquierda <= resultado):
                     self.posicion += 1
                     posicion = self.posicion
-                    izquierda = self.quadruplesList[posicion].left_operand
-                    derecha = self.quadruplesList[posicion].right_operand
-                    resultado = self.quadruplesList[posicion].result
+                    izquierda = self.check_parentesis(self.quadruplesList[posicion].left_operand)
+                    derecha = self.check_parentesis(self.quadruplesList[posicion].right_operand)
+                    resultado = self.check_parentesis(self.quadruplesList[posicion].result)
                     mem_res = self.posicion_direccion(resultado)
                     res = derecha + izquierda
                     self.set_value(mem_res, resultado, res)
@@ -171,11 +169,24 @@ class MaquinaVirtual:
                 self.set_value(mem_res, resultado, res)
                 aux_memoria.diccionario['local'].memoria_pasada()
                 self.posicion += 1
+
+            elif (operation  == 'arr'):
+                self.posicion += 1
+
+            elif (operation  == 'len'):
+                self.set_value(mem_res, resultado, derecha)
+                self.posicion += 1
+
+            elif (operation  == 'str'):
+                res  = self.get_value(mem_izq, izquierda)
+                self.set_value(mem_res, resultado, str(res))
+                self.posicion += 1
                 #print(self.posicion)
                 #print("parametro")
                 #aux_memoria.memoria_nueva()
 
                 #aux_memoria.memoria_pasada()
+        #print(aux_memoria.diccionario['local'].actual[0])
         print("FINISH")
 
     def check_parentesis(self, dir):
