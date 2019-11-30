@@ -192,7 +192,6 @@ class MaquinaVirtual:
                 self.posicion += 1
 
             elif (operation  == 'FSP'):
-                print("HERE")
                 pila_aux = []
                 while operation != "FSPEND":
                     if (derecha == None):
@@ -208,6 +207,8 @@ class MaquinaVirtual:
                     operation = self.quadruplesList[posicion].operator
                     derecha = self.check_parentesis(self.quadruplesList[posicion].right_operand)
                     resultado = self.check_parentesis(self.quadruplesList[posicion].result)
+                    mem_der = self.posicion_direccion(derecha)
+                    mem_res = self.posicion_direccion(resultado)
                 res_aux = self.funciones_especiales(pila_aux, izquierda)
                 mem_res = self.posicion_direccion(resultado)
                 self.set_value(mem_res, resultado, res_aux)
@@ -267,45 +268,3 @@ class MaquinaVirtual:
                 return 'local'
         else:
             return None
-
-
-#aux_memoria.diccionario['local'].insertar_funcion("Func")
-#self.quadruplesList.append(['+',10000,10001,30000])
-#test.funciones()
-##print(aux_memoria.diccionario)
-##print(aux_memoria.diccionario['local'].actual[0])
-##print(aux_memoria.diccionario['local'].actual[1])
-
-        #Quadruplos desde Main
-        #self.quadruplesList.append(['=',20000,None,30000])
-        #self.quadruplesList.append(['=',21000,None,31000])
-        #self.quadruplesList.append(['<',20002,20000,33000])
-        #self.quadruplesList.append(['=',33000,None,33001])
-        #self.quadruplesList.append(['>',30000,20003,33002])
-        #self.quadruplesList.append(['gotof',33002,None,10])#not sure si jala
-        #self.quadruplesList.append(['^',31000,30000,31001])
-        #self.quadruplesList.append(['#print', None, None, 31001])
-        #self.quadruplesList.append(['-',30000,20004,30000])
-        #self.quadruplesList.append(['goto', None, None,4])
-        #self.quadruplesList.append(['#print',None, None, 31000])
-        #self.quadruplesList.append(['#print',None, None, 30000])
-
-        #Escribir Constantes
-        #aux_memoria.diccionario['constante'][20000] = 2
-        #aux_memoria.diccionario['constante'][21000] = 1.0
-        #aux_memoria.diccionario['constante'][20002] = 0
-        #aux_memoria.diccionario['constante'][20003] = 1
-        #aux_memoria.diccionario['constante'][20004] = 1
-
-
-        #Ejemplos Escritura
-        #aux_memoria.diccionario['global'][5000] = int(4)
-
-        #contador = aux_memoria.diccionario['local'].contador
-        #aux_memoria.diccionario['local'].actual[contador][3000] = int(4)
-
-       #Lectura / Asignacion
-        ##print(aux_memoria.diccionario['constante'])
-        #prueba_regreso = aux_memoria.diccionario['constante'][5000]
-        ##print(prueba_regreso)
-        ##print(aux_memoria.diccionario['local'].actual[contador])

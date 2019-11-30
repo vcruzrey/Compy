@@ -18,6 +18,6 @@ func int Fibonacci(int n){
 }
 
 main {
-  int a = 23;
+  int a = 20;
   print(Fibonacci(a));
 }

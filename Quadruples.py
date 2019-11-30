@@ -112,6 +112,7 @@ class Quadruples():
                 self.PQuad.append(quad)
 
     def pop_poper(self, lineno):
+        dothis = True
         right_operand = self.PilaDato.pop()
         left_operand = self.PilaDato.pop()
         operator = self.POper.pop()
@@ -120,7 +121,22 @@ class Quadruples():
             raise TypeError("Unable to assign operator: {} to types: {} , {}. At line: {}".format(operator, left_operand['type'], right_operand['type'], lineno))
         else:
             if(operator=="="):
-                quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
+                if left_operand['complex'] == "arr":
+                    if right_operand['complex'] == "arr":
+                        if (left_operand['tamano'] == right_operand['tamano']):
+                            for i in range(left_operand['tamano']):
+                                quad = Quadruple(operator, right_operand['direccion'] + i, None, left_operand['direccion'] + i)
+                                self.PQuad.append(quad)
+                                dothis = False
+                        else:
+                            print("Tamanos incompatibles")
+                    else:
+                        for i in range(left_operand['tamano']):
+                            quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'] + i)
+                            self.PQuad.append(quad)
+                            dothis = False
+                else:
+                    quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
             elif(operator=="parametro"):
                 quad = Quadruple(operator, right_operand['direccion'], None, left_operand['direccion'])
             elif(operator=="return"):
@@ -130,7 +146,8 @@ class Quadruples():
                 result = self.Temporales.get_new_simple(result_Type)
                 self.PilaDato.append(result)
                 quad = Quadruple(operator, left_operand['direccion'], right_operand['direccion'], result['direccion'])
-            self.PQuad.append(quad)
+            if dothis:
+                self.PQuad.append(quad)
             #if(operator=="="):
             #    quad = Quadruple(operator, right_operand['name'], "NONE", left_operand['name'])
             #elif(operator=="parametro"):
@@ -158,6 +175,7 @@ class Quadruples():
             aux = result
             aux['name'] = "("+str(aux['name'])+")"
             aux['direccion'] = "("+str(aux['direccion'])+")"
+            aux['complex'] = "simple"
             self.PilaDato.append(aux)
         else:
             raise TypeError("Variable {} is not an Array. At Line: {}".format(dato['name'], lineno))

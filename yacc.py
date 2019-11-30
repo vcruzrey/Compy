@@ -21,7 +21,7 @@ aux_special_func = SpecialFunc()
 #PROGRAMA
 def p_programa(p):
     '''
-    programa : globales pn_quadruples_gotomain funciones principal muere
+    programa : globales pn_quadruples_gotomain funciones principal
     '''
     p[0] = "PROGRAM COMPILED"
 
@@ -463,7 +463,7 @@ def p_pn_quadruples_addvariablearr(p):
     aux_dato.name = p[-4]
     index = p[-2]
     vardato = tabla_varibles.get_variable(aux_dato.name, aux_tabla.name, p.lineno(-1))
-    print(vardato)
+    #print(vardato)
     Quadruples.get_variable_arr(vardato, index, p.lineno(-1))
 
 def p_pn_quadruples_addvariablearrvar(p):
@@ -727,7 +727,7 @@ def p_pn_quadruples_checkfuncid(p):
     left_operand = Quadruples.PilaDato.pop()
     tabla_varibles.check_param_arr(right_operand,left_operand,aux_parameter.name, p.lineno(-1))
     inicio = tabla_varibles.diccionario['dirFunc'][aux_parameter.name]['inicio']
-    print(inicio)
+    #print(inicio)
     Quadruples.check_param_arr_quads(left_operand,inicio)
     Quadruples.PilaDato.append(left_operand)
     Quadruples.PilaDato.append(right_operand)

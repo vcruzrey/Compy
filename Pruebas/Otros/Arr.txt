@@ -1,0 +1,32 @@
+func void imprimirarregloint(arr int arregloaux) {
+  int tamano = len(arregloaux);
+  int contador = 0;
+  while(contador<tamano) {
+    print(arregloaux[contador]);
+    contador = contador + 1;
+  }
+}
+
+func void imprimirarreglofloat(arr float arregloaux) {
+  int tamano = len(arregloaux);
+  int contador = 0;
+  while(contador<tamano) {
+    print(arregloaux[contador]);
+    contador = contador + 1;
+  }
+}
+
+main {
+  arr int arreglo1[10];
+  arr int arreglo3[10];
+  arr float arreglo2[10];
+
+  arreglo1 = 10;
+  imprimirarregloint(arreglo1);
+  float esp = average(arreglo1, 5);
+  arreglo2 = esp;
+  imprimirarreglofloat(arreglo2);
+
+  arreglo3 = arreglo1;
+  imprimirarregloint(arreglo3);
+}

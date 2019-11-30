@@ -7,11 +7,10 @@ main {
 		if(i == 0){
 			factorial = 1;
 		}
- 
-		else{
+		else {
 			factorial = 1;
 			j=1;
-			while(j <= i){
+			while(j <= i) {
 				factorial = factorial*j;
 				j= j+1;
 			}
